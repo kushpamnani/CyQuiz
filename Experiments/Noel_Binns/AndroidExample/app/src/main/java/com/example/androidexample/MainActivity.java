@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         simpleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "This Button has worked", Toast.LENGTH_LONG).show();//display the text of button1
+                Intent i = new Intent(getApplicationContext(), TestActivity.class);
+                startActivity(i);
+                //Toast.makeText(getApplicationContext(), "This Button has worked", Toast.LENGTH_LONG).show();//display the text of button1
             }
         });
     }

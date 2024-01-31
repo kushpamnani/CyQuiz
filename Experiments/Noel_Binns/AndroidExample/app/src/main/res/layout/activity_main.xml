@@ -23,7 +23,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Test Click Msg Button"
+        android:text="Test Click. This will open new window"
         android:textSize="20sp"
         android:padding="15dp"
         android:textStyle="bold|italic"
