@@ -28,5 +28,14 @@
         android:padding="15dp"
         android:textStyle="bold|italic"
         android:background="#147D03" /><!--Background green color-->
-
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="This button will take you back"
+        android:textSize="20sp"
+        android:padding="15dp"
+        android:textStyle="bold|italic"
+        android:background="#147D03" /><!--Background green color-->
 </androidx.appcompat.widget.LinearLayoutCompat>

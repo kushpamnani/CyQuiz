@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);             // link to Main activity XML
-
+        Button backButton = (Button) findViewById(R.id.backButton);
+        backButton.setVisibility(View.GONE);
         /* initialize UI elements */
         messageText = findViewById(R.id.main_msg_txt);      // link to message textview in the Main activity XML
         messageText.setText("Hello World");
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), TestActivity.class);
                 startActivity(i);
-                //Toast.makeText(getApplicationContext(), "This Button has worked", Toast.LENGTH_LONG).show();//display the text of button1
+                Toast.makeText(getApplicationContext(), "This Button has worked", Toast.LENGTH_LONG).show();//display the text of button1
             }
         });
     }
