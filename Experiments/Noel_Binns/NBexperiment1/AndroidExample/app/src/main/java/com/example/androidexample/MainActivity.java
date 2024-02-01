@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), TestActivity.class);
                 startActivity(i);
-                Toast.makeText(getApplicationContext(), "This Button has worked. Next window.", Toast.LENGTH_LONG).show();//display the text of button1
+                Toast.makeText(getApplicationContext(), "This Button has worked. Next window. ", Toast.LENGTH_LONG).show();//display the text of button1
             }
         });
     }
