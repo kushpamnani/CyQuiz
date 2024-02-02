@@ -12,7 +12,8 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView messageText;   // define message textview variable
+    private TextView messageText;// define message textview variable
+    int x;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +23,20 @@ public class MainActivity extends AppCompatActivity {
         /* initialize UI elements */
         messageText = findViewById(R.id.main_msg_txt);      // link to message textview in the Main activity XML
         messageText.setText("Hello World");
+        messageText = findViewById(R.id.bottem_text);
+        messageText.setText("Bottem Text");
+        messageText = findViewById(R.id.Upsidedown);
+        messageText.setText("Upsidedown");
+        messageText = findViewById(R.id.Do_Everything);
+        messageText.setText("I am crazy");
+        while (x<5){
+            messageText.setScaleX(4);
+            messageText.setScaleY(4);
+            messageText.setRotation(5);
+            messageText.setRotation(100);
+            messageText.setScaleX(x-1);
+            messageText.setScaleY(x);
+            x++;
+        }
     }
 }
