@@ -28,5 +28,15 @@
         android:textSize="20sp"
         android:textColor="#ffffff">
     </Button>
+    <Button
+        android:id="@+id/new_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:text="Go to switch experiment"
+        android:textSize="20sp"
+        android:textColor="#ffffff">
+    </Button>
 
 </androidx.appcompat.widget.LinearLayoutCompat>
