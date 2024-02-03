@@ -13,6 +13,7 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
 
     private TextView messageText;// define message textview variable
+    private TextView CrazyText;
     int x;
 
     @Override
@@ -27,15 +28,17 @@ public class MainActivity extends AppCompatActivity {
         messageText.setText("Bottem Text");
         messageText = findViewById(R.id.Upsidedown);
         messageText.setText("Upsidedown");
-        messageText = findViewById(R.id.Do_Everything);
-        messageText.setText("I am crazy");
+        CrazyText = findViewById(R.id.Do_Everything);
+        CrazyText.setText("I am crazy");
         while (x<5){
-            messageText.setScaleX(4);
-            messageText.setScaleY(4);
-            messageText.setRotation(5);
-            messageText.setRotation(100);
-            messageText.setScaleX(x-1);
-            messageText.setScaleY(x);
+            // wanted to have the text spin while it was open but caused crash with the wait statment
+            // probly just cant have wait in main
+            CrazyText.setScaleX(4);
+            CrazyText.setScaleY(4);
+            CrazyText.setRotation(5);
+            CrazyText.setRotation(100);
+            CrazyText.setScaleX(x-1);
+            CrazyText.setScaleY(x);
             x++;
         }
     }
