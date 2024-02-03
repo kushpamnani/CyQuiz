@@ -4,16 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.concurrent.TimeUnit;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView messageText;// define message textview variable
     private TextView CrazyText;
+    private Button CrazyButton;
     int x;
 
     @Override
@@ -29,17 +33,19 @@ public class MainActivity extends AppCompatActivity {
         messageText = findViewById(R.id.Upsidedown);
         messageText.setText("Upsidedown");
         CrazyText = findViewById(R.id.Do_Everything);
-        CrazyText.setText("I am crazy");
-        while (x<5){
-            // wanted to have the text spin while it was open but caused crash with the wait statment
-            // probly just cant have wait in main
-            CrazyText.setScaleX(4);
-            CrazyText.setScaleY(4);
-            CrazyText.setRotation(5);
-            CrazyText.setRotation(100);
-            CrazyText.setScaleX(x-1);
-            CrazyText.setScaleY(x);
-            x++;
-        }
+        CrazyText.setText("I am Normal");
+        CrazyButton = findViewById(R.id.Crazy);
+        CrazyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                x++;
+                CrazyText.setText("I am Crazy");
+                CrazyText.setScaleX(2*x);
+                CrazyText.setScaleY(6-x);
+                CrazyText.setRotation((x*100));
+
+            }
+        });
+
     }
 }
