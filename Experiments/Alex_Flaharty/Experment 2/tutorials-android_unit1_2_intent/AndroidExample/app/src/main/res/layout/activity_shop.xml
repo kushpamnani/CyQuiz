@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/S"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,20 +32,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Normal_Cost_txt" />
 
-    <TextView
-        android:id="@+id/Skill_level"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="201dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="202dp"
-        android:scaleX="3"
-        android:scaleY="3"
-        android:text="0"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Skill_Level_txt" />
-
     <Button
         android:id="@+id/More"
         android:layout_width="wrap_content"
@@ -53,6 +40,7 @@
         android:layout_marginTop="393dp"
         android:layout_marginEnd="108dp"
         android:text="+"
+        android:translationY="-10dp"
         app:layout_constraintEnd_toStartOf="@+id/Less"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,6 +53,7 @@
         android:layout_marginTop="399dp"
         android:layout_marginEnd="62dp"
         android:text="-"
+        android:translationY="-13dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/More"
         app:layout_constraintTop_toTopOf="parent" />
@@ -74,12 +63,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
-        android:layout_marginTop="178dp"
+        android:layout_marginTop="296dp"
         android:layout_marginEnd="173dp"
+        android:scaleX="3"
+        android:scaleY="3"
         android:text="Final Cost"
+        android:translationY="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Skill_level" />
+        app:layout_constraintTop_toBottomOf="@+id/Skill_Level" />
 
     <TextView
         android:id="@+id/Final_Cost"
@@ -94,4 +86,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Final_Cost_txt" />
+
+    <TextView
+        android:id="@+id/Cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="174dp"
+        android:layout_marginEnd="179dp"
+        android:layout_marginBottom="95dp"
+        android:scaleX="3"
+        android:scaleY="3"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/Skill_Level_txt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/Skill_Level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="174dp"
+        android:layout_marginBottom="345dp"
+        android:scaleX="5"
+        android:scaleY="5"
+        android:text="TextView"
+        android:translationY="150dp"
+        app:layout_constraintBottom_toTopOf="@+id/Final_Cost_txt"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Cost" />
 </androidx.constraintlayout.widget.ConstraintLayout>
