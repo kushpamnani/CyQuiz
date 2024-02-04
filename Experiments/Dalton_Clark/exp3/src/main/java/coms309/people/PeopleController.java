@@ -50,7 +50,6 @@ public class PeopleController {
     public String createPerson(@RequestBody Person person) {
         System.out.println(person);
         peopleList.put(person.getFirstName(), person);
-        DogController.createDog(person.dog);
         return "New person "+ person.getFirstName() + " Saved";
     }
 
