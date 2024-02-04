@@ -49,6 +49,7 @@ public class Dog {
     @Override
     public String toString() {
         return name + " "
+                + owner + " "
                 + breed + " "
                 + favTreat;
     }
