@@ -1,6 +1,8 @@
 package coms309.people;
 
 
+import coms309.dog.Dog;
+
 /**
  * Provides the Definition/Structure for the people row
  *
@@ -17,11 +19,7 @@ public class Person {
 
     private String telephone;
 
-    private String dogName;
-
-    private String dogBreed;
-
-    private String dogFavTreat;
+    protected Dog dog;
 
     public Person(){
         
@@ -39,9 +37,7 @@ public class Person {
         this.lastName = lastName;
         this.address = address;
         this.telephone = telephone;
-        this.dogName = dogName;
-        this.dogBreed = dogBreed;
-        this.dogFavTreat = dogFavTreat;
+        dog = new Dog(dogName, firstName, dogBreed, dogFavTreat);
     }
 
     public String getFirstName() {
@@ -75,22 +71,22 @@ public class Person {
     public void setTelephone(String telephone) { this.telephone = telephone; }
 
     public String getDogName() {
-        return this.dogName;
+        return dog.getName();
     }
 
-    public void setDogName(String dogName) { this.dogName = dogName; }
+    public void setDogName(String dogName) { dog.setName(dogName); }
 
-    public String getDogBreed() {
-        return this.dogBreed;
+    public String getBreed() {
+        return dog.getBreed();
     }
 
-    public void setDogBreed(String dogBreed) { this.dogBreed = dogBreed; }
+    public void setBreed(String dogBreed) { dog.setBreed(dogBreed); }
 
-    public String getDogFavTreat() {
-        return this.dogFavTreat;
+    public String getFavTreat() {
+        return dog.getFavTreat();
     }
 
-    public void setDogFavTreat(String dogFavTreat) { this.dogFavTreat = dogFavTreat; }
+    public void setFavTreat(String dogFavTreat) { dog.setFavTreat(dogFavTreat); }
 
     @Override
     public String toString() {
@@ -98,8 +94,8 @@ public class Person {
                 + lastName + " "
                 + address + " "
                 + telephone + " "
-                + dogName + " "
-                + dogBreed + " "
-                + dogFavTreat;
+                + dog.getName() + " "
+                + dog.getBreed() + " "
+                + dog.getFavTreat();
     }
 }
