@@ -19,7 +19,7 @@ public class ShopActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shop);
-        Level = 0;
+        Level = 1;
         Cost = 100;
         More = findViewById(R.id.More);
         less = findViewById(R.id.Less);
