@@ -11,12 +11,23 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 public class MainMenuTest extends AppCompatActivity {
+    private Button gamesButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_menu_test);             // link to Main activity XML
+        setContentView(R.layout.main_menu_test);
+
+    gamesButton = findViewById(R.id.gameButton);
+
+        gamesButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenuTest.this, GameSelection.class);
+                startActivity(intent);
+            }
+        });
 
 
 
