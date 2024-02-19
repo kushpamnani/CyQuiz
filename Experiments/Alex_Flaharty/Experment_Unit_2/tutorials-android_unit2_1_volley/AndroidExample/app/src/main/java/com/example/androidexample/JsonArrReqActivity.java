@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
 import org.json.JSONArray;
@@ -32,7 +31,7 @@ public class JsonArrReqActivity extends AppCompatActivity {
         setContentView(R.layout.activity_json_arr_req);
 
         btnJsonArrReq = findViewById(R.id.btnJsonArr);
-        msgResponse = findViewById(R.id.msgResponse);
+        msgResponse = findViewById(R.id.Type);
 
         btnJsonArrReq.setOnClickListener(new View.OnClickListener() {
             @Override

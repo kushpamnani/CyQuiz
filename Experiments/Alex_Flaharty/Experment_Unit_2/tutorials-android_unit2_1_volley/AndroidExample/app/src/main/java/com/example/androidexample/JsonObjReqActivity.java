@@ -12,7 +12,6 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
@@ -24,16 +23,21 @@ public class JsonObjReqActivity extends AppCompatActivity {
 
     private Button btnJsonObjReq;
     private TextView msgResponse;
+    private TextView object;
+    private String type;
+    private String name;
 
     //private static final String URL_JSON_OBJECT = "https://jsonplaceholder.typicode.com/users/1";
-    private static final String URL_JSON_OBJECT = "http://date.jsontest.com/";
+    //private static final String URL_JSON_OBJECT = "http://date.jsontest.com/";
+    private static final String URL_JSON_OBJECT = "https://270850cd-16f4-4610-8e1b-a64f07b81113.mock.pstmn.io/Object/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_json_obj_req);
 
         btnJsonObjReq = findViewById(R.id.btnJsonObj);
-        msgResponse = findViewById(R.id.msgResponse);
+        msgResponse = findViewById(R.id.Type);
+        object = findViewById(R.id.Object);
 
         btnJsonObjReq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +59,9 @@ public class JsonObjReqActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Volley Response", response.toString());
-                        msgResponse.setText(response.toString());
+                        JSONParse(response.toString());
+                        msgResponse.setText(type);
+                        object.setText(name);
                     }
                 },
                 new Response.ErrorListener() {
@@ -81,8 +87,29 @@ public class JsonObjReqActivity extends AppCompatActivity {
                 return params;
             }
         };
-
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+    private void JSONParse(String text){
+        type = "";
+        name = "";
+        int z = 0;
+        int i = 0;
+        int x =text.length();
+        while(i<x){
+            if(text.charAt(i)== '\"'){
+                z++;
+            }
+            else{
+                if(z==1){
+                    type =type + text.charAt(i);
+                }
+                if(z==3){
+                    name = name + text.charAt(i);
+                }
+            }
+            i++;
+        }
+    }
+
 }

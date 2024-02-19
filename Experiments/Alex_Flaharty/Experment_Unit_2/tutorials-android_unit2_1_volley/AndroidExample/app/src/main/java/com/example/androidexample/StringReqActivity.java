@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 
 import java.util.HashMap;
@@ -32,7 +31,7 @@ public class StringReqActivity extends AppCompatActivity {
         setContentView(R.layout.activity_string_req);
 
         btnStringReq = (Button) findViewById(R.id.btnStringReq);
-        msgResponse = (TextView) findViewById(R.id.msgResponse);
+        msgResponse = (TextView) findViewById(R.id.Type);
 
         btnStringReq.setOnClickListener(new View.OnClickListener() {
             @Override

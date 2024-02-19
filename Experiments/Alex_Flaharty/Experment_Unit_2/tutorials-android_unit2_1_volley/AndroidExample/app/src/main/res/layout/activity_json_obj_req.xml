@@ -22,10 +22,16 @@
         android:text="Response: " />
 
     <TextView
-        android:id="@+id/msgResponse"
+        android:id="@+id/Type"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="" />
+
+    <TextView
+        android:id="@+id/Object"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
