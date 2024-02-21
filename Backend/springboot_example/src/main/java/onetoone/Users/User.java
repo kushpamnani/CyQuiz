@@ -47,7 +47,6 @@ public class User {
     }
 
     public User() {
-
     }
 
     // =============================== Getters and Setters for each field ================================== //
