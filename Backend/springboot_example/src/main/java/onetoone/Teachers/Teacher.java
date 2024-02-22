@@ -1,25 +1,22 @@
-package onetoone.Users;
+package onetoone.Teachers;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
+import onetoone.Classrooms.Classroom;
 import onetoone.Laptops.Laptop;
 
+import java.util.Set;
+
 /**
- * 
+ *
  * @author Vivek Bengre
- * 
- */ 
+ *
+ */
 
 @Entity
-public class User {
+public class Teacher {
 
-     /* 
+    /*
      * The annotation @ID marks the field below as the primary key for the table created by springboot
      * The @GeneratedValue generates a value if not already present, The strategy in this case is to start from 1 and increment for each table
      */
@@ -28,7 +25,8 @@ public class User {
     private int id;
     private String name;
     private String password;
-    private String classroom;
+    @OneToMany(mappedBy="teacher", cascade = CascadeType.ALL)
+    private Set<Classroom> classrooms;
     private boolean ifActive;
 
     /*
@@ -41,14 +39,13 @@ public class User {
     @JoinColumn(name = "laptop_id")
     private Laptop laptop;
 
-    public User(String name, String password, String classroom) {
+    public Teacher(String name, String password) {
         this.name = name;
         this.password = password;
-        this.classroom = classroom;
         this.ifActive = true;
     }
 
-    public User() {
+    public Teacher() {
     }
 
     // =============================== Getters and Setters for each field ================================== //
@@ -77,11 +74,11 @@ public class User {
         this.password = password;
     }
 
-    public String getClassroom(){
+    public Classroom getClassroom(){
         return classroom;
     }
 
-    public void setClassroom(String classroom) { this.classroom = classroom; }
+    public void setClassroom(Classroom classroom) { this.classroom = classroom; }
 
     public boolean getIsActive(){
         return ifActive;
@@ -90,13 +87,4 @@ public class User {
     public void setIfActive(boolean ifActive){
         this.ifActive = ifActive;
     }
-
-    public Laptop getLaptop(){
-        return laptop;
-    }
-
-    public void setLaptop(Laptop laptop){
-        this.laptop = laptop;
-    }
-    
 }
