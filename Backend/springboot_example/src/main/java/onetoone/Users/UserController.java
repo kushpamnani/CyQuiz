@@ -2,6 +2,8 @@ package onetoone.Users;
 
 import java.util.List;
 
+import onetoone.Classrooms.ClassroomRepository;
+import onetoone.Teachers.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,9 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import onetoone.Laptops.Laptop;
-import onetoone.Laptops.LaptopRepository;
 
 /**
  * 
@@ -28,7 +27,10 @@ public class UserController {
     UserRepository userRepository;
 
     @Autowired
-    LaptopRepository laptopRepository;
+    ClassroomRepository classroomRepository;
+
+    @Autowired
+    TeacherRepository teacherRepository;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -68,25 +70,25 @@ public class UserController {
         if(user == null) {
             throw new RuntimeException("user id does not exist");
         }
-        else if (user.getId() != id){
-            throw new RuntimeException("path variable id does not match User request id");
+        else if (request.getId() != id){
+            throw new RuntimeException("path variable id does not match user request id");
         }
 
         userRepository.save(request);
         return userRepository.findById(id);
     }
 
-    @PutMapping("/users/{userId}/laptops/{laptopId}")
-    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
-        User user = userRepository.findById(userId);
-        Laptop laptop = laptopRepository.findById(laptopId);
-        if(user == null || laptop == null)
-            return failure;
-        laptop.setUser(user);
-        user.setLaptop(laptop);
-        userRepository.save(user);
-        return success;
-    }
+//    @PutMapping("/users/{userId}/laptops/{laptopId}")
+//    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
+//        User user = userRepository.findById(userId);
+//        Laptop laptop = laptopRepository.findById(laptopId);
+//        if(user == null || laptop == null)
+//            return failure;
+//        laptop.setUser(user);
+//        user.setLaptop(laptop);
+//        userRepository.save(user);
+//        return success;
+//    }
 
     @DeleteMapping(path = "/users/{id}")
     String deleteUser(@PathVariable int id){

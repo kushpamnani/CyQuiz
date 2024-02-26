@@ -1,14 +1,10 @@
 package onetoone.Users;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
-import onetoone.Laptops.Laptop;
+import onetoone.Classrooms.Classroom;
+
+import java.util.Set;
 
 /**
  * 
@@ -28,7 +24,10 @@ public class User {
     private int id;
     private String name;
     private String password;
-    private String classroom;
+    // SET MANY TO MANY RELATION & make SET ??
+    @ManyToOne
+    @JoinColumn(name="classroom_id")
+    private Classroom classroom;
     private boolean ifActive;
 
     /*
@@ -37,14 +36,11 @@ public class User {
      * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
      * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "laptop_id")
-    private Laptop laptop;
 
-    public User(String name, String password, String classroom) {
+
+    public User(String name, String password) {
         this.name = name;
         this.password = password;
-        this.classroom = classroom;
         this.ifActive = true;
     }
 
@@ -77,11 +73,11 @@ public class User {
         this.password = password;
     }
 
-    public String getClassroom(){
+    public Classroom getClassroom(){
         return classroom;
     }
 
-    public void setClassroom(String classroom) { this.classroom = classroom; }
+    public void setClassroom(Classroom classroom) { this.classroom = classroom; }
 
     public boolean getIsActive(){
         return ifActive;
@@ -91,12 +87,4 @@ public class User {
         this.ifActive = ifActive;
     }
 
-    public Laptop getLaptop(){
-        return laptop;
-    }
-
-    public void setLaptop(Laptop laptop){
-        this.laptop = laptop;
-    }
-    
 }

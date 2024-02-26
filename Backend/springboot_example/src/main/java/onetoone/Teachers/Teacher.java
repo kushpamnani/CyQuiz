@@ -1,9 +1,9 @@
 package onetoone.Teachers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import onetoone.Classrooms.Classroom;
-import onetoone.Laptops.Laptop;
 
 import java.util.Set;
 
@@ -25,19 +25,10 @@ public class Teacher {
     private int id;
     private String name;
     private String password;
+    @JsonIgnoreProperties("teacher")
     @OneToMany(mappedBy="teacher", cascade = CascadeType.ALL)
     private Set<Classroom> classrooms;
     private boolean ifActive;
-
-    /*
-     * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
-     * cascade is responsible propagating all changes, even to children of the class Eg: changes made to laptop within a user object will be reflected
-     * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
-     * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
-     */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "laptop_id")
-    private Laptop laptop;
 
     public Teacher(String name, String password) {
         this.name = name;
@@ -74,11 +65,17 @@ public class Teacher {
         this.password = password;
     }
 
-    public Classroom getClassroom(){
-        return classroom;
+    public Set<Classroom> getClassrooms() {
+        return classrooms;
     }
 
-    public void setClassroom(Classroom classroom) { this.classroom = classroom; }
+    public void setClassrooms(Set<Classroom> classrooms) {
+        this.classrooms = classrooms;
+    }
+
+    public void addClassroom(Classroom classroom) {
+        this.classrooms.add(classroom);
+    }
 
     public boolean getIsActive(){
         return ifActive;
