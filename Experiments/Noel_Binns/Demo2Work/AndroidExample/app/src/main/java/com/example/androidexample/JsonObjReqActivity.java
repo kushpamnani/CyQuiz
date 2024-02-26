@@ -25,7 +25,7 @@ public class JsonObjReqActivity extends AppCompatActivity {
     private Button btnJsonObjReq;
     private TextView msgResponse;
 
-    private static final String URL_JSON_OBJECT = "https://jsonplaceholder.typicode.com/users/1";
+    private static final String URL_JSON_OBJECT = "https://87c2ba07-6f71-4b03-adcb-747b9cb5798c.mock.pstmn.io/PostTester/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class JsonObjReqActivity extends AppCompatActivity {
      */
     private void makeJsonObjReq() {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.GET,
+                Request.Method.POST,
                 URL_JSON_OBJECT,
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONObject>() {

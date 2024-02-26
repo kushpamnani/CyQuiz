@@ -24,7 +24,7 @@ public class JsonArrReqActivity extends AppCompatActivity {
     private Button btnJsonArrReq;
     private TextView msgResponse;
 
-    private static final String URL_JSON_ARRAY = "https://0a60780d-c55b-4ad3-b888-3300f759b034.mock.pstmn.io/Object/";
+    private static final String URL_JSON_ARRAY = "https://87c2ba07-6f71-4b03-adcb-747b9cb5798c.mock.pstmn.io/PostTester/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class JsonArrReqActivity extends AppCompatActivity {
      * */
     private void makeJsonArrayReq() {
         JsonArrayRequest jsonArrReq = new JsonArrayRequest(
-                Request.Method.GET,
+                Request.Method.POST,
                 URL_JSON_ARRAY,
                 null, // Pass null as the request body since it's a GET request
                 new Response.Listener<JSONArray>() {
