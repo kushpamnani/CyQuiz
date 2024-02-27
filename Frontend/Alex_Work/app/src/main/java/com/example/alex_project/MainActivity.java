@@ -1,12 +1,15 @@
 package com.example.alex_project;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
     private TextView answer;
     private TextView Wrong_1;
     private TextView Wrong_2;
@@ -61,7 +64,8 @@ public class MainActivity extends Activity {
         Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo go to admin
+                Intent test = new Intent(MainActivity.this, AdminActivity.class);
+                startActivity(test);
             }
         });
 
