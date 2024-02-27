@@ -76,14 +76,13 @@ public class UserController {
         return userRepository.findById(id);
     }
 
-    @PutMapping("/users/{userId}/laptops/{laptopId}")
-    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
+    @PutMapping("/users/{userId}/role/{roleId}")
+    String assignRoleToUser(@PathVariable int userId,@PathVariable string roleId){
         User user = userRepository.findById(userId);
-        Laptop laptop = laptopRepository.findById(laptopId);
+        Role role = roleRepository.findById(roleId);
         if(user == null || laptop == null)
             return failure;
-        laptop.setUser(user);
-        user.setLaptop(laptop);
+        user.setRole(role);
         userRepository.save(user);
         return success;
     }

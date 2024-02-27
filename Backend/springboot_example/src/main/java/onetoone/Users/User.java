@@ -37,8 +37,8 @@ public class User {
      * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
      */
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "laptop_id")
-    private Laptop laptop;
+    @JoinColumn(name = "user_role")
+    private Role role;
 
     public User(String name, String emailId) {
         this.name = name;
@@ -83,12 +83,12 @@ public class User {
         this.ifActive = ifActive;
     }
 
-    public Laptop getLaptop(){
-        return laptop;
+    public Laptop getRole(){
+        return role;
     }
 
-    public void setLaptop(Laptop laptop){
-        this.laptop = laptop;
+    public void setRole(Role role){
+        this.role = role;
     }
-    
+
 }
