@@ -1,4 +1,4 @@
-package onetoone.Roles;
+package onetoone.Flashcards;
 
 import java.util.List;
 
@@ -22,54 +22,54 @@ import onetoone.Users.UserRepository;
  */
 
 @RestController
-public class RoleController {
+public class FlashcardController {
 
     @Autowired
-    RoleRepository roleRepository;
+    FlashcardRepository flashcardRepository;
 
     @Autowired
-    UserRepository userRepository;
+    flashcardRepository flashcardRepository;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
-    @GetMapping(path = "/roles")
-    List<Laptop> getAllRoles(){
-        return roleRepository.findAll();
+    @GetMapping(path = "/flashcards")
+    List<Flashcard> getAllFlashcards(){
+        return flashcardRepository.findAll();
     }
 
-    @GetMapping(path = "/roles/{id}")
-    Role getRoleById(@PathVariable int id){
-        return roleRepository.findById(id);
+    @GetMapping(path = "/flashcards/{id}")
+    Flashcard getFlashcardById(@PathVariable int id){
+        return flashcardRepository.findById(id);
     }
 
-    @PostMapping(path = "/roles")
-    String createRole(Role Role){
-        if (Role == null)
+    @PostMapping(path = "/flashcards")
+    String createFlashcard(Flashcard Flashcard){
+        if (Flashcard == null)
             return failure;
-        roleRepository.save(Role);
+        flashcardRepository.save(Flashcard);
         return success;
     }
 
-    @PutMapping(path = "/roles/{id}")
-    Role updateRole(@PathVariable int id, @RequestBody Role request){
-        Role role = roleRepository.findById(id);
-        if(role == null)
+    @PutMapping(path = "/flashcards/{id}")
+    Flashcard updateFlashcard(@PathVariable int id, @RequestBody Flashcard request){
+        Flashcard flashcard = flashcardRepository.findById(id);
+        if(flashcard == null)
             return null;
-        roleRepository.save(request);
-        return roleRepository.findById(id);
+        flashcardRepository.save(request);
+        return flashcardRepository.findById(id);
     }
 
-    @DeleteMapping(path = "/roles/{id}")
-    String deleteRole(@PathVariable int id){
+    @DeleteMapping(path = "/flashcards/{id}")
+    String deleteFlashcard(@PathVariable int id){
 
         // Check if there is an object depending on user and then remove the dependency
-        User user = userRepository.findByRoleId(id);
-        user.setRole(null);
+        User user = userRepository.findByFlashcard_Id(id);
+        user.setFlashcard(null);
         userRepository.save(user);
 
         // delete the laptop if the changes have not been reflected by the above statement
-        roleRepository.deleteById(id);
+        flashcardRepository.deleteById(id);
         return success;
     }
 }

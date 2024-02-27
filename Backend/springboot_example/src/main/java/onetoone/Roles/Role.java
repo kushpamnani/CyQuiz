@@ -1,4 +1,4 @@
-package onetoone.Laptops;
+package onetoone.Roles;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
