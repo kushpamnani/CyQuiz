@@ -33,13 +33,13 @@ public class MainActivity extends AppCompatActivity {
     private Button Back;
     private Button Save;
     private Button Next;
-    private String SaveUrl;
+    private String BaseUrl;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SaveUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/FlashCard";
+        BaseUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/FlashCard/";
         answer = findViewById(R.id.Correct);
         Wrong_1 = findViewById(R.id.Wrong_1);
         Wrong_2 = findViewById(R.id.Wrong_2);
@@ -52,13 +52,13 @@ public class MainActivity extends AppCompatActivity {
         Save = findViewById(R.id.Save);
         Card_Number_int = 1;
         Card_Number.setText("1");
-        makeJsonObjReq(SaveUrl);
+        makeJsonObjReq(BaseUrl+'1');
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Card_Number_int++;
                 Card_Number.setText(Integer.toString(Card_Number_int));
-                //todo pull new data from server
+                makeJsonObjReq(BaseUrl+Card_Number.getText());
             }
         });
         Back.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Card_Number_int = Math.max(1,Card_Number_int-1);
                 Card_Number.setText(Integer.toString(Card_Number_int));
-                //todo pull new data from server
+                makeJsonObjReq(BaseUrl+Card_Number.getText());
             }
         });
         Save.setOnClickListener(new View.OnClickListener() {
