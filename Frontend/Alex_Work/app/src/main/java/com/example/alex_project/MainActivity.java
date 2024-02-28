@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button Save;
     private Button Next;
     private String BaseUrl;
+    private JSONObject FlashCard;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         Save = findViewById(R.id.Save);
         Card_Number_int = 1;
         Card_Number.setText("1");
+        FlashCard = new JSONObject();
         makeJsonObjReq(BaseUrl+'1');
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,13 +69,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Card_Number_int = Math.max(1,Card_Number_int-1);
                 Card_Number.setText(Integer.toString(Card_Number_int));
+                // if there is time can change this to use card_number_int so it all updates at once
                 makeJsonObjReq(BaseUrl+Card_Number.getText());
             }
         });
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // todo send data to server
+                try {
+                    FlashCard.put("CardNumber",Card_Number.getText());
+                    FlashCard.put("Question",Question.getText());
+                    FlashCard.put("Answer",answer.getText());
+                    FlashCard.put("Wrong_1",Wrong_1.getText());
+                    FlashCard.put("Wrong_2",Wrong_2.getText());
+                    FlashCard.put("Wrong_3",Wrong_3.getText());
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                makeJsonObjPost(BaseUrl+"Save/"+Card_Number.getText());
             }
         });
         Home.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 slot++;
                 i=0;
                 parsed="";
+                x++;
             }
             x++;
         }
@@ -134,6 +149,43 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("Volley Response", response.toString());
                         Json_Parse(response);
 
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    private void makeJsonObjPost(String url) {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                FlashCard,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
                     }
                 },
                 new Response.ErrorListener() {
