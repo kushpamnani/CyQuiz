@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -25,7 +26,9 @@ public class AdminActivity extends AppCompatActivity {
     private TextView User_name;
     private TextView Banned_list;
     private Button Ban;
-    private String url;
+    private String ReqUrl;
+    private String PostUrl;
+    private JSONObject Ban_Post;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,14 +37,19 @@ public class AdminActivity extends AppCompatActivity {
         User_name = findViewById(R.id.Ban);
         Banned_list = findViewById(R.id.Banned_List);
         Ban = findViewById(R.id.Ban_button);
-        url ="https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Ban_List";
-        makeJsonObjReq(url);
+        ReqUrl ="https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Ban_List";
+        PostUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Ban";
+        makeJsonObjReq(ReqUrl);
         Ban.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //todo
-                // Add Username to ban list and refresh banned list
+                Ban_Post = new JSONObject();
+                try {
+                    Ban_Post.put("User",User_name.toString());
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                makeJsonObjPost(PostUrl);
             }
         });
 
@@ -106,4 +114,44 @@ public class AdminActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+
+    private void makeJsonObjPost(String url) {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                Ban_Post,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        Banned_list.setText(Json_Parse(response));
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
 }
+
