@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import onetoone.Teachers.Teacher;
+import onetoone.User_Classroom_JoinTable.Classroom_registrations;
 import onetoone.Users.User;
 
 import java.util.Set;
@@ -19,10 +20,10 @@ public class Classroom {
     @ManyToOne
     @JoinColumn(name="teacher_id")
     private Teacher teacher;
-    // SET MANY TO MANY RELATION ??
+
     @OneToMany(mappedBy="classroom")
     @JsonIgnore
-    private Set<User> studentList;
+    private Set<Classroom_registrations> studentRegistrations;
 
 
     public Classroom(String name, String code) {
@@ -67,11 +68,11 @@ public class Classroom {
         this.teacher = teacher;
     }
 
-    public Set<User> getStudentList() {
-        return studentList;
+    public Set<Classroom_registrations> getStudentRegistrations() {
+        return studentRegistrations;
     }
 
-    public void setStudentList(Set<User> studentList) {
-        this.studentList = studentList;
+    public void setStudentRegistrations(Set<Classroom_registrations> studentRegistrations) {
+        this.studentRegistrations = studentRegistrations;
     }
 }

@@ -1,8 +1,10 @@
 package onetoone.Users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import onetoone.Classrooms.Classroom;
+import onetoone.User_Classroom_JoinTable.Classroom_registrations;
 
 import java.util.Set;
 
@@ -24,10 +26,9 @@ public class User {
     private int id;
     private String name;
     private String password;
-    // SET MANY TO MANY RELATION & make SET ??
-    @ManyToOne
-    @JoinColumn(name="classroom_id")
-    private Classroom classroom;
+    @OneToMany(mappedBy="student")
+    @JsonIgnore
+    private Set<Classroom_registrations> classroomRegistrations;
     private boolean ifActive;
 
     /*
@@ -73,11 +74,13 @@ public class User {
         this.password = password;
     }
 
-    public Classroom getClassroom(){
-        return classroom;
+    public Set<Classroom_registrations> getClassroomRegistrations() {
+        return classroomRegistrations;
     }
 
-    public void setClassroom(Classroom classroom) { this.classroom = classroom; }
+    public void setClassroomRegistrations(Set<Classroom_registrations> classroomRegistrations) {
+        this.classroomRegistrations = classroomRegistrations;
+    }
 
     public boolean getIsActive(){
         return ifActive;
