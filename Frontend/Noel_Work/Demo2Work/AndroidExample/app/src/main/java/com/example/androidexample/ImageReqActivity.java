@@ -19,7 +19,7 @@ public class ImageReqActivity extends AppCompatActivity {
     private Button btnImageReq;
     private ImageView imageView;
 
-    public static final String URL_IMAGE = "https://i.ytimg.com/vi/bPypk4CYCJI/hqdefault.jpg";
+    public static final String URL_IMAGE = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Iowa_State_Cyclones_logo.svg/2560px-Iowa_State_Cyclones_logo.svg.png";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
