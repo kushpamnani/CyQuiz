@@ -10,7 +10,7 @@ public class Flashcard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String question;
     private String answer;
     private String option1;
@@ -29,11 +29,11 @@ public class Flashcard {
     }
 
     // Getters and setters
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -76,4 +76,6 @@ public class Flashcard {
     public void setOption3(String option3) {
         this.option3 = option3;
     }
+
+
 }
