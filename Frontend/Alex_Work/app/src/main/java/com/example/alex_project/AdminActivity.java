@@ -1,6 +1,7 @@
 package com.example.alex_project;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,28 +18,38 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.json.JSONObject;
 
 
 public class AdminActivity extends AppCompatActivity {
-    private TextView Title;
     private TextView User_name;
     private TextView Banned_list;
+    private TextView Save_Check;
     private Button Ban;
+    private Button Unban;
+    private Button Home;
     private String ReqUrl;
-    private String PostUrl;
+    private String BanUrl;
+    private String UnbanUrl;
     private JSONObject Ban_Post;
+    private Date currentTime;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        Title = findViewById(R.id.Title);
         User_name = findViewById(R.id.Ban);
         Banned_list = findViewById(R.id.Banned_List);
         Ban = findViewById(R.id.Ban_button);
+        Unban = findViewById(R.id.Unban);
+        Home = findViewById(R.id.Home);
+        Save_Check = findViewById(R.id.Save_check);
         ReqUrl ="https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Ban_List";
-        PostUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Ban";
+        BanUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Ban";
+        UnbanUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Unban";
+
         makeJsonObjReq(ReqUrl);
         Ban.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +60,28 @@ public class AdminActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-                makeJsonObjPost(PostUrl);
+                makeJsonObjPost(BanUrl);
+
+            }
+        });
+        Unban.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Ban_Post = new JSONObject();
+                try {
+                    Ban_Post.put("User",User_name.toString());
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                makeJsonObjPost(UnbanUrl);
+
+            }
+        });
+        Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent test = new Intent(AdminActivity.this, MainActivity.class);
+                startActivity(test);
             }
         });
 
@@ -124,7 +156,8 @@ public class AdminActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Volley Response", response.toString());
-                        Banned_list.setText(Json_Parse(response));
+                        currentTime = Calendar.getInstance().getTime();
+                        Save_Check.setText(Json_Parse(response)+currentTime.toString());
                     }
                 },
                 new Response.ErrorListener() {
@@ -154,4 +187,5 @@ public class AdminActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 }
+
 

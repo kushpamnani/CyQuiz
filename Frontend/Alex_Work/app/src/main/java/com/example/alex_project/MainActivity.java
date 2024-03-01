@@ -19,6 +19,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView Wrong_3;
     private TextView Question;
     private TextView Card_Number;
+    private TextView Save_Check;
     private int Card_Number_int;
     private Button Home;
     private Button Back;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private Button Next;
     private String BaseUrl;
     private JSONObject FlashCard;
+    private Date currentTime;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Wrong_2 = findViewById(R.id.Wrong_2);
         Wrong_3 = findViewById(R.id.Wrong_3);
         Question = findViewById(R.id.Question);
+        Save_Check = findViewById(R.id.Save_Check);
         Card_Number = findViewById(R.id.Card_number);
         Home = findViewById(R.id.Home);
         Back = findViewById(R.id.Prev_Card);
@@ -186,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Volley Response", response.toString());
+                        currentTime = Calendar.getInstance().getTime();
+                        Save_Check.setText("Save Successful "+currentTime.toString());
                     }
                 },
                 new Response.ErrorListener() {
