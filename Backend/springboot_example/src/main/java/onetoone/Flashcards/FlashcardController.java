@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import onetoone.Users.User;
@@ -26,10 +25,6 @@ public class FlashcardController {
 
     @Autowired
     FlashcardRepository flashcardRepository;
-
-    @Autowired
-    flashcardRepository flashcardRepository;
-
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
@@ -52,7 +47,7 @@ public class FlashcardController {
     }
 
     @PutMapping(path = "/flashcards/{id}")
-    Flashcard updateFlashcard(@PathVariable int id, @RequestBody Flashcard request){
+    Flashcard updateFlashcard(@PathVariable int id, Flashcard request){
         Flashcard flashcard = flashcardRepository.findById(id);
         if(flashcard == null)
             return null;
@@ -63,10 +58,6 @@ public class FlashcardController {
     @DeleteMapping(path = "/flashcards/{id}")
     String deleteFlashcard(@PathVariable int id){
 
-        // Check if there is an object depending on user and then remove the dependency
-        User user = userRepository.findByFlashcard_Id(id);
-        user.setFlashcard(null);
-        userRepository.save(user);
 
         // delete the laptop if the changes have not been reflected by the above statement
         flashcardRepository.deleteById(id);

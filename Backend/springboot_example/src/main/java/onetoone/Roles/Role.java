@@ -8,7 +8,7 @@ import jakarta.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import onetoone.Users.User;
+//import onetoone.Users.User;
 
 /**
  *
@@ -24,23 +24,23 @@ public class Role {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int roleId;
+    private int id;
     private String roleName;
 
     /*
      * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
      * @JsonIgnore is to assure that there is no infinite loop while returning either user/laptop objects (laptop->user->laptop->...)
      */
-    @OneToOne
-    @JsonIgnore
-    private User user;
+//    @OneToOne
+//    @JsonIgnore
+//    private User user;
 
-    public int getRoleId() {
-        return roleId;
+    public int getId() {
+        return id;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getRoleName() {
@@ -51,15 +51,13 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public Role(int roleId, String roleName) {
-        this.roleId = roleId;
+    public Role(int id, String roleName) {
+        this.id = id;
         this.roleName = roleName;
     }
 
     public Role() {
     }
-
-    // =============================== Getters and Setters for each field ================================== //
 
 
 

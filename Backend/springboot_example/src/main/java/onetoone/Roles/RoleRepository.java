@@ -2,15 +2,10 @@ package onetoone.Roles;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.Optional;
 
-/**
- *
- * @author Vivek Bengre
- *
- */
-
-public interface RoleRepository extends JpaRepository<Role, Long> {
-    Role findById(int id);
+public interface RoleRepository extends JpaRepository<Role, Integer> {
+    Optional<Role> findById(int id); // Correct return type
 
     @Transactional
     void deleteById(int id);

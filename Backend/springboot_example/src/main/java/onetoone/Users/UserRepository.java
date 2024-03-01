@@ -1,19 +1,11 @@
 package onetoone.Users;
 
+import onetoone.Roles.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
-/**
- * 
- * @author Vivek Bengre
- * 
- */ 
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    
-    User findById(int id);
-
-    void deleteById(int id);
-
-    User findByRoleId(int id);
+    // Method to find users by role's ID
+    //List<User> findByRole_Id(Integer roleId); // Assuming the attribute in User is named 'role'
 }
