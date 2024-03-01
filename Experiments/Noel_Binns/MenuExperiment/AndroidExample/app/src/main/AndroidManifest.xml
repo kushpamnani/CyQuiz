@@ -19,6 +19,9 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
+            android:name=".ClassroomMain"
+            android:exported="false" />
+        <activity
             android:name=".MainMenuTest"
             android:exported="false" />
         <activity
