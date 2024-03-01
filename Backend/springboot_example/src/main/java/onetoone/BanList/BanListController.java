@@ -3,6 +3,12 @@ package onetoone.BanList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 import java.util.Optional;
 
@@ -23,10 +29,16 @@ public class BanListController {
         return ResponseEntity.ok(savedBanList);
     }
 
-    @GetMapping("/{userName}")
-    public ResponseEntity<BanList> getBanListByUserName(@PathVariable String userName) {
-        Optional<BanList> banList = Optional.ofNullable(banListRepository.findByUserName(userName));
-        return banList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/all")
+    public ResponseEntity<Set<String>> getAllBannedUsers() {
+        List<BanList> allBanLists = banListRepository.findAll();
+        Set<String> allBannedUsers = allBanLists.stream()
+                .map(BanList::getBannedUsers) // Assuming getBannedUsers returns the comma-separated String
+                .filter(Objects::nonNull)
+                .flatMap(bannedUsers -> Arrays.stream(bannedUsers.split(",")))
+                .collect(Collectors.toSet()); // Using a Set to avoid duplicates
+
+        return ResponseEntity.ok(allBannedUsers);
     }
 
     @PutMapping("/add/{userName}")
