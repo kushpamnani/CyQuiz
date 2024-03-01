@@ -30,10 +30,13 @@ public class JsonObjReqActivity extends AppCompatActivity {
 
     private TextView testText;
 
-    private static final String URL_JSON_OBJECT = "https://87c2ba07-6f71-4b03-adcb-747b9cb5798c.mock.pstmn.io/PostTester/";
-   // private static final String URL_JSON_OBJECT = "http://coms-309-031.class.las.iastate.edu:8080/users";
-    //private static final String URL_JSON_OBJECT = "http://coms-309-031.class.las.iastate.edu:8080/teachers";
-   // private static final String URL_JSON_OBJECT = "http://coms-309-031.class.las.iastate.edu:8080/teachers/9/add_classroom";
+    //private static final String URL_JSON_OBJECT = "https://87c2ba07-6f71-4b03-adcb-747b9cb5798c.mock.pstmn.io/PostTester/";
+    //private static final String URL_JSON_OBJECT = "https://bb1bfe69-3299-49d4-8006-e8e24e5faf63.mock.pstmn.io/PostTest/";
+    private static final String URL_JSON_OBJECT = "https://bb1bfe69-3299-49d4-8006-e8e24e5faf63.mock.pstmn.io/PutTest/";
+
+    //private static final String URL_JSON_OBJECT = "http://coms-309-031.class.las.iastate.edu:8080/users";
+   // private static final String URL_JSON_OBJECT = "http://coms-309-031.class.las.iastate.edu:8080/teachers";
+  // private static final String URL_JSON_OBJECT = "http://coms-309-031.class.las.iastate.edu:8080/users/61/classrooms/24";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +52,8 @@ public class JsonObjReqActivity extends AppCompatActivity {
 
                 try{
                    TestLog = new JSONObject();
-                    TestLog.put("name", "Test Classroom");
-                    //TestLog.put("password", "password");
+                    TestLog.put("name", "Noel Binns");
+                    TestLog.put("password", "password1");
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -65,7 +68,7 @@ public class JsonObjReqActivity extends AppCompatActivity {
     private void makeJsonObjReq() {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
 
-                Request.Method.POST,
+                Request.Method.PUT,
                 URL_JSON_OBJECT,
                 TestLog,
                  // Pass null as the request body since it's a GET request
