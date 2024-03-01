@@ -5,16 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import onetoone.Laptops.Laptop;
-import onetoone.Laptops.LaptopRepository;
+import onetoone.Roles.Role;
+import onetoone.Roles.RoleRepository;
 import onetoone.Users.User;
 import onetoone.Users.UserRepository;
-
-/**
- * 
- * @author Vivek Bengre
- * 
- */ 
 
 @SpringBootApplication
 class Main {
@@ -23,31 +17,33 @@ class Main {
         SpringApplication.run(Main.class, args);
     }
 
-    // Create 3 users with their machines
-    /**
-     * 
-     * @param userRepository repository for the User entity
-     * @param laptopRepository repository for the Laptop entity
-     * Creates a commandLine runner to enter dummy data into the database
-     * As mentioned in User.java just associating the Laptop object with the User will save it into the database because of the CascadeType
-     */
-    @Bean
-    CommandLineRunner initUser(UserRepository userRepository, LaptopRepository laptopRepository) {
-        return args -> {
-            User user1 = new User("John", "john@somemail.com");
-            User user2 = new User("Jane", "jane@somemail.com");
-            User user3 = new User("Justin", "justin@somemail.com");
-            Laptop laptop1 = new Laptop( 2.5, 4, 8, "Lenovo", 300);
-            Laptop laptop2 = new Laptop( 4.1, 8, 16, "Hp", 800);
-            Laptop laptop3 = new Laptop( 3.5, 32, 32, "Dell", 2300);  
-            user1.setLaptop(laptop1);
-            user2.setLaptop(laptop2);
-            user3.setLaptop(laptop3);            
-            userRepository.save(user1);
-            userRepository.save(user2);
-            userRepository.save(user3);
-
-        };
-    }
-
+//    @Bean
+//    CommandLineRunner initUser(UserRepository userRepository, RoleRepository roleRepository) {
+//        return args -> {
+//            // Create roles
+//            Role role1 = new Role(1, "Admin");
+//            Role role2 = new Role(2, "User");
+//            Role role3 = new Role(3, "Guest");
+//
+//            // Save roles to the repository
+//            roleRepository.save(role1);
+//            roleRepository.save(role2);
+//            roleRepository.save(role3);
+//
+//            // Create users and assign roles
+//            User user1 = new User("John", "john@somemail.com");
+//            //user1.setRole(role1);
+//
+//            User user2 = new User("Jane", "jane@somemail.com");
+//            //user2.setRole(role2);
+//
+//            User user3 = new User("Justin", "justin@somemail.com");
+//            //user3.setRole(role3);
+//
+//            // Save users to the repository
+//            userRepository.save(user1);
+//            userRepository.save(user2);
+//            userRepository.save(user3);
+//        };
+//    }
 }
