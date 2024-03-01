@@ -49,11 +49,11 @@ public class Classroom_registrationsController {
     }
 
     @PostMapping(path = "/classroom_registrations")
-    String createClassroom_registration(@RequestBody Classroom_registrations classroom_registration){
+    Classroom_registrations createClassroom_registration(@RequestBody Classroom_registrations classroom_registration){
         if (classroom_registration == null)
-            return failure;
+            return null;
         classroom_registrationsRepository.save(classroom_registration);
-        return success;
+        return classroom_registration;
     }
 
     /* not safe to update */

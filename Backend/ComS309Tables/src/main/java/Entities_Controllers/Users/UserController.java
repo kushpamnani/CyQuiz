@@ -2,8 +2,10 @@ package Entities_Controllers.Users;
 
 import java.util.List;
 
+import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Classrooms.ClassroomRepository;
 import Entities_Controllers.Teachers.TeacherRepository;
+import Entities_Controllers.User_Classroom_JoinTable.Classroom_registrations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,11 +47,11 @@ public class UserController {
     }
 
     @PostMapping(path = "/users")
-    String createUser(@RequestBody User user){
-        if (user == null)
-            return failure;
+    <T> T createUser(@RequestBody User user){
+        if (user == null) // || (userRepository.findByName(user.getName()) != null)
+            return (T) failure;
         userRepository.save(user);
-        return success;
+        return (T) user;
     }
 
     /* not safe to update */
@@ -75,6 +77,22 @@ public class UserController {
 
         userRepository.save(request);
         return userRepository.findById(id);
+    }
+
+    @PutMapping("/users/{userId}/classrooms/{classroomId}")
+    String assignUserToClassroom(@PathVariable int userId, @PathVariable int classroomId) {
+        User user = userRepository.findById(userId);
+        Classroom classroom = classroomRepository.findById(classroomId);
+        if(user == null || classroom == null)
+            return failure;
+
+        Classroom_registrations cr = new Classroom_registrations(user, classroom);
+        user.addClassroomRegistration(cr);
+        classroom.addStudentRegistration(cr);
+
+        userRepository.save(user);
+        classroomRepository.save(classroom);
+        return success;
     }
 
 //    @PutMapping("/users/{userId}/laptops/{laptopId}")

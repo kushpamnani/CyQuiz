@@ -1,6 +1,7 @@
 package Entities_Controllers.Teachers;
 
 import java.util.List;
+import java.util.Random;
 
 import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Classrooms.ClassroomRepository;
@@ -32,6 +33,8 @@ public class TeacherController {
     @Autowired
     TeacherRepository teacherRepository;
 
+    private Random rand = new Random();
+
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
 
@@ -46,21 +49,30 @@ public class TeacherController {
     }
 
     @PostMapping(path = "/teachers")
-    String createTeacher(@RequestBody Teacher teacher){
-        if (teacher == null)
-            return failure;
+    <T> T createTeacher(@RequestBody Teacher teacher){
+        if (teacher == null) // || (teacherRepository.findByName(teacher.getName()) != null)
+            return (T) failure;
         teacherRepository.save(teacher);
-        return success;
+        return (T) teacher;
     }
 
     @PutMapping("/teachers/{id}/add_classroom")
     Teacher addClassroom(@PathVariable int id, @RequestBody Classroom classroom) {
         Teacher teacher = teacherRepository.findById(id);
-
+        if (classroom == null) {
+            throw new RuntimeException("no classroom sent in json body");
+        }
         if(teacher == null) {
-            throw new RuntimeException("classroom id does not exist");
+            throw new RuntimeException("teacher id does not exist");
         }
 
+        int tempCode;
+        do {
+            tempCode = rand.nextInt(1000,10000);
+        } while(classroomRepository.findByCode(tempCode) != null);
+        classroom.setCode(tempCode);
+
+        classroom.setTeacher(teacher);
         teacher.addClassroom(classroom);
         teacherRepository.save(teacher);
         return teacherRepository.findById(id);

@@ -1,6 +1,7 @@
 package Entities_Controllers.Classrooms;
 
 import java.util.List;
+import java.util.Random;
 
 import Entities_Controllers.Teachers.Teacher;
 import Entities_Controllers.Teachers.TeacherRepository;
@@ -27,19 +28,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClassroomController {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    ClassroomRepository classroomRepository;
+    private ClassroomRepository classroomRepository;
 
     @Autowired
-    TeacherRepository teacherRepository;
+    private TeacherRepository teacherRepository;
 
     @Autowired
     Classroom_registrationsRepository classroom_registrationsRepository;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
+
+    private Random rand = new Random();
 
     @GetMapping(path = "/classrooms")
     List<Classroom> getAllClassrooms(){
@@ -51,12 +54,20 @@ public class ClassroomController {
         return classroomRepository.findById(id);
     }
 
+    @GetMapping(path = "/classrooms/code/{code}")
+    Classroom getClassroomByCode(@PathVariable int code) { return classroomRepository.findByCode(code); }
+
     @PostMapping(path = "/classrooms")
-    String createClassroom(@RequestBody Classroom classroom){
+    Classroom createClassroom(@RequestBody Classroom classroom){
         if (classroom == null)
-            return failure;
+            return null;
+        int tempCode;
+        do {
+            tempCode = rand.nextInt(1000,10000);
+        } while(getClassroomByCode(tempCode) != null);
+        classroom.setCode(tempCode);
         classroomRepository.save(classroom);
-        return success;
+        return classroom;
     }
 
     /* not safe to update */
@@ -85,13 +96,18 @@ public class ClassroomController {
     }
 
     @PutMapping("/classrooms/{classroomId}/users/{userId}")
-    String assignClassroomToUser(@PathVariable int classroomId, @PathVariable int userId){
+    String assignClassroomToUser(@PathVariable int classroomId, @PathVariable int userId) {
         User user = userRepository.findById(userId);
         Classroom classroom = classroomRepository.findById(classroomId);
         if(user == null || classroom == null)
             return failure;
-        Classroom_registrations cr = user.addClassroomRegistration(classroom);
-        classroom_registrationsRepository.save(cr);
+
+        Classroom_registrations cr = new Classroom_registrations(user, classroom);
+        user.addClassroomRegistration(cr);
+        classroom.addStudentRegistration(cr);
+
+        userRepository.save(user);
+        classroomRepository.save(classroom);
         return success;
     }
 

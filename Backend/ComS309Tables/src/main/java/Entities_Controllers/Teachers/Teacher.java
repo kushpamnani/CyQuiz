@@ -37,6 +37,7 @@ public class Teacher {
     }
 
     public Teacher() {
+        this.ifActive = true;
     }
 
     // =============================== Getters and Setters for each field ================================== //

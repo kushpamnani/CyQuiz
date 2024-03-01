@@ -3,11 +3,14 @@ package Entities_Controllers.Users;
 import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.User_Classroom_JoinTable.Classroom_registrationsRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import Entities_Controllers.User_Classroom_JoinTable.Classroom_registrations;
 
 import java.util.Set;
+
+import static jakarta.persistence.CascadeType.*;
 
 /**
  * 
@@ -27,8 +30,8 @@ public class User {
     private int id;
     private String name;
     private String password;
-    @OneToMany(mappedBy="student", cascade = CascadeType.ALL)
-    @JsonIgnore
+    @JsonIgnoreProperties("student")
+    @OneToMany(mappedBy="student", cascade = {MERGE, REMOVE, REFRESH, DETACH})
     private Set<Classroom_registrations> classroomRegistrations;
     private boolean ifActive;
 
@@ -47,6 +50,7 @@ public class User {
     }
 
     public User() {
+        this.ifActive = true;
     }
 
     // =============================== Getters and Setters for each field ================================== //
@@ -82,10 +86,8 @@ public class User {
     public void setClassroomRegistrations(Set<Classroom_registrations> classroomRegistrations) {
         this.classroomRegistrations = classroomRegistrations;
     }
-    public Classroom_registrations addClassroomRegistration(Classroom classroom) {
-        Classroom_registrations cr = new Classroom_registrations(this, classroom);
-        this.classroomRegistrations.add(cr);
-        return cr;
+    public void addClassroomRegistration(Classroom_registrations classroom_registration) {
+        this.classroomRegistrations.add(classroom_registration);
     }
 
     public boolean getIsActive(){

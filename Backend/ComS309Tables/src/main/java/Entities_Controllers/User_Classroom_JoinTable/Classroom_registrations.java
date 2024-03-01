@@ -10,7 +10,7 @@ public class Classroom_registrations {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @JsonIgnoreProperties("classroomRegistrations")
+    @JsonIgnoreProperties({"classroomRegistrations", "password"})
     @ManyToOne
     @JoinColumn(name = "student_id")
     User student;
