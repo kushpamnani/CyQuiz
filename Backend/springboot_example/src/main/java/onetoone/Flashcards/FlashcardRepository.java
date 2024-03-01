@@ -10,8 +10,5 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 public interface FlashcardRepository extends JpaRepository<Flashcard, Long> {
-    Flashcard findById(int id);
 
-    @Transactional
-    void deleteById(int id);
 }

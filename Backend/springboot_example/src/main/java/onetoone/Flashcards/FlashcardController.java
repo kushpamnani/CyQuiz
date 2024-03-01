@@ -1,66 +1,59 @@
 package onetoone.Flashcards;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import java.util.Optional;
 
-import onetoone.Users.User;
-import onetoone.Users.UserRepository;
-
-/**
- *
- * @author Vivek Bengre
- *
- */
 
 @RestController
 public class FlashcardController {
 
     @Autowired
-    FlashcardRepository flashcardRepository;
-    private String success = "{\"message\":\"success\"}";
-    private String failure = "{\"message\":\"failure\"}";
+    private FlashcardRepository flashcardRepository;
+
+    private final String success = "{\"message\":\"success\"}";
+    private final String failure = "{\"message\":\"failure\"}";
 
     @GetMapping(path = "/flashcards")
-    List<Flashcard> getAllFlashcards(){
+    public List<Flashcard> getAllFlashcards() {
         return flashcardRepository.findAll();
     }
 
     @GetMapping(path = "/flashcards/{id}")
-    Flashcard getFlashcardById(@PathVariable int id){
-        return flashcardRepository.findById(id);
+    public ResponseEntity<Flashcard> getFlashcardById(@PathVariable Long id) {
+        return flashcardRepository.findById(id)
+                .map(ResponseEntity::ok) // If flashcard is found, return it with 200 OK
+                .orElseGet(() -> ResponseEntity.notFound().build()); // If not found, return 404 Not Found
     }
 
     @PostMapping(path = "/flashcards")
-    String createFlashcard(Flashcard Flashcard){
-        if (Flashcard == null)
-            return failure;
-        flashcardRepository.save(Flashcard);
-        return success;
+    public ResponseEntity<String> createFlashcard(@RequestBody Flashcard flashcard) {
+        flashcardRepository.save(flashcard);
+        return ResponseEntity.ok(success);
     }
 
     @PutMapping(path = "/flashcards/{id}")
-    Flashcard updateFlashcard(@PathVariable int id, Flashcard request){
-        Flashcard flashcard = flashcardRepository.findById(id);
-        if(flashcard == null)
-            return null;
-        flashcardRepository.save(request);
-        return flashcardRepository.findById(id);
+    public ResponseEntity<Flashcard> updateFlashcard(@PathVariable Long id, @RequestBody Flashcard request) {
+        Optional<Flashcard> updatedFlashcard = flashcardRepository.findById(id)
+                .map(flashcard -> {
+                    // Update the necessary fields from the request
+                    // Example: flashcard.setQuestion(request.getQuestion());
+                    // Make sure to update other fields as well
+                    return flashcardRepository.save(flashcard);
+                });
+        return updatedFlashcard
+                .map(ResponseEntity::ok) // If update is successful, return the updated flashcard
+                .orElseGet(() -> ResponseEntity.notFound().build()); // If original flashcard not found, return 404
     }
 
     @DeleteMapping(path = "/flashcards/{id}")
-    String deleteFlashcard(@PathVariable int id){
-
-
-        // delete the laptop if the changes have not been reflected by the above statement
+    public ResponseEntity<String> deleteFlashcard(@PathVariable Long id) {
+        if (!flashcardRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
         flashcardRepository.deleteById(id);
-        return success;
+        return ResponseEntity.ok(success);
     }
 }
