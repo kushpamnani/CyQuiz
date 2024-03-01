@@ -38,15 +38,19 @@ public class FlashcardController {
     public ResponseEntity<Flashcard> updateFlashcard(@PathVariable Long id, @RequestBody Flashcard request) {
         Optional<Flashcard> updatedFlashcard = flashcardRepository.findById(id)
                 .map(flashcard -> {
-                    // Update the necessary fields from the request
-                    // Example: flashcard.setQuestion(request.getQuestion());
-                    // Make sure to update other fields as well
-                    return flashcardRepository.save(flashcard);
+                    flashcard.setQuestion(request.getQuestion()); // Updating the question
+                    flashcard.setAnswer(request.getAnswer()); // Updating the answer
+                    // Make sure to update other fields as needed
+                    flashcard.setOption1(request.getOption1());
+                    flashcard.setOption2(request.getOption2());
+                    flashcard.setOption3(request.getOption3());
+                    return flashcardRepository.save(flashcard); // Save the updated flashcard
                 });
         return updatedFlashcard
                 .map(ResponseEntity::ok) // If update is successful, return the updated flashcard
                 .orElseGet(() -> ResponseEntity.notFound().build()); // If original flashcard not found, return 404
     }
+
 
     @DeleteMapping(path = "/flashcards/{id}")
     public ResponseEntity<String> deleteFlashcard(@PathVariable Long id) {
