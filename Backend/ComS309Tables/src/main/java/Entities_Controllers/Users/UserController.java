@@ -53,7 +53,7 @@ public class UserController {
 
     @PostMapping(path = "/users")
     <T> T createUser(@RequestBody User user){
-        if (user == null) // || (userRepository.findByName(user.getName()) != null)
+        if (user == null || (userRepository.findByName(user.getName()) != null))
             return (T) failure;
         userRepository.save(user);
         return (T) user;

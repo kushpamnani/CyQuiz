@@ -50,7 +50,7 @@ public class TeacherController {
 
     @PostMapping(path = "/teachers")
     <T> T createTeacher(@RequestBody Teacher teacher){
-        if (teacher == null) // || (teacherRepository.findByName(teacher.getName()) != null)
+        if (teacher == null || (teacherRepository.findByName(teacher.getName()) != null))
             return (T) failure;
         teacherRepository.save(teacher);
         return (T) teacher;
