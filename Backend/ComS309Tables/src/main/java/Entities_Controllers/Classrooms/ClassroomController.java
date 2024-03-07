@@ -111,6 +111,22 @@ public class ClassroomController {
         return success;
     }
 
+    @PutMapping("/classrooms/{code}/users/{userId}")
+    String assignClassroomToUserFromCode(@PathVariable int code, @PathVariable int userId) {
+        User user = userRepository.findById(userId);
+        Classroom classroom = classroomRepository.findByCode(code);
+        if(user == null || classroom == null)
+            return failure;
+
+        Classroom_registrations cr = new Classroom_registrations(user, classroom);
+        user.addClassroomRegistration(cr);
+        classroom.addStudentRegistration(cr);
+
+        userRepository.save(user);
+        classroomRepository.save(classroom);
+        return success;
+    }
+
     @DeleteMapping(path = "/classrooms/{id}")
     String deleteClassroom(@PathVariable int id){
         if (classroomRepository.findById(id) == null) {

@@ -33,7 +33,7 @@ public class TeacherController {
     @Autowired
     TeacherRepository teacherRepository;
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";

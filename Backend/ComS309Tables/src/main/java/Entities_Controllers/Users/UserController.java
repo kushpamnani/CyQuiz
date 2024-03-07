@@ -113,6 +113,22 @@ public class UserController {
         return success;
     }
 
+    @PutMapping("/users/{userId}/classrooms/{code}")
+    String assignUserToClassroomFromCode(@PathVariable int userId, @PathVariable int code) {
+        User user = userRepository.findById(userId);
+        Classroom classroom = classroomRepository.findByCode(code);
+        if(user == null || classroom == null)
+            return failure;
+
+        Classroom_registrations cr = new Classroom_registrations(user, classroom);
+        user.addClassroomRegistration(cr);
+        classroom.addStudentRegistration(cr);
+
+        userRepository.save(user);
+        classroomRepository.save(classroom);
+        return success;
+    }
+
 //    @PutMapping("/users/{userId}/laptops/{laptopId}")
 //    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
 //        User user = userRepository.findById(userId);
