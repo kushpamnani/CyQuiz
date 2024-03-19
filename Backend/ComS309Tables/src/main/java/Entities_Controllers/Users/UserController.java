@@ -59,16 +59,6 @@ public class UserController {
         return (T) user;
     }
 
-    /* not safe to update */
-//    @PutMapping("/users/{id}")
-//    User updateUser(@PathVariable int id, @RequestBody User request){
-//        User user = userRepository.findById(id);
-//        if(user == null)
-//            return null;
-//        userRepository.save(request);
-//        return userRepository.findById(id);
-//    }
-
     @PutMapping("/users/{id}")
     User updateUser(@PathVariable int id, @RequestBody User request){
         User user = userRepository.findById(id);
