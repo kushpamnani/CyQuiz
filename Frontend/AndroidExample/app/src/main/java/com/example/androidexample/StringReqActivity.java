@@ -19,16 +19,21 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class StringReqActivity extends AppCompatActivity {
+public class StringReqActivity extends JsonObjReqActivity {
 
     private Button btnStringReq;
     private TextView msgResponse;
 
     private TextView TestText;
+
+    private TextView GetID;
+
+    private Button chipTeacher;
 
     private  boolean idTaken = false;
 
@@ -80,8 +85,8 @@ public class StringReqActivity extends AppCompatActivity {
 
 
    //private static final String URL_STRING_REQ = "https://bb1bfe69-3299-49d4-8006-e8e24e5faf63.mock.pstmn.io/GetTest2/";
-     // public static final String URL_STRING_REQ = "http://coms-309-031.class.las.iastate.edu:8080/users/61";
-       public static final String URL_STRING_REQ = "https://d34095c7-496f-4dc3-8497-9d514eef0c4c.mock.pstmn.io/ScanTest/";
+      public static final String URL_STRING_REQ = "http://coms-309-031.class.las.iastate.edu:8080";
+       //public static final String URL_STRING_REQ = "https://d34095c7-496f-4dc3-8497-9d514eef0c4c.mock.pstmn.io/ScanTest/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +97,8 @@ public class StringReqActivity extends AppCompatActivity {
         btnStringReq = (Button) findViewById(R.id.btnStringReq);
         msgResponse = (TextView) findViewById(R.id.msgResponse);
         TestText = (TextView) findViewById(R.id.textView2);
+        GetID = findViewById(R.id.IDGet);
+        chipTeacher = findViewById(R.id.teacherChip);
 
         btnStringReq.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +106,13 @@ public class StringReqActivity extends AppCompatActivity {
                 makeStringReq();
             }
         });
+        chipTeacher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chipTeacher.setActivated(!chipTeacher.isActivated());
+            }
+        });
+
     }
 
 
@@ -106,15 +120,22 @@ public class StringReqActivity extends AppCompatActivity {
      * Making string request
      **/
     private void makeStringReq() {
-
+    String TestUrl = URL_STRING_REQ;
+    if (chipTeacher.isActivated()){
+        TestUrl = TestUrl + "/teachers/";
+    }
+    else {
+        TestUrl = TestUrl + "/users/";
+    }
+    TestUrl = TestUrl + GetID.getText().toString();
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
-                URL_STRING_REQ,
+                TestUrl,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("Volley Response", response.toString());
-                        //msgResponse.setText(response.toString());
+                        Log.d("Volley Response", response);
+                        msgResponse.setText(response.toString());
 
                          HelperString = response.toString();
                          int length = HelperString.length();
@@ -126,7 +147,8 @@ public class StringReqActivity extends AppCompatActivity {
                         String ID = "";
                         String name = "";
                         String password = "";
-                        boolean bugfix = false;
+
+
                         for (int i = 0; i < length; i++){
                             if (!idTaken) {
                                 if (HelperString.charAt(i) == ':' || HelperString.charAt(i) == ',') {
@@ -219,23 +241,23 @@ public class StringReqActivity extends AppCompatActivity {
 
                         }
 
-//                         for (int i = 0; i < length; i++){
-//                             if (HelperString.charAt(i) == '\"') {
-//                                counter++;
-//                             }
-//                               else if (counter == 3) {
-//
-//
-//                                       Answer = Answer + HelperString.charAt(i);
-//
-//
-//                               }
-//                             if (counter == 4){
-//                                 counter = 0;
-//                             }
-//                         }
+                         for (int i = 0; i < length; i++){
+                             if (HelperString.charAt(i) == '\"') {
+                                counter++;
+                             }
+                               else if (counter == 3) {
 
-                        TestText.setText("ID is: " + ID + " name: " + name + " password: " + password + " class id1: " + classID1 + " class id2: " + classID2 + " class name: " + className + " class code: " + classCode + " Teacher ID: " + teacherID + " Teacher name: " + teacherName + " teacher is active: " + teacherIsActive + " Student is active: " + studentIsActive);
+
+                                       Answer = Answer + HelperString.charAt(i);
+
+
+                               }
+                             if (counter == 4){
+                                 counter = 0;
+                             }
+                         }
+
+                        TestText.setText("ID is: " + ID);
 
                     }
                 },
