@@ -6,6 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ *
+ * @author Dalton Clark
+ *
+ */
 public interface UserRepository extends JpaRepository<User, Long> {
     
     User findById(int id);

@@ -5,6 +5,11 @@ import jakarta.persistence.*;
 import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Users.User;
 
+/**
+ *
+ * @author Dalton Clark
+ *
+ */
 @Entity
 public class Classroom_registrations {
     @Id

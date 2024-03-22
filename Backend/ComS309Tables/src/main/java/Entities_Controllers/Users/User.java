@@ -14,10 +14,9 @@ import static jakarta.persistence.CascadeType.*;
 
 /**
  * 
- * @author Vivek Bengre
+ * @author Dalton Clark
  * 
  */
-
 @Entity
 public class User {
 
@@ -30,13 +29,6 @@ public class User {
     @OneToMany(mappedBy="student", cascade = {MERGE, REMOVE, REFRESH, DETACH})
     private Set<Classroom_registrations> classroomRegistrations;
     private boolean ifActive;
-
-    /*
-     * @OneToOne creates a relation between the current entity/table(Laptop) with the entity/table defined below it(User)
-     * cascade is responsible propagating all changes, even to children of the class Eg: changes made to laptop within a user object will be reflected
-     * in the database (more info : https://www.baeldung.com/jpa-cascade-types)
-     * @JoinColumn defines the ownership of the foreign key i.e. the user table will have a field called laptop_id
-     */
 
 
     public User(String name, String password) {

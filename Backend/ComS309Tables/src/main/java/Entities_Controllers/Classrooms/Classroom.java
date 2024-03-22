@@ -15,6 +15,11 @@ import java.util.Set;
 import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.CascadeType.DETACH;
 
+/**
+ *
+ * @author Dalton Clark
+ *
+ */
 @Entity
 public class Classroom {
 
