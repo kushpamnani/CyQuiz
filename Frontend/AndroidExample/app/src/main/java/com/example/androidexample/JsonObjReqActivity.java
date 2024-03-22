@@ -20,31 +20,73 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Area where users can be created or deleted, as well as updated
+ */
 public class JsonObjReqActivity extends AppCompatActivity {
 
+    /**
+    Sends json Objects
+     */
     private Button btnJsonObjReq;
+    /**
+    shows the message the server responds
+     */
     private TextView msgResponse;
 
+    /**
+    Json Object building base
+     */
     private JSONObject TestLog;
 
+    /**
+    test text var
+     */
     private TextView testText;
 
+    /**
+    user enters their name here
+     */
     private TextView NameGet;
 
+   /**
+   user enters their password here
+    */
     private TextView PassGet;
 
+    /**
+    button for submitting a put update
+     */
     private Button putButton;
 
+   /**
+   button to select adding a user
+    */
     private Button addUser;
 
+    /**
+    button to select adding a teacher
+     */
     private Button addTeacher;
 
+   /**
+   button to select adding a class
+    */
     private Button addClass;
 
+    /**
+     * place for user to ender their ID
+     */
     private TextView userID;
 
+    /**
+     * place for user to enter a classroom ID
+     */
     private TextView classID;
 
+    /**
+     * button to delete
+     */
     private Button deleteButton;
 
 
@@ -53,6 +95,9 @@ public class JsonObjReqActivity extends AppCompatActivity {
     //private static final String URL_JSON_OBJECT = "https://bb1bfe69-3299-49d4-8006-e8e24e5faf63.mock.pstmn.io/PostTest/";
     //private static final String URL_JSON_OBJECT = "https://bb1bfe69-3299-49d4-8006-e8e24e5faf63.mock.pstmn.io/DemoDelete/";
 
+    /**
+     * base URL string for the server
+     */
     private static final String URL_JSON_OBJECT = "http://coms-309-031.class.las.iastate.edu:8080";
     //private static final String URL_JSON_OBJECT = "http://coms-309-031.class.las.iastate.edu:8080/teachers/11/add_classroom";
    //private static final String URL_JSON_OBJECT = "http://coms-309-031.class.las.iastate.edu:8080/users/72/classrooms/25";
@@ -139,6 +184,10 @@ public class JsonObjReqActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * builds the URL that is necessary to complete the put action that the user would like
+     */
     private void makeJsonObjReqPut() {
         String baseURL = URL_JSON_OBJECT;
         if (addClass.isActivated() && addTeacher.isActivated()){
@@ -196,6 +245,10 @@ public class JsonObjReqActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+
+    /**
+     * builds the correct URL for the user to delete what they would like
+     */
     private void makeJsonObjReqDelete() {
         String baseURL = URL_JSON_OBJECT;
         if (addClass.isActivated()){
@@ -258,8 +311,9 @@ public class JsonObjReqActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
     /**
-     * Making json object request
+     * Builds the URL for a custom OBJ request
      */
+
     private void makeJsonObjReq() {
         String baseURL = URL_JSON_OBJECT;
         if (addTeacher.isActivated()){
