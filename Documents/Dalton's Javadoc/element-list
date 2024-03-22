@@ -1,8 +1,4 @@
-Entities_Controllers
-Entities_Controllers.BanList
 Entities_Controllers.Classrooms
-Entities_Controllers.Flashcards
 Entities_Controllers.Teachers
 Entities_Controllers.User_Classroom_JoinTable
 Entities_Controllers.Users
-onetoone.Roles
