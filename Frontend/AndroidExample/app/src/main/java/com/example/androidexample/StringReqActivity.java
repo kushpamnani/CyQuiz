@@ -24,6 +24,9 @@ import org.w3c.dom.Text;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * area where information is gotten via a GET
+ */
 public class StringReqActivity extends JsonObjReqActivity {
     /**
      * sends a string req
@@ -34,13 +37,21 @@ public class StringReqActivity extends JsonObjReqActivity {
      */
     private TextView msgResponse;
 
-
+    /**
+     * shows text, testing variable
+     */
     private TextView TestText;
-
+    /**
+     * gets the ID the user enters
+     */
     private TextView GetID;
-
+    /**
+     * selected if you are searching a teacher not a student
+     */
     private Button chipTeacher;
-
+    /**
+     * keeps track of if ID is taken
+     */
     private  boolean idTaken = false;
 
     private boolean nameTaken = false;

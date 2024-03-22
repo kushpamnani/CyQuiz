@@ -14,6 +14,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 
+/**
+ * returns an image via a link
+ */
 public class ImageReqActivity extends AppCompatActivity {
 
     private Button btnImageReq;

@@ -20,6 +20,9 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Area where users can be created or deleted, as well as updated
+ */
 public class JsonObjReqActivity extends AppCompatActivity {
 
     /**
