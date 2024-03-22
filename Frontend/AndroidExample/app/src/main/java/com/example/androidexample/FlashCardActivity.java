@@ -46,7 +46,10 @@ public class FlashCardActivity extends AppCompatActivity {
     private Date currentTime;
 
 
-
+    /**
+     * Initilizes ui and Gets the first Flash Card
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
@@ -135,6 +138,11 @@ public class FlashCardActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * Parses JSON Array
+     * @param response
+     */
     private void Json_Parse(JSONArray response){
         int x = 0;
         int i = -2;
@@ -188,6 +196,11 @@ public class FlashCardActivity extends AppCompatActivity {
         }
         Total_Cards = Current_Card;
     }
+
+    /**
+     * Gets Flash Card
+     * @param url
+     */
     private void makeJsonArrayReq(String url) {
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(
                 Request.Method.GET,
@@ -228,6 +241,10 @@ public class FlashCardActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 
+    /**
+     * Saves new FlashCard
+     * @param url
+     */
     private void makeJsonObjPost(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.POST,
@@ -267,6 +284,11 @@ public class FlashCardActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+
+    /**
+     * Deletes FlashCard
+     * @param url
+     */
     private void makeJsonObjDel(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.DELETE,
@@ -306,6 +328,11 @@ public class FlashCardActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+
+    /**
+     * Updates FlashCard
+     * @param url
+     */
     private void makeJsonObjSave(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.PUT,

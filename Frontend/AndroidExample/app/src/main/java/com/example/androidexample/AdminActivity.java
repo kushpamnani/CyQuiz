@@ -36,6 +36,11 @@ public class AdminActivity extends AppCompatActivity {
     private String UnbanUrl;
     private JSONObject Ban_Post;
     private Date currentTime;
+
+    /**
+     * Generates Ui and Gets ban list
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +91,12 @@ public class AdminActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * Parses Jason Object
+     * @param response
+     * @return
+     */
     private String Json_Parse(JSONObject response){
         int x = 0;
         int i = 0;
@@ -108,6 +119,10 @@ public class AdminActivity extends AppCompatActivity {
         return parsed;
     }
 
+    /**
+     * Request Ban List
+     * @param url
+     */
     private void makeJsonObjReq(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.GET,
@@ -147,6 +162,10 @@ public class AdminActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 
+    /**
+     * Ban A User
+     * @param url
+     */
     private void makeJsonObjPost(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.POST,
