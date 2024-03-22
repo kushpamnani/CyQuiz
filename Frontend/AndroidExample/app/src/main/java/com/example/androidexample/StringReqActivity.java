@@ -25,9 +25,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StringReqActivity extends JsonObjReqActivity {
-
+    /**
+     * sends a string req
+     */
     private Button btnStringReq;
+    /**
+     * shows what the server sent back
+     */
     private TextView msgResponse;
+
 
     private TextView TestText;
 
@@ -85,7 +91,10 @@ public class StringReqActivity extends JsonObjReqActivity {
 
 
    //private static final String URL_STRING_REQ = "https://bb1bfe69-3299-49d4-8006-e8e24e5faf63.mock.pstmn.io/GetTest2/";
-      public static final String URL_STRING_REQ = "http://coms-309-031.class.las.iastate.edu:8080";
+    /**
+     * the base URL for the server
+      */
+    public static final String URL_STRING_REQ = "http://coms-309-031.class.las.iastate.edu:8080";
        //public static final String URL_STRING_REQ = "https://d34095c7-496f-4dc3-8497-9d514eef0c4c.mock.pstmn.io/ScanTest/";
 
     @Override
@@ -292,6 +301,10 @@ public class StringReqActivity extends JsonObjReqActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
+    /**
+     * helper method to scan a string returned (will be fixed)
+
+     */
     public void classScanner() {
         int length = HelperString.length();
         int counter = 0;
