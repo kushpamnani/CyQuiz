@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity{
                 User = new JSONObject();
                 try {
                     User.put("name",name.getText());
-                    User.put("Password",pass.getText());
+                    User.put("password",pass.getText());
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
