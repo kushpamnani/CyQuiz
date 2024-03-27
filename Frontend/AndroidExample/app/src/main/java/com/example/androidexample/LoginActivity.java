@@ -14,15 +14,19 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity{
     private Button login, create;
-    private TextView name,pass;
+    private TextView name,pass,status;
+    JSONObject User;
 
 
     @Override
@@ -33,7 +37,8 @@ public class LoginActivity extends AppCompatActivity{
         create = findViewById(R.id.btnCreateUser);
         name = findViewById(R.id.User_Name);
         pass = findViewById(R.id.Password);
-        String url = "bs";
+        status = findViewById(R.id.loginStatus);
+        String url = "https://58f67216-988e-4758-8b17-dcef9fda4611.mock.pstmn.io/login";
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,27 +49,45 @@ public class LoginActivity extends AppCompatActivity{
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                User = new JSONObject();
+                try {
+                    User.put("name",name.getText());
+                    User.put("Password",pass.getText());
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
                 CreateUserReq(url);
             }
         });
     }
     private void LoginReq(String url) {
-        JsonArrayRequest jsonObjReq = new JsonArrayRequest(
-                Request.Method.GET,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.POST,
                 url,
                 null, // Pass null as the request body since it's a GET request
-                new Response.Listener<JSONArray>() {
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
                         Log.d("Volley Response", response.toString());
-
-
+                        try {
+                            if(response.getBoolean("Success")){
+                                // if login successful
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            }
+                            else{
+                                status.setText("Incorect Username or Passowrd");
+                            }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley Error", error.toString());
+                        status.setText(error.toString());
                     }
                 }
         ) {
@@ -88,21 +111,22 @@ public class LoginActivity extends AppCompatActivity{
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
     private void CreateUserReq(String url) {
-        JsonArrayRequest jsonObjReq = new JsonArrayRequest(
-                Request.Method.GET,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.POST,
                 url,
-                null, // Pass null as the request body since it's a GET request
-                new Response.Listener<JSONArray>() {
+                User,
+                new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(JSONObject response) {
+                        status.setText("User Created");
                         Log.d("Volley Response", response.toString());
-
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("Volley Error", error.toString());
+                        status.setText(error.toString());
                     }
                 }
         ) {

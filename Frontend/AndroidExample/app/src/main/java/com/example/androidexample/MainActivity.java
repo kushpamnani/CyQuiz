@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn;
+    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgBtn = findViewById(R.id.btnImageRequest);
         flashCardBtn = findViewById(R.id.btnFlashCard);
         adminBtn = findViewById(R.id.btnAdmin);
+        signout = findViewById(R.id.btnSIgnOut);
 
         /* button click listeners */
         strBtn.setOnClickListener(this);
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imgBtn.setOnClickListener(this);
         flashCardBtn.setOnClickListener(this);
         adminBtn.setOnClickListener(this);
+        signout.setOnClickListener(this);
     }
 
     @Override
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, FlashCardActivity.class));
         } else if (id == R.id.btnAdmin) {
             startActivity(new Intent(MainActivity.this, AdminActivity.class));
+        } else if (id == R.id.btnSIgnOut) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }
 
     }
