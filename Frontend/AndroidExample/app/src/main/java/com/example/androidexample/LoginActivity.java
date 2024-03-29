@@ -38,11 +38,13 @@ public class LoginActivity extends AppCompatActivity{
         name = findViewById(R.id.User_Name);
         pass = findViewById(R.id.Password);
         status = findViewById(R.id.loginStatus);
-        String url = "https://58f67216-988e-4758-8b17-dcef9fda4611.mock.pstmn.io";
+        String login_check = "http://coms-309-031.class.las.iastate.edu:8080/users";
+        String url_create = "http://coms-309-031.class.las.iastate.edu:8080/";
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginReq(url+"/login");
+                LoginReq(login_check);
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
         });
@@ -57,7 +59,7 @@ public class LoginActivity extends AppCompatActivity{
                     throw new RuntimeException(e);
                 }
 
-                CreateUserReq(url+"/create");
+                CreateUserReq(url_create+"/create");
             }
         });
     }
