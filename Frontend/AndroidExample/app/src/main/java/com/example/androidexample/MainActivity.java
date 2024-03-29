@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.androidexample.Map.MapActivity;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout;
+    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout, map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         flashCardBtn = findViewById(R.id.btnFlashCard);
         adminBtn = findViewById(R.id.btnAdmin);
         signout = findViewById(R.id.btnSIgnOut);
+        map = findViewById(R.id.btnMapTest);
 
         /* button click listeners */
         strBtn.setOnClickListener(this);
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         flashCardBtn.setOnClickListener(this);
         adminBtn.setOnClickListener(this);
         signout.setOnClickListener(this);
+        map.setOnClickListener(this);
     }
 
     @Override
@@ -51,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, AdminActivity.class));
         } else if (id == R.id.btnSIgnOut) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        } else if (id == R.id.btnMapTest) {
+            startActivity(new Intent(MainActivity.this, MapActivity.class));
         }
 
     }
