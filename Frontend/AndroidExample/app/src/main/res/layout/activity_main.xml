@@ -27,9 +27,8 @@
         android:layout_height="0dp"
         android:layout_marginStart="34dp"
         android:layout_marginTop="55dp"
-        android:layout_marginEnd="87dp"
         android:text="String Request"
-        app:layout_constraintEnd_toStartOf="@+id/btnJsonObjRequest"
+        app:layout_constraintEnd_toEndOf="@+id/btnFlashCard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnFlashCard" />
 
@@ -37,23 +36,20 @@
         android:id="@+id/btnJsonObjRequest"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="55dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="20dp"
         android:text="JSON Post Test"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnStringRequest"
+        app:layout_constraintStart_toStartOf="@+id/btnAdmin"
         app:layout_constraintTop_toBottomOf="@+id/btnAdmin" />
 
     <Button
         android:id="@+id/btnJsonArrRequest"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="39dp"
-        android:layout_marginEnd="76dp"
         android:text="JSON Array Request"
-        app:layout_constraintEnd_toStartOf="@+id/btnImageRequest"
+        app:layout_constraintEnd_toEndOf="@+id/btnStringRequest"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnStringRequest" />
 
@@ -61,12 +57,12 @@
         android:id="@+id/btnImageRequest"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="39dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="20dp"
         android:text="Image Request"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnJsonArrRequest"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="@+id/btnJsonObjRequest"
         app:layout_constraintTop_toBottomOf="@+id/btnJsonObjRequest" />
 
     <Button
@@ -75,7 +71,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginEnd="30dp"
         android:text="Flash Card"
         app:layout_constraintEnd_toStartOf="@+id/btnAdmin"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +81,7 @@
         android:id="@+id/btnAdmin"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:text="Admin"

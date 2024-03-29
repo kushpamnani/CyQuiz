@@ -38,11 +38,11 @@ public class LoginActivity extends AppCompatActivity{
         name = findViewById(R.id.User_Name);
         pass = findViewById(R.id.Password);
         status = findViewById(R.id.loginStatus);
-        String url = "https://58f67216-988e-4758-8b17-dcef9fda4611.mock.pstmn.io/login";
+        String url = "https://58f67216-988e-4758-8b17-dcef9fda4611.mock.pstmn.io";
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginReq(url);
+                LoginReq(url+"/login");
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
         });
@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity{
                     throw new RuntimeException(e);
                 }
 
-                CreateUserReq(url);
+                CreateUserReq(url+"/create");
             }
         });
     }
