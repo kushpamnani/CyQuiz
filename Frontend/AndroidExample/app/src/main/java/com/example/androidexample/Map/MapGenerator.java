@@ -9,7 +9,9 @@ import com.example.androidexample.R;
 class MapGenerator extends AppCompatActivity {
     TextView Test;
     String NewMap(){
-        Test = findViewById(R.id.Map_Test);
+        return null;
+    }
+    String newMap(String seed){
         return null;
     }
 }
