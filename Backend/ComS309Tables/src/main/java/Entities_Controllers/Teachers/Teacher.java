@@ -1,5 +1,6 @@
 package Entities_Controllers.Teachers;
 
+import Entities_Controllers.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -14,7 +15,7 @@ import java.util.Set;
  */
 
 @Entity
-public class Teacher {
+public class Teacher implements User {
 
     /*
      * The annotation @ID marks the field below as the primary key for the table created by springboot

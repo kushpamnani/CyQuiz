@@ -1,12 +1,16 @@
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Flashcards\FlashcardController.java
-C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\User_Classroom_JoinTable\Classroom_registrationsController.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\onetoone\Roles\RoleController.java
+C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Students\Student.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Main.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Classrooms\Classroom.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\BanList\BanList.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Teachers\Teacher.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\BanList\BanListRepository.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\onetoone\Roles\RoleRepository.java
+C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Student_Classroom_JoinTable\Classroom_registrations.java
+C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Students\StudentRepository.java
+C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Student_Classroom_JoinTable\Classroom_registrationsController.java
+C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Student_Classroom_JoinTable\Classroom_registrationsRepository.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\BanList\BanListController.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Users\User.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\onetoone\Roles\Role.java
@@ -16,7 +20,5 @@ C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Cl
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Users\UserController.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Teachers\TeacherController.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Flashcards\FlashcardRepository.java
-C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\User_Classroom_JoinTable\Classroom_registrationsRepository.java
 C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Classrooms\ClassroomRepository.java
-C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\User_Classroom_JoinTable\Classroom_registrations.java
-C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Users\UserRepository.java
+C:\Users\clark\mr2_8\Backend\ComS309Tables\src\main\java\Entities_Controllers\Students\StudentController.java
