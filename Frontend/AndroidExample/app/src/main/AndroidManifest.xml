@@ -25,6 +25,9 @@
             android:name=".ImageReqActivity"
             android:exported="false" />
         <activity
+            android:name=".EnemyCreatorActivity"
+            android:exported="false" />
+        <activity
             android:name=".AdminActivity"
             android:exported="false" />
         <activity
