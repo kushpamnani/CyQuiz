@@ -143,10 +143,10 @@ public class FlashCardActivity extends AppCompatActivity {
      * Parses JSON Array
      * @param response
      */
-    private void Json_Parse(JSONArray response){
+    private void Json_Parse(JSONArray response) throws JSONException {
+            JSONObject test = response.getJSONObject(0);
         int x = 0;
         int i = -2;
-        int Current_Card = 1;
         int slot =0; //keeps track where to put the info
         String text = response.toString();
         String parsed="";
@@ -159,34 +159,20 @@ public class FlashCardActivity extends AppCompatActivity {
             }
             if(i==4){
                 i=0;
-                if(Current_Card == Card_Number_int){
-                    if(slot==0){
-                        Question.setText(parsed);
-                    }
-                    if(slot==1){
-                        answer.setText(parsed);
-                    }
-                    if(slot==2){
-                        Wrong_1.setText(parsed);
-                    }
-                    if(slot==3){
-                        Wrong_2.setText(parsed);
-                    }
-                    if(slot==4){
-                        Wrong_3.setText(parsed);
-                        Current_Card++;
-                        i =-2;
-                        slot =-1;
-                    }
+                if(slot==0){
+                    Question.setText(parsed);
                 }
-                else{
-                    i=0;
-                    if(slot==4){
-                        Current_Card++;
-                        slot =-1;
-                        i =-2;
-                    }
-
+                if(slot==1){
+                    answer.setText(parsed);
+                }
+                if(slot==2){
+                    Wrong_1.setText(parsed);
+                }
+                if(slot==3){
+                    Wrong_2.setText(parsed);
+                }
+                if(slot==4){
+                    Wrong_3.setText(parsed);
                 }
                 slot++;
                 parsed="";
@@ -194,7 +180,6 @@ public class FlashCardActivity extends AppCompatActivity {
             }
             x++;
         }
-        Total_Cards = Current_Card;
     }
 
     /**
@@ -210,7 +195,11 @@ public class FlashCardActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d("Volley Response", response.toString());
-                        Json_Parse(response);
+                        try {
+                            Json_Parse(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
 
                     }
                 },
