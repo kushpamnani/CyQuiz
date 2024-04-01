@@ -197,6 +197,7 @@ public class FlashCardActivity extends AppCompatActivity {
         Total_Cards = Current_Card;
     }
 
+
     /**
      * Gets Flash Card
      * @param url
@@ -371,6 +372,11 @@ public class FlashCardActivity extends AppCompatActivity {
         };
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    public String[] getFlashCard(){
+        String[] card = new String[5];
+        makeJsonArrayReq(SqlUrl);
+        return card;
     }
 }
 

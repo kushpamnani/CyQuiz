@@ -1,12 +1,14 @@
 package com.example.androidexample.Map;
 
 import android.app.usage.UsageEvents;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.androidexample.MainActivity;
 import com.example.androidexample.R;
 import com.example.androidexample.Map.MapGenerator;
 import com.example.androidexample.Map.Tiles;
@@ -35,54 +37,63 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 events.event(a_1_Type);
+                startActivity(new Intent(MapActivity.this, Tiles.class));
             }
         });
         a_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 events.event(a_2_Type);
+                startActivity(new Intent(MapActivity.this, Tiles.class));
             }
         });
         a_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 events.event(a_3_Type);
+                startActivity(new Intent(MapActivity.this, Tiles.class));
             }
         });
         b_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 events.event(b_1_Type);
+                startActivity(new Intent(MapActivity.this, Tiles.class));
             }
         });
         b_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 events.event(b_2_Type);
+                startActivity(new Intent(MapActivity.this, Tiles.class));
             }
         });
         b_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 events.event(b_3_Type);
+                startActivity(new Intent(MapActivity.this, Tiles.class));
             }
         });
         b_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 events.event(b_4_Type);
+                startActivity(new Intent(MapActivity.this, Tiles.class));
             }
         });
         c_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 events.event(c_1_Type);
+                startActivity(new Intent(MapActivity.this, Tiles.class));
             }
         });
         c_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 events.event(c_2_Type);
+                startActivity(new Intent(MapActivity.this, Tiles.class));
             }
         });
         boss.setOnClickListener(new View.OnClickListener() {
@@ -91,5 +102,10 @@ public class MapActivity extends AppCompatActivity {
 
             }
         });
+    }
+    void setlayout(String layout){
+        if(layout == "quiz"){
+            setContentView(R.layout.event_quiz);
+        }
     }
 }
