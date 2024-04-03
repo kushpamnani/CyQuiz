@@ -40,7 +40,7 @@ public class UserController {
     private String failure = "{\"success\": false}";
 
     @GetMapping(path = "/users") //                                 THIS IS A SECURITY RISK
-    List<? extends User> getAllUsers(){
+    List<User> getAllUsers(){
         List<User> list = new ArrayList<>(teacherRepository.findAll());
         list.addAll(studentRepository.findAll());
         //admins added here
@@ -50,12 +50,12 @@ public class UserController {
     @GetMapping(path = "/users/{name}/{password}")
     User getUserByNameAndPassword(@PathVariable String name, @PathVariable String password) {
         User user = studentRepository.findByName(name);
-        User user2 = teacherRepository.findByName(name);
+        User teacher = teacherRepository.findByName(name);
         if (user != null && user.getPassword().equals(password)) {
             return user;
         }
-        else if (user2 != null && user2.getPassword().equals(password)) {
-            return user2;
+        else if (teacher != null && teacher.getPassword().equals(password)) {
+            return teacher;
         }
         else {
             return null;
