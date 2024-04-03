@@ -103,12 +103,13 @@
         android:id="@+id/btnMapTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="61dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="40dp"
         android:text="Map Test"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnJsonArrRequest" />
-    <button
+        app:layout_constraintStart_toEndOf="@+id/btnEnemyCreate"
+        app:layout_constraintTop_toBottomOf="@+id/btnImageRequest" />
+
+    <Button
         android:id="@+id/btnEnemyCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
