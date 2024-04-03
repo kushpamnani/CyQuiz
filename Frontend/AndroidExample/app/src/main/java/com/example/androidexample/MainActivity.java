@@ -7,9 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import com.example.androidexample.Map.MapActivity;
 
-    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout, enemyCreateBtn;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout, map, enemyCreateBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         flashCardBtn = findViewById(R.id.btnFlashCard);
         adminBtn = findViewById(R.id.btnAdmin);
         signout = findViewById(R.id.btnSIgnOut);
+        map = findViewById(R.id.btnMapTest);
         enemyCreateBtn = findViewById(R.id.btnEnemyCreate);
 
         /* button click listeners */
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         flashCardBtn.setOnClickListener(this);
         adminBtn.setOnClickListener(this);
         signout.setOnClickListener(this);
+        map.setOnClickListener(this);
         enemyCreateBtn.setOnClickListener(this);
     }
 
@@ -53,9 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, AdminActivity.class));
         } else if (id == R.id.btnSIgnOut) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        } else if (id == R.id.btnMapTest) {
+            startActivity(new Intent(MainActivity.this, MapActivity.class));
         } else if (id == R.id.btnEnemyCreate){
             startActivity(new Intent(MainActivity.this, EnemyCreatorActivity.class));
         }
-
     }
 }
