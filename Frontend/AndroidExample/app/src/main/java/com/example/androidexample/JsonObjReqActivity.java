@@ -194,7 +194,7 @@ public class JsonObjReqActivity extends AppCompatActivity {
             baseURL = baseURL + "/teachers/" + userID.getText().toString() + "/add_classroom";
         }
         else if (addClass.isActivated() && addUser.isActivated()){
-            baseURL = baseURL + "/users/" + userID.getText().toString() + "/classrooms/" + classID.getText().toString();
+            baseURL = baseURL + "/students/" + userID.getText().toString() + "/classrooms/" + classID.getText().toString();
         }else{
             msgResponse.setText("Dont do that pls");
         }
@@ -255,7 +255,7 @@ public class JsonObjReqActivity extends AppCompatActivity {
             baseURL = baseURL + "/classrooms/" + classID.getText().toString();
         }
         else if (addUser.isActivated()){
-            baseURL = baseURL + "/users/" + userID.getText().toString();
+            baseURL = baseURL + "/students/" + userID.getText().toString();
         }
         else if(addTeacher.isActivated()){
             baseURL = baseURL + "/teachers/" + userID.getText().toString();
@@ -319,7 +319,7 @@ public class JsonObjReqActivity extends AppCompatActivity {
         if (addTeacher.isActivated()){
             baseURL = baseURL + "/teachers";
         } else if (addUser.isActivated()){
-            baseURL = baseURL + "/users";
+            baseURL = baseURL + "/students";
         }
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
 
