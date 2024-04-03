@@ -149,21 +149,8 @@ public class FlashCardActivity extends AppCompatActivity {
      * @param number of flash card you want
      * @return JSONOBJECT
      */
-    public JSONObject getFlashCardJSON(int number){
-        if(number > Total_Cards){
-            return null;
-        }
-        makeJsonArrayReq(SqlUrl);
-        try {
-            FlashCard.put("question", Question.getText());
-            FlashCard.put("answer", answer.getText());
-            FlashCard.put("option1", Wrong_1.getText());
-            FlashCard.put("option2", Wrong_2.getText());
-            FlashCard.put("option3", Wrong_3.getText());
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        return FlashCard;
+    public JSONObject getFlashCardJSON(int number,JSONArray card) throws JSONException {
+       return card.getJSONObject(number);
     }
 
     /**
@@ -172,18 +159,10 @@ public class FlashCardActivity extends AppCompatActivity {
      * @param number
      * @return String[]
      */
-    public String[] getFlashCardStringArray(int number) throws JSONException {
-        return new String[0];
+    public String[] getFlashCardStringArray(int number,JSONArray card) throws JSONException {
+        JSONObject temp = card.getJSONObject(number);
+        return new String[]{temp.getString("question"),temp.getString("answer"),temp.getString("option1"),temp.getString("option2"),temp.getString("option3")};
     }
-
-    /**
-     * gets Total Cards
-     * @return
-     */
-    public int getTotal_Cards() {
-        return Total_Cards;
-    }
-
     /**
      * Parses JSON Array
      * @param response

@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Volley_requests extends AppCompatActivity {
-    private void makeJsonArrayReq(String url) {
+    void makeJsonArrayReq(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -26,7 +26,6 @@ public class Volley_requests extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Volley Response", response.toString());
-
                     }
                 },
                 new Response.ErrorListener() {

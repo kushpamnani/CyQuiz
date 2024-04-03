@@ -2,21 +2,36 @@ package com.example.androidexample.Map;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.androidexample.FlashCardActivity;
 import com.example.androidexample.MainActivity;
 import com.example.androidexample.R;
+import com.example.androidexample.VolleySingleton;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Tiles extends MapActivity {
     char type;
+    Button option1,option2,option3,option4;
+    TextView question;
+    String[] card;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -30,11 +45,7 @@ public class Tiles extends MapActivity {
             RandomEvents();
         }
         else{
-            try {
-                Quiz();
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
+           Quiz();
         }
 
     }
@@ -46,37 +57,70 @@ public class Tiles extends MapActivity {
         //3 is Quiz
         this.type = type;
     }
-    void Quiz() throws JSONException {
+    void Quiz() {
         setContentView(R.layout.event_quiz);
-        Random rand = new Random();
-        FlashCardActivity flashcard = new FlashCardActivity();
-        String[] card =flashcard.getFlashCardStringArray(rand.nextInt(flashcard.getTotal_Cards()));
-        Button response1 = findViewById(R.id.btnResponse_1);
-        Button response2 = findViewById(R.id.btnResponse_2);
-        Button response3 = findViewById(R.id.btnResponse_3);
-        Button response4 = findViewById(R.id.btnResponse_4);
-        TextView Question = findViewById(R.id.testQuestion);
-        Question.setText(card[0]);
-        int i = Math.abs(rand.nextInt());
-        int x = 1;
-        while (x<5){
-            i= (i%4)+1;
-            if(i==1){
-                response1.setText(card[x]);
-            }
-            if(i==2){
-                response3.setText(card[x]);
-            }
-            if(i==3){
-                response2.setText(card[x]);
-            }
-            if(i==4){
-                response4.setText(card[x]);
-            }
-            x++;
-        }
+        question = findViewById(R.id.testQuestion);
+        option1 = findViewById(R.id.btnResponse_1);
+        option2 = findViewById(R.id.btnResponse_2);
+        option3 = findViewById(R.id.btnResponse_3);
+        option4 = findViewById(R.id.btnResponse_4);
+        makeJsonArrayReq("http://coms-309-031.class.las.iastate.edu:8080/flashcards");
+
+    }
+    void Quiz(String[] card){
+        question.setText(card[0]);
+        option1.setText(card[1]);
+        option2.setText(card[2]);
+        option3.setText(card[3]);
+        option4.setText(card[4]);
     }
     void RandomEvents(){
 
     }
+    void makeJsonArrayReq(String url) {
+        JsonArrayRequest jsonObjReq = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null, // Pass null as the request body since it's a GET request
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+                        response.length();
+                        FlashCardActivity flashcard = new FlashCardActivity();
+                        Random rand = new Random();
+                        try {
+                            Quiz(flashcard.getFlashCardStringArray(rand.nextInt(response.length()),response));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+
 }

@@ -141,4 +141,5 @@ public class MapActivity extends AppCompatActivity {
             setContentView(R.layout.event_quiz);
         }
     }
+
 }
