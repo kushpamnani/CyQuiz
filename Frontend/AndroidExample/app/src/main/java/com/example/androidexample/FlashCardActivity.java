@@ -1,6 +1,5 @@
 package com.example.androidexample;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FlashCardActivity extends AppCompatActivity {
+
     private TextView answer;
     private TextView Wrong_1;
     private TextView Wrong_2;
@@ -50,9 +50,10 @@ public class FlashCardActivity extends AppCompatActivity {
      * Initilizes ui and Gets the first Flash Card
      * @param savedInstanceState
      */
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
+        //SqlUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/FlashCard";
         SqlUrl = "http://coms-309-031.class.las.iastate.edu:8080/flashcards";
         Question = findViewById(R.id.Question);
         answer = findViewById(R.id.Correct);
@@ -68,7 +69,7 @@ public class FlashCardActivity extends AppCompatActivity {
         Card_Number_int = 1;
         Card_Number.setText("1");
         FlashCard = new JSONObject();
-       makeJsonArrayReq(SqlUrl);
+        makeJsonArrayReq(SqlUrl);
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +106,11 @@ public class FlashCardActivity extends AppCompatActivity {
                     try {
                         FlashCard.put("CardNumber", Card_Number.getText());
                         makeJsonObjDel(BaseUrl + "Delete");
+                        Card_Number_int = Math.max(1,Card_Number_int-1);
+                        Card_Number.setText(Integer.toString(Card_Number_int));
+                        // if there is time can change this to use card_number_int so it all updates at once
+                        makeJsonArrayReq(SqlUrl);
+
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -138,70 +144,44 @@ public class FlashCardActivity extends AppCompatActivity {
         });
 
     }
+    /**
+     * call to get a flash card JSONObject
+     * @param number of flash card you want
+     * @return JSONOBJECT
+     */
+    public JSONObject getFlashCardJSON(int number,JSONArray card) throws JSONException {
+       return card.getJSONObject(number);
+    }
 
+    /**
+     * call to get a flash card String[]
+     *
+     * @param number
+     * @return String[]
+     */
+    public String[] getFlashCardStringArray(int number,JSONArray card) throws JSONException {
+        JSONObject temp = card.getJSONObject(number);
+        return new String[]{temp.getString("question"),temp.getString("answer"),temp.getString("option1"),temp.getString("option2"),temp.getString("option3")};
+    }
     /**
      * Parses JSON Array
      * @param response
      */
-    private void Json_Parse(JSONArray response){
-        int x = 0;
-        int i = -2;
-        int Current_Card = 1;
-        int slot =0; //keeps track where to put the info
-        String text = response.toString();
-        String parsed="";
-        while (x< text.length()-1){
-            if(text.charAt(x)=='\"'){
-                i++;
-            }
-            else if(i==3 && text.charAt(x)!='\"'){
-                parsed =parsed + text.charAt(x);
-            }
-            if(i==4){
-                i=0;
-                if(Current_Card == Card_Number_int){
-                    if(slot==0){
-                        Question.setText(parsed);
-                    }
-                    if(slot==1){
-                        answer.setText(parsed);
-                    }
-                    if(slot==2){
-                        Wrong_1.setText(parsed);
-                    }
-                    if(slot==3){
-                        Wrong_2.setText(parsed);
-                    }
-                    if(slot==4){
-                        Wrong_3.setText(parsed);
-                        Current_Card++;
-                        i =-2;
-                        slot =-1;
-                    }
-                }
-                else{
-                    i=0;
-                    if(slot==4){
-                        Current_Card++;
-                        slot =-1;
-                        i =-2;
-                    }
-
-                }
-                slot++;
-                parsed="";
-                x++;
-            }
-            x++;
-        }
-        Total_Cards = Current_Card;
+    private void Json_Parse(JSONArray response) throws JSONException {
+        JSONObject FlashCard = response.getJSONObject(Card_Number_int);
+        Question.setText(FlashCard.getString("question"));
+        answer.setText(FlashCard.getString("answer"));
+        Wrong_1.setText(FlashCard.getString("option1"));
+        Wrong_2.setText(FlashCard.getString("option2"));
+        Wrong_3.setText(FlashCard.getString("option3"));
     }
+
 
     /**
      * Gets Flash Card
      * @param url
      */
-    private void makeJsonArrayReq(String url) {
+    public void makeJsonArrayReq(String url) {
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(
                 Request.Method.GET,
                 url,
@@ -210,7 +190,12 @@ public class FlashCardActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         Log.d("Volley Response", response.toString());
-                        Json_Parse(response);
+                        try {
+                            Total_Cards=response.length();
+                            Json_Parse(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
 
                     }
                 },
@@ -372,6 +357,9 @@ public class FlashCardActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+
+
+
 }
 
 

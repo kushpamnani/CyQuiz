@@ -38,48 +38,39 @@ public class LoginActivity extends AppCompatActivity{
         name = findViewById(R.id.User_Name);
         pass = findViewById(R.id.Password);
         status = findViewById(R.id.loginStatus);
-        String url = "https://58f67216-988e-4758-8b17-dcef9fda4611.mock.pstmn.io";
+        String login_check = "http://coms-309-031.class.las.iastate.edu:8080/users";
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LoginReq(url+"/login");
+                LoginReq(login_check+"/"+name.getText().toString()+"/"+pass.getText().toString());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
         });
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User = new JSONObject();
-                try {
-                    User.put("name",name.getText());
-                    User.put("password",pass.getText());
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-
-                CreateUserReq(url+"/create");
+                startActivity(new Intent(LoginActivity.this, JsonObjectRequest.class));
             }
         });
     }
     private void LoginReq(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.POST,
+                Request.Method.GET,
                 url,
-                null, // Pass null as the request body since it's a GET request
+                null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Volley Response", response.toString());
-                        try {
-                            if(response.getBoolean("Success")){
-                                // if login successful
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            }
-                            else{
-                                status.setText("Incorect Username or Passowrd");
-                            }
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
+                        //Log.d("Volley Response", response.toString());
+                        //studentexample
+                        //passwrod123
+                        if(response != null){
+                            // if login successful
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
+                        else{
+                            status.setText("Incorect Username or Passowrd");
                         }
                     }
                 },
