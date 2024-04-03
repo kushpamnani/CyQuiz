@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout;
+    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout, enemyCreateBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         flashCardBtn = findViewById(R.id.btnFlashCard);
         adminBtn = findViewById(R.id.btnAdmin);
         signout = findViewById(R.id.btnSIgnOut);
+        enemyCreateBtn = findViewById(R.id.btnEnemyCreate);
 
         /* button click listeners */
         strBtn.setOnClickListener(this);
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         flashCardBtn.setOnClickListener(this);
         adminBtn.setOnClickListener(this);
         signout.setOnClickListener(this);
+        enemyCreateBtn.setOnClickListener(this);
     }
 
     @Override
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, AdminActivity.class));
         } else if (id == R.id.btnSIgnOut) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        } else if (id == R.id.btnEnemyCreate){
+            startActivity(new Intent(MainActivity.this, EnemyCreatorActivity.class));
         }
 
     }

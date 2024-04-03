@@ -99,4 +99,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <Button
+        android:id="@+id/btnEnemyCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enemy Creation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.135"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnJsonArrRequest"
+        app:layout_constraintVertical_bias="0.121" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
