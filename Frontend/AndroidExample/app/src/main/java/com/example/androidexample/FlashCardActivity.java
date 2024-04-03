@@ -1,6 +1,5 @@
 package com.example.androidexample;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FlashCardActivity extends AppCompatActivity {
+
     private TextView answer;
     private TextView Wrong_1;
     private TextView Wrong_2;
@@ -50,9 +50,10 @@ public class FlashCardActivity extends AppCompatActivity {
      * Initilizes ui and Gets the first Flash Card
      * @param savedInstanceState
      */
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
+        //SqlUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/FlashCard";
         SqlUrl = "http://coms-309-031.class.las.iastate.edu:8080/flashcards";
         Question = findViewById(R.id.Question);
         answer = findViewById(R.id.Correct);
@@ -68,7 +69,7 @@ public class FlashCardActivity extends AppCompatActivity {
         Card_Number_int = 1;
         Card_Number.setText("1");
         FlashCard = new JSONObject();
-       makeJsonArrayReq(SqlUrl);
+        makeJsonArrayReq(SqlUrl);
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +106,11 @@ public class FlashCardActivity extends AppCompatActivity {
                     try {
                         FlashCard.put("CardNumber", Card_Number.getText());
                         makeJsonObjDel(BaseUrl + "Delete");
+                        Card_Number_int = Math.max(1,Card_Number_int-1);
+                        Card_Number.setText(Integer.toString(Card_Number_int));
+                        // if there is time can change this to use card_number_int so it all updates at once
+                        makeJsonArrayReq(SqlUrl);
+
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -138,48 +144,57 @@ public class FlashCardActivity extends AppCompatActivity {
         });
 
     }
+    /**
+     * call to get a flash card JSONObject
+     * @param number of flash card you want
+     * @return JSONOBJECT
+     */
+    public JSONObject getFlashCardJSON(int number){
+        if(number > Total_Cards){
+            return null;
+        }
+        makeJsonArrayReq(SqlUrl);
+        try {
+            FlashCard.put("question", Question.getText());
+            FlashCard.put("answer", answer.getText());
+            FlashCard.put("option1", Wrong_1.getText());
+            FlashCard.put("option2", Wrong_2.getText());
+            FlashCard.put("option3", Wrong_3.getText());
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        return FlashCard;
+    }
+
+    /**
+     * call to get a flash card String[]
+     *
+     * @param number
+     * @return String[]
+     */
+    public String[] getFlashCardStringArray(int number) throws JSONException {
+        return new String[0];
+    }
+
+    /**
+     * gets Total Cards
+     * @return
+     */
+    public int getTotal_Cards() {
+        return Total_Cards;
+    }
 
     /**
      * Parses JSON Array
      * @param response
      */
     private void Json_Parse(JSONArray response) throws JSONException {
-            JSONObject test = response.getJSONObject(0);
-        int x = 0;
-        int i = -2;
-        int slot =0; //keeps track where to put the info
-        String text = response.toString();
-        String parsed="";
-        while (x< text.length()-1){
-            if(text.charAt(x)=='\"'){
-                i++;
-            }
-            else if(i==3 && text.charAt(x)!='\"'){
-                parsed =parsed + text.charAt(x);
-            }
-            if(i==4){
-                i=0;
-                if(slot==0){
-                    Question.setText(parsed);
-                }
-                if(slot==1){
-                    answer.setText(parsed);
-                }
-                if(slot==2){
-                    Wrong_1.setText(parsed);
-                }
-                if(slot==3){
-                    Wrong_2.setText(parsed);
-                }
-                if(slot==4){
-                    Wrong_3.setText(parsed);
-                }
-                slot++;
-                parsed="";
-                x++;
-            }
-            x++;
-        }
+        JSONObject FlashCard = response.getJSONObject(Card_Number_int);
+        Question.setText(FlashCard.getString("question"));
+        answer.setText(FlashCard.getString("answer"));
+        Wrong_1.setText(FlashCard.getString("option1"));
+        Wrong_2.setText(FlashCard.getString("option2"));
+        Wrong_3.setText(FlashCard.getString("option3"));
     }
 
 
@@ -187,7 +202,7 @@ public class FlashCardActivity extends AppCompatActivity {
      * Gets Flash Card
      * @param url
      */
-    private void makeJsonArrayReq(String url) {
+    public void makeJsonArrayReq(String url) {
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(
                 Request.Method.GET,
                 url,
@@ -197,6 +212,7 @@ public class FlashCardActivity extends AppCompatActivity {
                     public void onResponse(JSONArray response) {
                         Log.d("Volley Response", response.toString());
                         try {
+                            Total_Cards=response.length();
                             Json_Parse(response);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -362,11 +378,9 @@ public class FlashCardActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
-    public String[] getFlashCard(){
-        String[] card = new String[5];
-        makeJsonArrayReq(SqlUrl);
-        return card;
-    }
+
+
+
 }
 
 

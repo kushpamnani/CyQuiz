@@ -5,9 +5,13 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.androidexample.FlashCardActivity;
 import com.example.androidexample.MainActivity;
 import com.example.androidexample.R;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Random;
 
@@ -26,7 +30,11 @@ public class Tiles extends MapActivity {
             RandomEvents();
         }
         else{
-            Quiz();
+            try {
+                Quiz();
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
@@ -38,16 +46,17 @@ public class Tiles extends MapActivity {
         //3 is Quiz
         this.type = type;
     }
-    void Quiz(){
-        String[] card = new String[]{"what doing?","a","b","c","d"};
+    void Quiz() throws JSONException {
         setContentView(R.layout.event_quiz);
+        Random rand = new Random();
+        FlashCardActivity flashcard = new FlashCardActivity();
+        String[] card =flashcard.getFlashCardStringArray(rand.nextInt(flashcard.getTotal_Cards()));
         Button response1 = findViewById(R.id.btnResponse_1);
         Button response2 = findViewById(R.id.btnResponse_2);
         Button response3 = findViewById(R.id.btnResponse_3);
         Button response4 = findViewById(R.id.btnResponse_4);
         TextView Question = findViewById(R.id.testQuestion);
         Question.setText(card[0]);
-        Random rand = new Random();
         int i = Math.abs(rand.nextInt());
         int x = 1;
         while (x<5){
