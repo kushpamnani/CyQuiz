@@ -24,6 +24,7 @@ class MapGenerator extends MapActivity {
             seed = seed +rand.nextInt(4);
             x++;
         }
+        seed= seed +'0'+'0';
         newMap(seed);
         return seed;
     }
@@ -47,5 +48,46 @@ class MapGenerator extends MapActivity {
         c_1.setText(type[Character.getNumericValue(c_1_Type)]);
         c_2_Type= seed.charAt(8);
         c_2.setText(type[Character.getNumericValue(c_2_Type)]);
+        char temp = seed.charAt(9);
+        if(seed.charAt(9)=='0'){
+           start.setText(start.getText().toString()+'*');
+        }
+        else if(seed.charAt(9)=='1'){
+            if(seed.charAt(10)=='1'){
+                a_1.setText(a_1.getText().toString()+"*");
+            }
+            else if(seed.charAt(10)=='2'){
+                a_2.setText(a_2.getText().toString()+"*");
+            }
+            else if(seed.charAt(10)=='3'){
+                a_3.setText(a_3.getText().toString()+"*");
+
+            }
+
+        }
+        else if(seed.charAt(9)=='2'){
+            if(seed.charAt(10)=='1'){
+                b_1.setText(b_1.getText().toString()+"*");
+            }
+            else if(seed.charAt(10)=='2'){
+                b_2.setText(b_2.getText().toString()+"*");
+            }
+            else if(seed.charAt(10)=='3'){
+                b_3.setText(b_3.getText().toString()+"*");
+            }
+            else if(seed.charAt(10)=='4'){
+                b_4.setText(b_4.getText().toString()+"*");
+            }
+
+        }
+        else if(seed.charAt(9)=='3'){
+            if(seed.charAt(10)=='1'){
+                c_1.setText(c_1.getText().toString()+"*");
+            }
+            else if(seed.charAt(10)=='2'){
+                c_2.setText(c_2.getText().toString()+"*");
+            }
+
+        }
     }
 }
