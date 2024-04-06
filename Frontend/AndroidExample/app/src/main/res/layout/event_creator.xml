@@ -15,11 +15,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/editTextText"
-            android:layout_width="wrap_content"
+            android:id="@+id/EventTitle"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_weight="1"
+            android:elegantTextHeight="false"
             android:ems="10"
+            android:gravity="top"
             android:hint="Insert event text"
             android:inputType="text"
             android:textAlignment="center" />
@@ -46,16 +48,15 @@
             android:layout_height="50dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/healAmount"
+            <EditText
+                android:id="@+id/moreHeath"
                 android:layout_width="185dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="heath number"
-                android:translationY="-10dp" />
+                android:hint="heath number" />
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/checkBoxMorehp"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"
@@ -68,15 +69,15 @@
             android:layout_height="50dp"
             android:orientation="horizontal">
 
-            <TextView
+            <EditText
                 android:id="@+id/lessHeath"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Heath number" />
+                android:hint="heath number" />
 
             <CheckBox
-                android:id="@+id/checkBox3"
+                android:id="@+id/checkBoxLesshp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -92,7 +93,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
             android:orientation="horizontal">
 
             <EditText
@@ -101,8 +102,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="text"
-                android:text="heath number" />
+                android:hint="heath number"
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -112,6 +113,12 @@
                 android:text="Heal" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/EventSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="save" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

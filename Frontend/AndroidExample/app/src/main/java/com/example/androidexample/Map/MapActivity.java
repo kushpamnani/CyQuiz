@@ -1,5 +1,6 @@
 package com.example.androidexample.Map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.androidexample.EnemyCreatorActivity;
 import com.example.androidexample.FlashCardActivity;
+import com.example.androidexample.MainActivity;
 import com.example.androidexample.R;
 import com.example.androidexample.VolleySingleton;
 
@@ -27,7 +30,7 @@ import java.util.Random;
 public class MapActivity extends AppCompatActivity {
     static Button a_1,a_2,a_3,b_1,b_2,b_3,b_4,c_1,c_2,boss;
     static TextView start;
-    Button option1,option2,option3,option4,load,New;
+    Button option1,option2,option3,option4,load,New,CreateEvent;
     TextView question;
     StringBuilder seed;
     char type;
@@ -39,6 +42,7 @@ public class MapActivity extends AppCompatActivity {
         setContentView(R.layout.new_load_map);
         New=findViewById(R.id.MapNew);
         load=findViewById(R.id.MapLoad);
+        CreateEvent=findViewById(R.id.EventCreateBtn);
         MapGenerator map = new MapGenerator();
         New.setText("New game");
         load.setText("Load game");
@@ -57,6 +61,12 @@ public class MapActivity extends AppCompatActivity {
                 positon="a_1";
                 setUi();
                 map.newMap(String.valueOf(seed));
+            }
+        });
+        CreateEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MapActivity.this, EventCreator.class));
             }
         });
 
