@@ -5,10 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Vivek Bengre
+ * @author Dalton Clark
  *
  */
-
 public interface ClassroomRepository extends JpaRepository<Classroom, Long> {
 
     Classroom findById(int id);

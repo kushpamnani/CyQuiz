@@ -1,20 +1,20 @@
 package Entities_Controllers.Classrooms;
 
-import Entities_Controllers.Users.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import Entities_Controllers.Teachers.Teacher;
-import Entities_Controllers.User_Classroom_JoinTable.Classroom_registrations;
-import org.springframework.beans.factory.annotation.Autowired;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
 
-import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.CascadeType.DETACH;
 
+/**
+ *
+ * @author Dalton Clark
+ *
+ */
 @Entity
 public class Classroom {
 

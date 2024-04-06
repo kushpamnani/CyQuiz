@@ -5,7 +5,7 @@ import java.util.Random;
 
 import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Classrooms.ClassroomRepository;
-import Entities_Controllers.Users.UserRepository;
+import Entities_Controllers.Students.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Vivek Bengre
+ * @author Dalton Clark
  *
  */
 
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TeacherController {
 
     @Autowired
-    UserRepository userRepository;
+    StudentRepository studentRepository;
 
     @Autowired
     ClassroomRepository classroomRepository;
@@ -33,7 +33,7 @@ public class TeacherController {
     @Autowired
     TeacherRepository teacherRepository;
 
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -48,9 +48,11 @@ public class TeacherController {
         return teacherRepository.findById(id);
     }
 
+
+
     @PostMapping(path = "/teachers")
     <T> T createTeacher(@RequestBody Teacher teacher){
-        if (teacher == null) // || (teacherRepository.findByName(teacher.getName()) != null)
+        if (teacher == null || (teacherRepository.findByName(teacher.getName()) != null) || (studentRepository.findByName(teacher.getName()) != null) )
             return (T) failure;
         teacherRepository.save(teacher);
         return (T) teacher;
@@ -91,13 +93,13 @@ public class TeacherController {
     }
 
     /* not safe to update */
-//    @PutMapping("/users/{id}")
-//    User updateUser(@PathVariable int id, @RequestBody User request){
-//        User user = userRepository.findById(id);
-//        if(user == null)
+//    @PutMapping("/students/{id}")
+//    Student updateStudent(@PathVariable int id, @RequestBody Student request){
+//        Student student = studentRepository.findById(id);
+//        if(student == null)
 //            return null;
-//        userRepository.save(request);
-//        return userRepository.findById(id);
+//        studentRepository.save(request);
+//        return studentRepository.findById(id);
 //    }
 
     @PutMapping("/teachers/{id}")
@@ -114,18 +116,6 @@ public class TeacherController {
         teacherRepository.save(request);
         return teacherRepository.findById(id);
     }
-
-//    @PutMapping("/users/{userId}/laptops/{laptopId}")
-//    String assignLaptopToUser(@PathVariable int userId,@PathVariable int laptopId){
-//        User user = userRepository.findById(userId);
-//        Laptop laptop = laptopRepository.findById(laptopId);
-//        if(user == null || laptop == null)
-//            return failure;
-//        laptop.setUser(user);
-//        user.setLaptop(laptop);
-//        userRepository.save(user);
-//        return success;
-//    }
 
     @DeleteMapping(path = "/teachers/{id}")
     String deleteTeacher(@PathVariable int id){

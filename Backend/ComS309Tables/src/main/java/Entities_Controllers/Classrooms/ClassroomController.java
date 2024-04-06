@@ -3,12 +3,11 @@ package Entities_Controllers.Classrooms;
 import java.util.List;
 import java.util.Random;
 
-import Entities_Controllers.Teachers.Teacher;
+import Entities_Controllers.Students.Student;
+import Entities_Controllers.Students.StudentRepository;
 import Entities_Controllers.Teachers.TeacherRepository;
-import Entities_Controllers.User_Classroom_JoinTable.Classroom_registrations;
-import Entities_Controllers.User_Classroom_JoinTable.Classroom_registrationsRepository;
-import Entities_Controllers.Users.User;
-import Entities_Controllers.Users.UserRepository;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Vivek Bengre
+ * @author Dalton Clark
  *
  */
 
@@ -28,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ClassroomController {
 
     @Autowired
-    private UserRepository userRepository;
+    private StudentRepository studentRepository;
 
     @Autowired
     private ClassroomRepository classroomRepository;
@@ -71,13 +70,13 @@ public class ClassroomController {
     }
 
     /* not safe to update */
-//    @PutMapping("/users/{id}")
-//    User updateUser(@PathVariable int id, @RequestBody User request){
-//        User user = userRepository.findById(id);
-//        if(user == null)
+//    @PutMapping("/students/{id}")
+//    Student updateStudent(@PathVariable int id, @RequestBody Student request){
+//        Student student = studentRepository.findById(id);
+//        if(student == null)
 //            return null;
-//        userRepository.save(request);
-//        return userRepository.findById(id);
+//        studentRepository.save(request);
+//        return studentRepository.findById(id);
 //    }
 
     @PutMapping("/classrooms/{id}")
@@ -95,18 +94,34 @@ public class ClassroomController {
         return classroomRepository.findById(id);
     }
 
-    @PutMapping("/classrooms/{classroomId}/users/{userId}")
-    String assignClassroomToUser(@PathVariable int classroomId, @PathVariable int userId) {
-        User user = userRepository.findById(userId);
+    @PutMapping("/classrooms/{classroomId}/students/{studentId}")
+    String assignClassroomToStudent(@PathVariable int classroomId, @PathVariable int studentId) {
+        Student student = studentRepository.findById(studentId);
         Classroom classroom = classroomRepository.findById(classroomId);
-        if(user == null || classroom == null)
+        if(student == null || classroom == null)
             return failure;
 
-        Classroom_registrations cr = new Classroom_registrations(user, classroom);
-        user.addClassroomRegistration(cr);
+        Classroom_registrations cr = new Classroom_registrations(student, classroom);
+        student.addClassroomRegistration(cr);
         classroom.addStudentRegistration(cr);
 
-        userRepository.save(user);
+        studentRepository.save(student);
+        classroomRepository.save(classroom);
+        return success;
+    }
+
+    @PutMapping("/classrooms/{code}/students/{studentId}")
+    String assignClassroomToStudentFromCode(@PathVariable int code, @PathVariable int studentId) {
+        Student student = studentRepository.findById(studentId);
+        Classroom classroom = classroomRepository.findByCode(code);
+        if(student == null || classroom == null)
+            return failure;
+
+        Classroom_registrations cr = new Classroom_registrations(student, classroom);
+        student.addClassroomRegistration(cr);
+        classroom.addStudentRegistration(cr);
+
+        studentRepository.save(student);
         classroomRepository.save(classroom);
         return success;
     }

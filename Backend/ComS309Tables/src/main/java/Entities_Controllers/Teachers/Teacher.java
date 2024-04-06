@@ -1,20 +1,22 @@
 package Entities_Controllers.Teachers;
 
+import Entities_Controllers.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import Entities_Controllers.Classrooms.Classroom;
+import Entities_Controllers.Enemies.Enemy;
 
 import java.util.Set;
 
 /**
  *
- * @author Vivek Bengre
+ * @author Dalton Clark
  *
  */
 
 @Entity
-public class Teacher {
+public class Teacher implements User {
 
     /*
      * The annotation @ID marks the field below as the primary key for the table created by springboot
@@ -28,6 +30,9 @@ public class Teacher {
     @JsonIgnoreProperties("teacher")
     @OneToMany(mappedBy="teacher", cascade = CascadeType.ALL)
     private Set<Classroom> classrooms;
+    @JsonIgnoreProperties("teacher") // might need to fix later
+    @OneToMany(mappedBy="teacher", cascade = CascadeType.ALL)
+    private Set<Enemy> enemies;
     private boolean ifActive;
 
     public Teacher(String name, String password) {
@@ -77,6 +82,16 @@ public class Teacher {
     public void addClassroom(Classroom classroom) {
         this.classrooms.add(classroom);
     }
+
+    public Set<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void setEnemies(Set<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void addEnemy(Enemy enemy) { this.enemies.add(enemy); }
 
     public boolean getIsActive(){
         return ifActive;
