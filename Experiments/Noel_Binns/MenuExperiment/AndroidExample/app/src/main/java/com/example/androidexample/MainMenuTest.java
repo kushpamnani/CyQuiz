@@ -12,6 +12,7 @@ import org.w3c.dom.Text;
 
 public class MainMenuTest extends AppCompatActivity {
     private Button gamesButton;
+    private Button classroomButton;
 
 
     @Override
@@ -20,11 +21,19 @@ public class MainMenuTest extends AppCompatActivity {
         setContentView(R.layout.main_menu_test);
 
     gamesButton = findViewById(R.id.gameButton);
+    classroomButton = findViewById(R.id.classroomButton);
 
         gamesButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuTest.this, GameSelection.class);
+                startActivity(intent);
+            }
+        });
+        classroomButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenuTest.this, ClassroomMain.class);
                 startActivity(intent);
             }
         });
