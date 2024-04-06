@@ -19,6 +19,12 @@
             android:name=".JsonArrReqActivity"
             android:exported="false" />
         <activity
+            android:name=".BossCreatorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BattleCreatorActivity"
+            android:exported="false" />
+        <activity
             android:name=".JsonObjReqActivity"
             android:exported="false" />
         <activity
