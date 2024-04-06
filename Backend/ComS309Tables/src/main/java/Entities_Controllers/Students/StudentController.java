@@ -120,7 +120,7 @@ public class StudentController {
 //    }
 
     @DeleteMapping(path = "/students/{id}")
-    String deleteTeacher(@PathVariable int id){
+    String deleteStudent(@PathVariable int id){
         if (studentRepository.findById(id) == null) {
             return failure;
         } else {

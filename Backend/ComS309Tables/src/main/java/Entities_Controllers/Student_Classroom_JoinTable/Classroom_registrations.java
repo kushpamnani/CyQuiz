@@ -1,9 +1,13 @@
 package Entities_Controllers.Student_Classroom_JoinTable;
 
+import Entities_Controllers.Maps.Map;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Students.Student;
+
+import static jakarta.persistence.CascadeType.*;
+import static jakarta.persistence.CascadeType.DETACH;
 
 /**
  *
@@ -23,6 +27,10 @@ public class Classroom_registrations {
     @ManyToOne
     @JoinColumn(name = "classroom_id")
     Classroom classroom;
+    @JsonIgnoreProperties("classroomRegistration")
+    @OneToOne(mappedBy = "classroomRegistration", cascade = {MERGE, REMOVE, REFRESH, DETACH})
+    @JoinColumn(name = "map_id")
+    private Map map;
 
 
     public Classroom_registrations(Student student, Classroom classroom) {
@@ -56,5 +64,13 @@ public class Classroom_registrations {
 
     public void setClassroom(Classroom classroom) {
         this.classroom = classroom;
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
     }
 }
