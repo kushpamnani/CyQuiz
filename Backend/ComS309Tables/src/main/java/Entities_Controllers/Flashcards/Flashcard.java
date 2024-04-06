@@ -1,9 +1,9 @@
 package Entities_Controllers.Flashcards;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import Entities_Controllers.Enemies.Enemy;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 
 @Entity
@@ -17,6 +17,9 @@ public class Flashcard {
     private String option1;
     private String option2;
     private String option3;
+    @OneToMany
+    @JoinColumn(name="enemy_id")
+    private Set<Enemy> enemies;
 
     public Flashcard() {
     }
@@ -78,5 +81,15 @@ public class Flashcard {
         this.option3 = option3;
     }
 
+    public Set<Enemy> getEnemies() {
+        return enemies;
+    }
 
+    public void setEnemies(Set<Enemy> enemies) {
+        this.enemies = enemies;
+    }
+
+    public void addEnemy(Enemy enemy) {
+        this.enemies.add(enemy);
+    }
 }

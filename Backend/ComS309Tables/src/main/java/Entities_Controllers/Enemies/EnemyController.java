@@ -1,5 +1,7 @@
 package Entities_Controllers.Enemies;
 
+import Entities_Controllers.Flashcards.Flashcard;
+import Entities_Controllers.Flashcards.FlashcardRepository;
 import Entities_Controllers.Teachers.Teacher;
 import Entities_Controllers.Teachers.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class EnemyController {
     EnemyRepository enemyRepository;
     @Autowired
     TeacherRepository teacherRepository;
+
+    @Autowired
+    FlashcardRepository flashcardRepository;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -68,6 +73,21 @@ public class EnemyController {
 
         enemyRepository.save(enemy);
         teacherRepository.save(teacher);
+        return success;
+    }
+
+    @PutMapping("/enemies/{enemyId}/flashcards/{flashcardId}")
+    String assignEnemyToFlashcard(@PathVariable int enemyId, @PathVariable int flashcardId) {
+        Enemy enemy = enemyRepository.findById(enemyId);
+        Flashcard flashcard = flashcardRepository.findById(flashcardId);
+        if(enemy == null || flashcard == null)
+            return failure;
+
+        enemy.setFlashcard(flashcard);
+        flashcard.addEnemy(enemy);
+
+        enemyRepository.save(enemy);
+        flashcardRepository.save(flashcard);
         return success;
     }
 
