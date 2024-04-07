@@ -43,8 +43,8 @@ public class MapActivity extends AppCompatActivity {
     static int hp;
     static char a_1_Type, a_2_Type, a_3_Type, b_1_Type, b_2_Type, b_3_Type, b_4_Type, c_1_Type, c_2_Type;
     String  positon;
-    private String  url;
-    private JSONObject info;
+    private String  url,url_event;
+    private JSONObject info,RandomEvent;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +56,7 @@ public class MapActivity extends AppCompatActivity {
         New.setText("New game");
         load.setText("Load game");
         url = "https://f809797b-3a5d-474e-8b1a-5aebf6b7e323.mock.pstmn.io/"+ LoginActivity.getUsername()+"/map";
+        url_event = "https://f809797b-3a5d-474e-8b1a-5aebf6b7e323.mock.pstmn.io/";
         New.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -238,6 +239,7 @@ public class MapActivity extends AppCompatActivity {
         } else if (event == '1') {
             hp = Math.min(100, hp + 20);
         } else if (event == '2') {
+            setContentView(R.layout.event_random_event);
             RandomEvents();
         } else {
             setContentView(R.layout.event_quiz);
@@ -272,6 +274,9 @@ public class MapActivity extends AppCompatActivity {
     }
 
     void RandomEvents() {
+        makerandomEventreq(url_event);
+    }
+    void RandomEvents(JSONObject event){
 
     }
 
@@ -519,6 +524,44 @@ public class MapActivity extends AppCompatActivity {
             }
 
         }
+    }
+    private void makerandomEventreq(String url) {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        RandomEvents(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
 }
 

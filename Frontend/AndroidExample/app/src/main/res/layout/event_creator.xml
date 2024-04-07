@@ -14,17 +14,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/EventTitle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_weight="1"
-            android:elegantTextHeight="false"
-            android:ems="10"
-            android:gravity="top"
-            android:hint="Insert event text"
-            android:inputType="text"
-            android:textAlignment="center" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/EventTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Title"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/EventDesciption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Desciption"
+                android:inputType="text" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -119,6 +129,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="save" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/EventDelete_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="name of event to delete"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/EventDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delete" />
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
