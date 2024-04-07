@@ -55,13 +55,19 @@ public class MapActivity extends AppCompatActivity {
         MapGenerator map = new MapGenerator();
         New.setText("New game");
         load.setText("Load game");
-        url = "https://f809797b-3a5d-474e-8b1a-5aebf6b7e323.mock.pstmn.io/"+ LoginActivity.getUsername()+"/map";
+        url = "http://coms-309-031.class.las.iastate.edu:8080/"+"/maps";
         url_event = "https://f809797b-3a5d-474e-8b1a-5aebf6b7e323.mock.pstmn.io/";
         New.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 positon = "start";
                 setUi();
+                try {
+                    setPositon('0','0');
+                    info.put("hp",hp);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
                 seed = new StringBuilder(map.NewMap());
                 makeMapSave(url);
             }
@@ -101,7 +107,11 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (positon == "start") {
                     positon = "a_1";
-                    setPositon('1', '1');
+                    try {
+                        setPositon('1', '1');
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     a_1.setText(a_1.getText().toString() + "*");
                     event(a_1_Type);
                     makeMapUpdate(url);
@@ -113,7 +123,11 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (positon == "start") {
                     positon = "a_2";
-                    setPositon('1', '2');
+                    try {
+                        setPositon('1', '2');
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     a_2.setText(a_2.getText().toString() + "*");
                     event(a_2_Type);
                     makeMapUpdate(url);
@@ -125,7 +139,11 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (positon == "start") {
                     positon = "a_3";
-                    setPositon('1', '3');
+                    try {
+                        setPositon('1', '3');
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     a_3.setText(a_3.getText().toString() + "*");
                     event(a_3_Type);
                     makeMapUpdate(url);
@@ -137,7 +155,11 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (positon == "a_1") {
                     positon = "b_1";
-                    setPositon('2', '1');
+                    try {
+                        setPositon('2', '1');
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     b_1.setText(b_1.getText().toString() + "*");
                     event(b_1_Type);
                     makeMapUpdate(url);
@@ -149,7 +171,11 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (positon == "a_2" || positon == "a_1") {
                     positon = "b_2";
-                    setPositon('2', '2');
+                    try {
+                        setPositon('2', '2');
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     b_2.setText(b_2.getText().toString() + "*");
                     event(b_2_Type);
                     makeMapUpdate(url);
@@ -161,7 +187,11 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (positon == "a_3" || positon == "a_2") {
                     positon = "b_3";
-                    setPositon('2', '3');
+                    try {
+                        setPositon('2', '3');
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     b_3.setText(b_3.getText().toString() + "*");
                     event(b_3_Type);
                     makeMapUpdate(url);
@@ -173,7 +203,11 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (positon == "a_3") {
                     positon = "b_4";
-                    setPositon('2', '4');
+                    try {
+                        setPositon('2', '4');
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     b_4.setText(b_4.getText().toString() + "*");
                     event(b_4_Type);
                     makeMapUpdate(url);
@@ -185,7 +219,11 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (positon == "b_1" || positon == "b_2") {
                     positon = "c_1";
-                    setPositon('3', '1');
+                    try {
+                        setPositon('3', '1');
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     c_1.setText(c_1.getText().toString() + "*");
                     event(c_1_Type);
                     makeMapUpdate(url);
@@ -198,7 +236,11 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (positon == "b_3" || positon == "b_4") {
                     positon = "c_2";
-                    setPositon('3', '2');
+                    try {
+                        setPositon('3', '2');
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                     c_2.setText(c_2.getText().toString() + "*");
                     event(c_2_Type);
                     makeMapUpdate(url);
@@ -209,19 +251,25 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (positon == "c_2" || positon == "c_1") {
-                    setPositon('4', '1');
+                    try {
+                        setPositon('4', '1');
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
 
             }
         });
     }
 
-    void setPositon(char y, char x) {
+    void setPositon(char y, char x) throws JSONException {
+        info.put("seed",seed);
         seed.setCharAt(9, y);
         seed.setCharAt(10, x);
     }
-    void changehp(int amount){
+    void changehp(int amount) throws JSONException {
         hp=Math.min(100,hp+amount);
+        info.put("hp",hp);
         if(hp<=0){
             makeMapDel(url);
         }
