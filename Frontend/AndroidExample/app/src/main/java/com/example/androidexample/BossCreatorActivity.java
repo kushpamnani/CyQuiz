@@ -32,8 +32,12 @@ public class BossCreatorActivity extends AppCompatActivity {
     private TextView defenseGet;
     private TextView nameGet;
     private Button sendInfo;
+    private Button updateButton;
+    private Button deleteButton;
     private JSONObject bossJSON;
     private boolean flashcardExist = true;
+    private TextView idGet;
+    private Button getButton;
 
     private String baseURL = "http://coms-309-031.class.las.iastate.edu:8080";
 
@@ -49,6 +53,10 @@ public class BossCreatorActivity extends AppCompatActivity {
         errorText = findViewById(R.id.errorText);
         defenseGet = findViewById(R.id.defenseInput);
         nameGet = findViewById(R.id.bossNameInput);
+        idGet = findViewById(R.id.idInput);
+        updateButton = findViewById(R.id.updateBtn);
+        deleteButton = findViewById(R.id.deleteBtn);
+        getButton = findViewById(R.id.getButton);
 
 
         sendInfo.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +80,41 @@ public class BossCreatorActivity extends AppCompatActivity {
                 }
 
 
+            }
+        });
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bossJSON = new JSONObject();
+                try {
+                    bossJSON.put("name", nameGet.getText().toString());
+                    bossJSON.put("health", healthGet.getText().toString());
+                    bossJSON.put("damage", dmgGet.getText().toString());
+                    bossJSON.put("defense", defenseGet.getText().toString());
+                    bossJSON.put("flashcard", flashGet.getText().toString());
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                makeJsonArrayReq();
+
+                if (flashcardExist) {
+                    makeJsonObjReqPut();
+                }
+
+
+            }
+        });
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    makeJsonObjReqDelete();
+            }
+        });
+        getButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeJsonObjReqGet();
             }
         });
 
@@ -143,9 +186,9 @@ public class BossCreatorActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
 
                 Request.Method.POST,
-                baseURL + "/enemies",
+                baseURL + "/enemies/" + idGet.getText().toString(),
                 bossJSON,
-                // Pass null as the request body since it's a GET request
+
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -181,5 +224,142 @@ public class BossCreatorActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+    private void makeJsonObjReqPut() {
+
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+
+                Request.Method.PUT,
+                baseURL + "/enemies",
+                bossJSON,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        errorText.setText(response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    private void makeJsonObjReqGet() {
+
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+
+                Request.Method.GET,
+                baseURL + "/enemies/" + idGet.getText().toString(),
+                null,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        errorText.setText(response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    private void makeJsonObjReqDelete() {
+
+
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+
+                Request.Method.DELETE,
+                baseURL + "/enemies/" + idGet.getText().toString(),
+                null,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        errorText.setText(response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+
 
 }
