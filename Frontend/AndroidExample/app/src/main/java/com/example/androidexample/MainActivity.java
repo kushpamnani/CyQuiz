@@ -10,13 +10,13 @@ import android.widget.Button;
 import com.example.androidexample.Map.MapActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout, map, enemyCreateBtn;
+    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout, map, enemyCreateBtn,anouncments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        anouncments= findViewById(R.id.anouncments);
         strBtn = findViewById(R.id.btnStringRequest);
         jsonObjBtn = findViewById(R.id.btnJsonObjRequest);
         jsonArrBtn = findViewById(R.id.btnJsonArrRequest);
@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         signout.setOnClickListener(this);
         map.setOnClickListener(this);
         enemyCreateBtn.setOnClickListener(this);
+        anouncments.setOnClickListener(this);
     }
 
     @Override
@@ -60,6 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, MapActivity.class));
         } else if (id == R.id.btnEnemyCreate){
             startActivity(new Intent(MainActivity.this, EnemyCreatorActivity.class));
+        }
+        else if (id == R.id.anouncments){
+            startActivity(new Intent(MainActivity.this, ChatActivity.class));
         }
     }
 }

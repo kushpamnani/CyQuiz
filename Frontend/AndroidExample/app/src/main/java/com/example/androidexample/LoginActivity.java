@@ -26,9 +26,16 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity{
     private Button login, create;
     private TextView name,pass,status;
+    static String Username;
     JSONObject User;
 
-
+    /**
+     * gets username
+     * @return
+     */
+    public static String getUsername(){
+        return Username;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +50,7 @@ public class LoginActivity extends AppCompatActivity{
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Username = name.getText().toString();
                 LoginReq(login_check+"/"+name.getText().toString()+"/"+pass.getText().toString());
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
@@ -54,6 +62,7 @@ public class LoginActivity extends AppCompatActivity{
             }
         });
     }
+
     private void LoginReq(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.GET,
