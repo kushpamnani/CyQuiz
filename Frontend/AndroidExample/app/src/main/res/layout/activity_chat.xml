@@ -26,19 +26,24 @@ android:orientation="vertical">
 </LinearLayout>
 
 
-
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="650dp">
-
-    <TextView
-        android:id="@+id/tx1"
+    <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="550dp">
+
+        <TextView
+            android:id="@+id/tx1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="The Conversation will appear here:\n"
+            android:textSize="20dp" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/ChatBack"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="The Conversation will appear here:\n"
-        android:textSize="20dp" />
-</ScrollView>
+        android:text="Back" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

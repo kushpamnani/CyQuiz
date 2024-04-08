@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 public interface MapRepository extends JpaRepository<Map, Long> {
-    
+
     Map findById(int id);
 
     @Transactional

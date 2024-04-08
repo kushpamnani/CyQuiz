@@ -62,20 +62,21 @@ public class UserController {
         }
     }
 
-    @GetMapping(path = "/users")
-    User getUserByNameAndPassword(@RequestBody Student u) {
-        User user = studentRepository.findByName(u.getName());
-        User user2 = teacherRepository.findByName(u.getName());
-        if (user != null && user.getPassword().equals(u.getPassword())) {
+    @GetMapping(path = "/users/{name}")
+    User getUserByName(@PathVariable String name) {
+        User user = studentRepository.findByName(name);
+        User teacher = teacherRepository.findByName(name);
+        if (user != null) {
             return user;
         }
-        else if (user2 != null && user2.getPassword().equals(u.getPassword())) {
-            return user2;
+        else if (teacher != null) {
+            return teacher;
         }
         else {
             return null;
         }
     }
+
 
 //    @PostMapping(path = "/users")
 //    <T> T createUser(@RequestBody User user){

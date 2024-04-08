@@ -1,6 +1,7 @@
 package Entities_Controllers.Flashcards;
 
 import Entities_Controllers.Enemies.Enemy;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -17,6 +18,7 @@ public class Flashcard {
     private String option1;
     private String option2;
     private String option3;
+    @JsonIgnoreProperties("flashcard")
     @OneToMany
     @JoinColumn(name="enemy_id")
     private Set<Enemy> enemies;

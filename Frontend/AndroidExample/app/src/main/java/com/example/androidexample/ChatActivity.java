@@ -2,8 +2,10 @@ package com.example.androidexample;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,10 +16,10 @@ import java.util.Objects;
 
 public class ChatActivity extends AppCompatActivity implements WebSocketListener{
 
-    private Button sendBtn;
+    private Button sendBtn,back;
     private EditText msgEtx;
     private TextView msgTv;
-    private String username;
+    private String username,url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +31,19 @@ public class ChatActivity extends AppCompatActivity implements WebSocketListener
         msgEtx = (EditText) findViewById(R.id.msgEdt);
         msgTv = (TextView) findViewById(R.id.tx1);
         username = LoginActivity.getUsername();
+        back = findViewById(R.id.ChatBack);
+        url = "ws://10.0.2.2:8080/chat/";
 
         /* connect this activity to the websocket instance */
+        WebSocketManager.getInstance().connectWebSocket(url+username);
         WebSocketManager.getInstance().setWebSocketListener(ChatActivity.this);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WebSocketManager.getInstance().disconnectWebSocket();
+                startActivity(new Intent(ChatActivity.this, MainActivity.class));
+            }
+        });
 
         /* send button listener */
         sendBtn.setOnClickListener(v -> {

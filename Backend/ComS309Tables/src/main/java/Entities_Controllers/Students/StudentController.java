@@ -2,11 +2,15 @@ package Entities_Controllers.Students;
 
 import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Classrooms.ClassroomRepository;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrationsRepository;
 import Entities_Controllers.Teachers.TeacherRepository;
 import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Statement;
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -25,6 +29,9 @@ public class StudentController {
 
     @Autowired
     TeacherRepository teacherRepository;
+
+    @Autowired
+    Classroom_registrationsRepository classroom_registrationsRepository;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -54,33 +61,19 @@ public class StudentController {
         if(student == null) {
             throw new RuntimeException("student id does not exist");
         }
-        else if (request.getId() != id){
-            throw new RuntimeException("path variable id does not match student request id");
-        }
 
+        request.setId(student.getId());
         studentRepository.save(request);
         return studentRepository.findById(id);
     }
 
 
-//    @PutMapping("/students/{studentId}/role/{roleId}")
-//    public ResponseEntity<?> assignRoleToStudent(@PathVariable Integer studentId, @PathVariable Integer roleId) {
-//        Optional<Student> studentOptional = studentRepository.findById(studentId);
-//        //Optional<Role> roleOptional = roleRepository.findById(roleId);
-////        if (!studentOptional.isPresent() || !roleOptional.isPresent()) {
-////            return ResponseEntity.notFound().build();
-////        }
-//        Student student = studentOptional.get();
-////        Role role = roleOptional.get();
-////        student.setRole(role); // This assumes a setRole method in your Student entity
-//        studentRepository.save(student);
-//        return ResponseEntity.ok("Role assigned successfully");
     @PutMapping("/students/{studentId}/classrooms/{classroomId}")
-    String assignStudentToClassroom(@PathVariable int studentId, @PathVariable int classroomId) {
+    Classroom_registrations assignStudentToClassroom(@PathVariable int studentId, @PathVariable int classroomId) {
         Student student = studentRepository.findById(studentId);
         Classroom classroom = classroomRepository.findById(classroomId);
         if(student == null || classroom == null)
-            return failure;
+            return null;
 
         Classroom_registrations cr = new Classroom_registrations(student, classroom);
         student.addClassroomRegistration(cr);
@@ -88,15 +81,15 @@ public class StudentController {
 
         studentRepository.save(student);
         classroomRepository.save(classroom);
-        return success;
+        return cr;
     }
 
-    @PutMapping("/students/{studentId}/classrooms/{code}")
-    String assignStudentToClassroomFromCode(@PathVariable int studentId, @PathVariable int code) {
+    @PutMapping("/students/{studentId}/code/{code}")
+    Classroom_registrations assignStudentToClassroomFromCode(@PathVariable int studentId, @PathVariable int code) {
         Student student = studentRepository.findById(studentId);
         Classroom classroom = classroomRepository.findByCode(code);
         if(student == null || classroom == null)
-            return failure;
+            return null;
 
         Classroom_registrations cr = new Classroom_registrations(student, classroom);
         student.addClassroomRegistration(cr);
@@ -104,7 +97,7 @@ public class StudentController {
 
         studentRepository.save(student);
         classroomRepository.save(classroom);
-        return success;
+        return cr;
     }
 
 //    @PutMapping("/students/{studentId}/laptops/{laptopId}")

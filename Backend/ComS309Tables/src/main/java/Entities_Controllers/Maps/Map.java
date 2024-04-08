@@ -9,9 +9,9 @@ import java.util.Set;
 import static jakarta.persistence.CascadeType.*;
 
 /**
- * 
+ *
  * @author Dalton Clark
- * 
+ *
  */
 @Entity
 public class Map {
@@ -19,15 +19,15 @@ public class Map {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int seed;
+    private String seed;
     private int health;
     @JsonIgnoreProperties("map")
-    @OneToOne(mappedBy="map")
+    @OneToOne
     @JoinColumn(name = "classroom_registration_id")
     private Classroom_registrations classroomRegistration;
 
 
-    public Map(int seed, int health) {
+    public Map(String seed, int health) {
         this.seed = seed;
         this.health = health;
     }
@@ -45,11 +45,11 @@ public class Map {
         this.id = id;
     }
 
-    public int getSeed() {
+    public String getSeed() {
         return seed;
     }
 
-    public void setSeed(int seed) {
+    public void setSeed(String seed) {
         this.seed = seed;
     }
 
