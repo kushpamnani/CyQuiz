@@ -274,7 +274,7 @@ public class MapActivity extends AppCompatActivity {
         hp=Math.min(100,hp+amount);
         info.put("heath", Integer.toString(hp));
         if(hp<=0){
-            makeMapDel(url);
+            makeMapDel(url+"maps/"+info.get("id"));
         }
     }
     void setHp(int amount){
@@ -447,6 +447,7 @@ public class MapActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+
     private void makeMapSave(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.POST,
