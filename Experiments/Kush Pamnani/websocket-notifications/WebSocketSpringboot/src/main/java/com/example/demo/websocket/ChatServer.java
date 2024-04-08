@@ -50,16 +50,11 @@ public class ChatServer {
      */
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) throws IOException {
-
-        // server side log
-        logger.info("[onOpen] " + username);
-
         // Handle the case of a duplicate username
         if (usernameSessionMap.containsKey(username)) {
             session.getBasicRemote().sendText("Username already exists");
             session.close();
-        }
-        else {
+        } else {
             // map current session with username
             sessionUsernameMap.put(session, username);
 
@@ -67,13 +62,12 @@ public class ChatServer {
             usernameSessionMap.put(username, session);
 
             // send to the user joining in
-            sendMessageToPArticularUser(username, "Welcome to the chat server, "+username);
+            sendMessageToPArticularUser(username, "Player \"" + username + "\" has joined the game");
 
             // send to everyone in the chat
-            broadcast("User: " + username + " has Joined the Chat");
+            broadcast("Player \"" + username + "\" has joined the game");
         }
     }
-
     /**
      * Handles incoming WebSocket messages from a client.
      *
@@ -115,21 +109,22 @@ public class ChatServer {
      *
      * @param session The WebSocket session that is being closed.
      */
+    /**
+     * Handles the closure of a WebSocket connection.
+     *
+     * @param session The WebSocket session that is being closed.
+     */
     @OnClose
     public void onClose(Session session) throws IOException {
-
         // get the username from session-username mapping
         String username = sessionUsernameMap.get(session);
-
-        // server side log
-        logger.info("[onClose] " + username);
 
         // remove user from memory mappings
         sessionUsernameMap.remove(session);
         usernameSessionMap.remove(username);
 
         // send the message to chat
-        broadcast(username + " disconnected");
+        broadcast("Player \"" + username + "\" has disconnected");
     }
 
     /**

@@ -26,3 +26,11 @@ function send() {  // this is how to send messages
     var content = document.getElementById("msg").value;
     ws.send(content);
 }
+
+function disconnect() {
+    // Close WebSocket connection
+    ws.close();
+
+    // Clear log
+    document.getElementById("log").value = "";
+}
