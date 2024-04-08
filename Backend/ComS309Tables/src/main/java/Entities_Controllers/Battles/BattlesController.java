@@ -3,6 +3,7 @@ package Entities_Controllers.Battles;
 import Entities_Controllers.Bosses.Boss;
 import Entities_Controllers.Bosses.BossesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,10 +29,24 @@ public class BattlesController {
     }
 
     // Create a new battle
+    // Create a new battle
     @PostMapping("/battles")
-    public Battles createBattle(@RequestBody Battles battle) {
-        return battlesRepository.save(battle);
+    public ResponseEntity<Battles> createBattle(@RequestBody Battles battle) {
+        // Check if the battle has an associated boss
+        Boss boss = battle.getBoss();
+        if (boss != null) {
+            // Check if the boss entity is already saved or not
+            if (boss.getId() == 0) {
+                // If not saved, save the boss entity first
+                boss = bossesRepository.save(boss);
+            }
+        }
+
+        // Save the battle entity
+        Battles createdBattle = battlesRepository.save(battle);
+        return ResponseEntity.ok().body(createdBattle);
     }
+
 
     // Update an existing battle
     @PutMapping("/battles/{id}")
@@ -45,11 +60,13 @@ public class BattlesController {
             Boss updatedBoss = updatedBattle.getBoss();
             if (updatedBoss != null) {
                 // Check if the Boss entity is already saved or not
-                if (updatedBoss.getId() == 0) {
+                if (updatedBoss.getId() != 0 && bossesRepository.existsById(updatedBoss.getId())) {
+                    existingBattle.setBoss(updatedBoss);
+                } else {
                     // If not saved, save the Boss entity first
                     updatedBoss = bossesRepository.save(updatedBoss);
+                    existingBattle.setBoss(updatedBoss);
                 }
-                existingBattle.setBoss(updatedBoss);
             }
 
             return battlesRepository.save(existingBattle);

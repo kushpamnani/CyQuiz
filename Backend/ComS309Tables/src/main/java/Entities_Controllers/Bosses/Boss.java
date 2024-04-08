@@ -14,8 +14,8 @@ public class Boss {
 
     private String name;
     private int health;
-    private int damage;
-    private int defenseStat;
+    private int attack; // Changed from damage
+    private int defense; // Changed from defenseStat
     private String flashcards;
 
     // Getters and setters
@@ -43,20 +43,20 @@ public class Boss {
         this.health = health;
     }
 
-    public int getDamage() {
-        return damage;
+    public int getAttack() { // Changed from getDamage
+        return attack;
     }
 
-    public void setDamage(int damage) {
-        this.damage = damage;
+    public void setAttack(int attack) { // Changed from setDamage
+        this.attack = attack;
     }
 
-    public int getDefenseStat() {
-        return defenseStat;
+    public int getDefense() { // Changed from getDefenseStat
+        return defense;
     }
 
-    public void setDefenseStat(int defenseStat) {
-        this.defenseStat = defenseStat;
+    public void setDefense(int defense) { // Changed from setDefenseStat
+        this.defense = defense;
     }
 
     public String getFlashcards() {

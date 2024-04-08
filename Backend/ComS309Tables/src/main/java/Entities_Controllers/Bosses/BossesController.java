@@ -36,8 +36,8 @@ public class BossesController {
         if (existingBoss != null) {
             existingBoss.setName(updatedBoss.getName());
             existingBoss.setHealth(updatedBoss.getHealth());
-            existingBoss.setDamage(updatedBoss.getDamage());
-            existingBoss.setDefenseStat(updatedBoss.getDefenseStat());
+            existingBoss.setAttack(updatedBoss.getAttack()); // Changed from getDamage
+            existingBoss.setDefense(updatedBoss.getDefense()); // Changed from getDefenseStat
             existingBoss.setFlashcards(updatedBoss.getFlashcards());
             return bossesRepository.save(existingBoss);
         } else {
@@ -56,4 +56,3 @@ public class BossesController {
         }
     }
 }
-
