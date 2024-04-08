@@ -61,9 +61,6 @@ public class StudentController {
         if(student == null) {
             throw new RuntimeException("student id does not exist");
         }
-        else if (request.getId() != id){
-            throw new RuntimeException("path variable id does not match student request id");
-        }
 
         request.setId(student.getId());
         studentRepository.save(request);

@@ -73,9 +73,6 @@ public class Classroom_registrationsController {
         if(classroom_registration == null) {
             throw new RuntimeException("classroom id does not exist");
         }
-        else if (request.getId() != id){
-            throw new RuntimeException("path variable id does not match classroom request id");
-        }
 
         request.setId(classroom_registration.getId());
         classroom_registrationsRepository.save(request);

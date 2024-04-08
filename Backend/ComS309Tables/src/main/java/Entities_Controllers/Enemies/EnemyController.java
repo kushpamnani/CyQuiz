@@ -53,9 +53,6 @@ public class EnemyController {
         if(enemy == null) {
             throw new RuntimeException("enemy id does not exist");
         }
-        else if (request.getId() != id){
-            throw new RuntimeException("path variable id does not match enemy request id");
-        }
 
         request.setId(enemy.getId());
         request.setFlashcard(enemy.getFlashcard());

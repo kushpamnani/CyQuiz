@@ -109,9 +109,6 @@ public class TeacherController {
         if(teacher == null) {
             throw new RuntimeException("classroom id does not exist");
         }
-        else if (request.getId() != id){
-            throw new RuntimeException("path variable id does not match classroom request id");
-        }
 
         request.setId(teacher.getId());
         teacherRepository.save(request);

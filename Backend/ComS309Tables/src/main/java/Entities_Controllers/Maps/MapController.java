@@ -58,10 +58,8 @@ public class MapController {
         if(map == null) {
             throw new RuntimeException("map id does not exist");
         }
-        else if (request.getId() != id){
-            throw new RuntimeException("path variable id does not match map request id");
-        }
 
+        request.setClassroomRegistration(map.getClassroomRegistration());
         request.setId(map.getId());
         mapRepository.save(request);
         return mapRepository.findById(id);
