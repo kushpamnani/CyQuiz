@@ -1,6 +1,7 @@
 package Entities_Controllers.Events;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/events")
 public class EventsController {
-
     @Autowired
     private EventsRepository eventsRepository;
 
@@ -36,8 +36,11 @@ public class EventsController {
     public ResponseEntity<Events> updateEvent(@PathVariable Long id, @RequestBody Events eventDetails) {
         return eventsRepository.findById(id)
                 .map(existingEvent -> {
-                    existingEvent.setType(eventDetails.getType());
+                    existingEvent.setTitle(eventDetails.getTitle());
                     existingEvent.setDescription(eventDetails.getDescription());
+                    existingEvent.setCondition1(eventDetails.getCondition1());
+                    existingEvent.setCondition2(eventDetails.getCondition2());
+                    existingEvent.setHpChange(eventDetails.getHpChange());
                     Events updatedEvent = eventsRepository.save(existingEvent);
                     return ResponseEntity.ok(updatedEvent);
                 }).orElseGet(() -> ResponseEntity.notFound().build());
