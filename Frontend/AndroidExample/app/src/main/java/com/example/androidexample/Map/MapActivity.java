@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.androidexample.ChatActivity;
 import com.example.androidexample.EnemyCreatorActivity;
 import com.example.androidexample.FlashCardActivity;
 import com.example.androidexample.LoginActivity;
@@ -37,16 +38,17 @@ public class MapActivity extends AppCompatActivity {
     static Button a_1, a_2, a_3, b_1, b_2, b_3, b_4, c_1, c_2, boss;
     static TextView start;
     Button option1, option2, option3, option4, load, New, CreateEvent;
-    TextView question;
+    TextView question,desciption,Effect;
     StringBuilder seed;
     char type;
     static int hp;
     static char a_1_Type, a_2_Type, a_3_Type, b_1_Type, b_2_Type, b_3_Type, b_4_Type, c_1_Type, c_2_Type;
     String  positon;
-    private String  url,url_event;
+    private String  url,url_event,id;
     private JSONObject info,RandomEvent;
 
     protected void onCreate(Bundle savedInstanceState) {
+        info = new JSONObject();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_load_map);
         New = findViewById(R.id.MapNew);
@@ -55,27 +57,28 @@ public class MapActivity extends AppCompatActivity {
         MapGenerator map = new MapGenerator();
         New.setText("New game");
         load.setText("Load game");
-        url = "http://coms-309-031.class.las.iastate.edu:8080/"+"/maps";
+        url = "http://coms-309-031.class.las.iastate.edu:8080/";
         url_event = "https://f809797b-3a5d-474e-8b1a-5aebf6b7e323.mock.pstmn.io/";
         New.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 positon = "start";
                 setUi();
+                seed = new StringBuilder(map.NewMap());
                 try {
                     setPositon('0','0');
-                    info.put("hp",hp);
+                    info.put("heath",hp);
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-                seed = new StringBuilder(map.NewMap());
-                makeMapSave(url);
+                makeMapSave(url+"/maps");
             }
         });
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                makeMapReqest(url);
+                makemapidreq(url+"users"+LoginActivity.getUsername());
+                makeMapReqest(url+"maps"+id);
 
             }
         });
@@ -269,7 +272,7 @@ public class MapActivity extends AppCompatActivity {
     }
     void changehp(int amount) throws JSONException {
         hp=Math.min(100,hp+amount);
-        info.put("hp",hp);
+        info.put("heath", Integer.toString(hp));
         if(hp<=0){
             makeMapDel(url);
         }
@@ -324,8 +327,28 @@ public class MapActivity extends AppCompatActivity {
     void RandomEvents() {
         makerandomEventreq(url_event);
     }
-    void RandomEvents(JSONObject event){
-
+    void RandomEvents(JSONObject event) throws JSONException {
+        // event.put("Condition 1","");
+        //event.put("Condition 2", "");
+        desciption.setText("desciption");
+        if(event.getString("Condition 1")!=""&&event.getString("Condition 2")!=""){
+            desciption.setText("if hp is more then" +event.getString("Condition 1")+"and hp is less then"+ event.getString("Condition 2")+"change hp by"+event.getString("Hp change"));
+            if(hp>Integer.parseInt(event.getString("Condition 1"))&&hp<Integer.parseInt(event.getString("Condition 2"))){
+                changehp(Integer.getInteger(event.getString("Hp change")));
+            }
+        }
+        else if(event.getString("Condition 1")!=""){
+            desciption.setText("if hp is more then" +event.getString("Condition 1")+"change hp by"+event.getString("Hp change"));
+            if(hp>Integer.parseInt(event.getString("Condition 1"))){
+                changehp(Integer.getInteger(event.getString("Hp change")));
+            }
+        }
+        else if(event.getString("Condition 2")!=""){
+            desciption.setText("if hp is less then" +event.getString("Condition 2")+"change hp by"+event.getString("Hp change"));
+            if(hp<Integer.parseInt(event.getString("Condition 1"))){
+                changehp(Integer.getInteger(event.getString("Hp change")));
+            }
+        }
     }
 
     void makeJsonArrayReq(String url) {
@@ -387,6 +410,10 @@ public class MapActivity extends AppCompatActivity {
                             MapGenerator map = new MapGenerator();
                             setUi();
                             seed= new StringBuilder(response.getString("seed").toString());
+                            info.put("seed",response.get("seed"));
+                            id=response.getString("id").toString();
+                            info.put("id",response.get("id").toString());
+                            setHp((Integer) response.get("heath"));
                             map.newMap(response.getString("seed"));
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
@@ -582,7 +609,54 @@ public class MapActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("Volley Response", response.toString());
-                        RandomEvents(response);
+                        try {
+                            RandomEvents(response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    private void makemapidreq(String url) {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        try {
+                           id = response.getString("map");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
                     }
                 },
                 new Response.ErrorListener() {
