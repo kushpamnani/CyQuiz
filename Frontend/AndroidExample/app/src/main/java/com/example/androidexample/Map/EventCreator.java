@@ -15,6 +15,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.androidexample.LoginActivity;
 import com.example.androidexample.R;
 import com.example.androidexample.VolleySingleton;
 
@@ -29,7 +30,7 @@ public class EventCreator extends AppCompatActivity {
     TextView title,hpmin,hpmax,healamount,deletename,description;
     Button save,delete;
     Checkable morehp,lesshp;
-    JSONObject event;
+    JSONObject event = new JSONObject();;
     String url;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,33 +45,31 @@ public class EventCreator extends AppCompatActivity {
         save = findViewById(R.id.EventSave);
         deletename = findViewById(R.id.EventDelete_name);
         delete=findViewById(R.id.EventDelete);
-        url="http://coms-309-031.class.las.iastate.edu:8080/event";
-
-        event = new JSONObject();
+        url="http://coms-309-031.class.las.iastate.edu:8080/events";
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
                     event.put("title",title.getText().toString());
-                    event.put("Description",description.getText().toString());
+                    event.put("description",description.getText().toString());
                     if (morehp.isChecked()&&lesshp.isChecked()){
-                        event.put("Condition 1",hpmax.getText().toString());
-                        event.put("Condition 2",hpmin.getText().toString());
+                        event.put("condition1",hpmax.getText().toString());
+                        event.put("condition2",hpmin.getText().toString());
                     }
                     else if (morehp.isChecked()){
-                        event.put("Condition 1",hpmax.getText().toString());
-                        event.put("Condition 2", "");
+                        event.put("condition1",hpmax.getText().toString());
+                        event.put("condition2", "");
                     }
                     else if (lesshp.isChecked()){
-                        event.put("Condition 1","");
-                        event.put("Condition 2", hpmin.getText().toString());
+                        event.put("condition1","");
+                        event.put("condition2", hpmin.getText().toString());
                     }
                     else{
-                        event.put("Condition 1","");
-                        event.put("Condition 2", "");
+                        event.put("condition1","");
+                        event.put("condition2", "");
                     }
-                    event.put("Hp change",healamount.getText().toString());
-                    makerandomEventReq(url);
+                    event.put("hp_change",healamount.getText().toString());
+                    makerandomEventSave(url);
                 }
                 catch (JSONException e) {
                     throw new RuntimeException(e);
@@ -106,7 +105,7 @@ public class EventCreator extends AppCompatActivity {
                             int i =0;
                             boolean found = false;
                             while(i<response.length()){
-                                if(event.getString("title")==response.getJSONObject(i).getString("title")){
+                                if(title.getText().toString()==response.getJSONObject(i).getString("title")){
                                     makerandomEventUpdate(url);
 
                                 }

@@ -46,6 +46,7 @@ public class MapActivity extends AppCompatActivity {
     String  positon;
     private String  url,url_event,id;
     private JSONObject info,RandomEvent;
+    private JSONObject userInfo;
 
     protected void onCreate(Bundle savedInstanceState) {
         info = new JSONObject();
@@ -59,6 +60,11 @@ public class MapActivity extends AppCompatActivity {
         load.setText("Load game");
         url = "http://coms-309-031.class.las.iastate.edu:8080/";
         url_event = "https://f809797b-3a5d-474e-8b1a-5aebf6b7e323.mock.pstmn.io/";
+        try {
+            userInfo = LoginActivity.getUserInfo().getJSONArray("classroomRegistrations").getJSONObject(0);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         New.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,9 +83,14 @@ public class MapActivity extends AppCompatActivity {
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                makemapidreq(url+"users"+LoginActivity.getUsername());
-                makeMapReqest(url+"maps"+id);
-
+                setUi();
+                try {
+                    seed = new StringBuilder(userInfo.getJSONObject("map").getString("seed"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                startingPositon(String.valueOf(seed));
+                map.newMap(String.valueOf(seed));
             }
         });
         CreateEvent.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +128,11 @@ public class MapActivity extends AppCompatActivity {
                     }
                     a_1.setText(a_1.getText().toString() + "*");
                     event(a_1_Type);
-                    makeMapUpdate(url);
+                    try {
+                        makeMapUpdate(url+"/maps/"+userInfo.getJSONObject("map").getString("id"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -133,7 +148,11 @@ public class MapActivity extends AppCompatActivity {
                     }
                     a_2.setText(a_2.getText().toString() + "*");
                     event(a_2_Type);
-                    makeMapUpdate(url);
+                    try {
+                        makeMapUpdate(url+"/maps/"+userInfo.getJSONObject("map").getString("id"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -149,7 +168,11 @@ public class MapActivity extends AppCompatActivity {
                     }
                     a_3.setText(a_3.getText().toString() + "*");
                     event(a_3_Type);
-                    makeMapUpdate(url);
+                    try {
+                        makeMapUpdate(url+"/maps/"+userInfo.getJSONObject("map").getString("id"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -165,7 +188,11 @@ public class MapActivity extends AppCompatActivity {
                     }
                     b_1.setText(b_1.getText().toString() + "*");
                     event(b_1_Type);
-                    makeMapUpdate(url);
+                    try {
+                        makeMapUpdate(url+"/maps/"+userInfo.getJSONObject("map").getString("id"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -181,7 +208,11 @@ public class MapActivity extends AppCompatActivity {
                     }
                     b_2.setText(b_2.getText().toString() + "*");
                     event(b_2_Type);
-                    makeMapUpdate(url);
+                    try {
+                        makeMapUpdate(url+"/maps/"+userInfo.getJSONObject("map").getString("id"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -197,7 +228,11 @@ public class MapActivity extends AppCompatActivity {
                     }
                     b_3.setText(b_3.getText().toString() + "*");
                     event(b_3_Type);
-                    makeMapUpdate(url);
+                    try {
+                        makeMapUpdate(url+"/maps/"+userInfo.getJSONObject("map").getString("id"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -213,7 +248,11 @@ public class MapActivity extends AppCompatActivity {
                     }
                     b_4.setText(b_4.getText().toString() + "*");
                     event(b_4_Type);
-                    makeMapUpdate(url);
+                    try {
+                        makeMapUpdate(url+"/maps/"+userInfo.getJSONObject("map").getString("id"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -229,7 +268,11 @@ public class MapActivity extends AppCompatActivity {
                     }
                     c_1.setText(c_1.getText().toString() + "*");
                     event(c_1_Type);
-                    makeMapUpdate(url);
+                    try {
+                        makeMapUpdate(url+"/maps/"+userInfo.getJSONObject("map").getString("id"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
 
             }
@@ -246,7 +289,11 @@ public class MapActivity extends AppCompatActivity {
                     }
                     c_2.setText(c_2.getText().toString() + "*");
                     event(c_2_Type);
-                    makeMapUpdate(url);
+                    try {
+                        makeMapUpdate(url+"/maps/"+userInfo.getJSONObject("map").getString("id"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });
@@ -274,7 +321,7 @@ public class MapActivity extends AppCompatActivity {
         hp=Math.min(100,hp+amount);
         info.put("heath", Integer.toString(hp));
         if(hp<=0){
-            makeMapDel(url+"maps/"+info.get("id"));
+            makeMapDel(url+"maps/"+userInfo.getString("id"));
         }
     }
     void setHp(int amount){
