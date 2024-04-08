@@ -38,6 +38,8 @@ public class OnlineTrackerActivity extends AppCompatActivity implements WebSocke
         helperText = findViewById(R.id.textStatement);
         debugText = findViewById(R.id.debugText);
 
+        debugText.setText(getOnlineList().toString());
+
 
         onlineSet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +110,7 @@ public class OnlineTrackerActivity extends AppCompatActivity implements WebSocke
         runOnUiThread(() -> {
             isOnline = false;
             helperText.setText("offline");
+
 
 
         });
