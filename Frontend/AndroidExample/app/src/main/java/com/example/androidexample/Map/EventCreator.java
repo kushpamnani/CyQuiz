@@ -44,7 +44,7 @@ public class EventCreator extends AppCompatActivity {
         save = findViewById(R.id.EventSave);
         deletename = findViewById(R.id.EventDelete_name);
         delete=findViewById(R.id.EventDelete);
-        url="";
+        url="http://coms-309-031.class.las.iastate.edu:8080/event";
 
         event = new JSONObject();
         save.setOnClickListener(new View.OnClickListener() {
@@ -80,17 +80,18 @@ public class EventCreator extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                event = new JSONObject();
-                try {
-                    event.put("title",deletename.getText().toString());
-                    makerandomEventdel(url);
-
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
+               makerandomEventGetDel(url);
             }
         });
 
+    }
+    private void delete(JSONArray deleted) throws JSONException {
+        int i =0;
+        while(i<deleted.length()){
+            if(deleted.getJSONObject(i).get("title")== deletename.getText().toString()){
+                makerandomEventdel(url+"/"+deleted.getJSONObject(i).getString("id"));
+            }
+        }
     }
     private void makerandomEventReq(String url) {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
@@ -113,6 +114,48 @@ public class EventCreator extends AppCompatActivity {
                             if(!found){
                                 makerandomEventSave(url);
                             }
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrayRequest);
+    }
+    private void makerandomEventGetDel(String url) {
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Volley Response", response.toString());
+                        try {
+                            delete(response);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -222,7 +265,7 @@ public class EventCreator extends AppCompatActivity {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.DELETE,
                 url,
-                event,
+                null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
