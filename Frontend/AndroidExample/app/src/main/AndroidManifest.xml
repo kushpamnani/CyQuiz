@@ -28,6 +28,9 @@
             android:name=".JsonObjReqActivity"
             android:exported="false" />
         <activity
+            android:name=".OnlineTrackerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ImageReqActivity"
             android:exported="false" />
         <activity

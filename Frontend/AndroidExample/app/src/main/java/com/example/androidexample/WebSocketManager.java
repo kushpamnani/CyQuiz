@@ -83,6 +83,7 @@ public class WebSocketManager {
         }
     }
 
+
     /**
      * Disconnects the WebSocket connection, terminating the communication with the
      * WebSocket server.

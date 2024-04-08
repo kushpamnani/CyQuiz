@@ -1,10 +1,14 @@
 package com.example.androidexample;
 
 
+import static com.example.androidexample.OnlineTrackerActivity.getOnlineList;
+import static com.example.androidexample.OnlineTrackerActivity.onlineCheck;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +34,7 @@ public class BossCreatorActivity extends AppCompatActivity {
     private TextView flashGet;
     private TextView errorText;
     private TextView defenseGet;
+    private Button addFlash;
     private TextView nameGet;
     private Button sendInfo;
     private Button updateButton;
@@ -38,6 +43,9 @@ public class BossCreatorActivity extends AppCompatActivity {
     private boolean flashcardExist = true;
     private TextView idGet;
     private Button getButton;
+    private ImageView onlineStar;
+    private ImageView offlineStar;
+    private TextView onlineList;
 
     private String baseURL = "http://coms-309-031.class.las.iastate.edu:8080";
 
@@ -57,6 +65,19 @@ public class BossCreatorActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.updateBtn);
         deleteButton = findViewById(R.id.deleteBtn);
         getButton = findViewById(R.id.getButton);
+        addFlash = findViewById(R.id.addCard);
+        onlineStar = findViewById(R.id.onlineStar);
+        offlineStar = findViewById(R.id.offlineStar);
+        onlineList = findViewById(R.id.onlineList);
+
+        if (onlineCheck()){
+            offlineStar.setVisibility(View.GONE);
+            onlineStar.setVisibility(View.VISIBLE);
+            onlineList.setText(getOnlineList().toString());
+        } else{
+            offlineStar.setVisibility(View.VISIBLE);
+            onlineStar.setVisibility(View.GONE);
+        }
 
 
         sendInfo.setOnClickListener(new View.OnClickListener() {
@@ -66,18 +87,23 @@ public class BossCreatorActivity extends AppCompatActivity {
                 try {
                     bossJSON.put("name", nameGet.getText().toString());
                     bossJSON.put("health", healthGet.getText().toString());
-                    bossJSON.put("damage", dmgGet.getText().toString());
+                    bossJSON.put("attack", dmgGet.getText().toString());
                     bossJSON.put("defense", defenseGet.getText().toString());
-                    bossJSON.put("flashcard", flashGet.getText().toString());
+                    //bossJSON.put("flashcard", flashGet.getText().toString());
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
+                makeJsonObjReq();
 
-                makeJsonArrayReq();
 
-                if (flashcardExist) {
-                    makeJsonObjReq();
-                }
+
+            }
+        });
+        addFlash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeJsonObjReqPutFlash();
+
 
 
             }
@@ -89,18 +115,20 @@ public class BossCreatorActivity extends AppCompatActivity {
                 try {
                     bossJSON.put("name", nameGet.getText().toString());
                     bossJSON.put("health", healthGet.getText().toString());
-                    bossJSON.put("damage", dmgGet.getText().toString());
+                    bossJSON.put("attack", dmgGet.getText().toString());
                     bossJSON.put("defense", defenseGet.getText().toString());
-                    bossJSON.put("flashcard", flashGet.getText().toString());
+                    bossJSON.put("id", idGet.getText().toString());
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
+                makeJsonObjReqPut();
 
-                makeJsonArrayReq();
 
-                if (flashcardExist) {
-                    makeJsonObjReqPut();
-                }
+//                makeJsonArrayReq();
+//
+//                if (flashcardExist) {
+//                    makeJsonObjReqPut();
+//                }
 
 
             }
@@ -186,6 +214,50 @@ public class BossCreatorActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
 
                 Request.Method.POST,
+                baseURL + "/enemies",
+                bossJSON,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        errorText.setText(response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    private void makeJsonObjReqPut() {
+
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+
+                Request.Method.PUT,
                 baseURL + "/enemies/" + idGet.getText().toString(),
                 bossJSON,
 
@@ -224,15 +296,15 @@ public class BossCreatorActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
-    private void makeJsonObjReqPut() {
+    private void makeJsonObjReqPutFlash() {
 
 
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
 
                 Request.Method.PUT,
-                baseURL + "/enemies",
-                bossJSON,
+                baseURL + "/enemies/" + idGet.getText().toString() + "/flashcards/" + flashGet.getText().toString(),
+                null,
 
                 new Response.Listener<JSONObject>() {
                     @Override

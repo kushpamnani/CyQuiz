@@ -1,9 +1,13 @@
 package com.example.androidexample;
 
+import static com.example.androidexample.OnlineTrackerActivity.getOnlineList;
+import static com.example.androidexample.OnlineTrackerActivity.onlineCheck;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,10 +40,14 @@ public class BattleCreatorActivity extends AppCompatActivity {
     private Button getButton;
     private TextView battleID;
     private boolean bossExist;
+    private ImageView onlineStar;
+    private ImageView offlineStar;
+    private TextView onlineList;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle_create);
+
 
         smallEnemies = findViewById(R.id.smallEnemies);
         largeEnemies = findViewById(R.id.largeEnemies);
@@ -50,6 +58,18 @@ public class BattleCreatorActivity extends AppCompatActivity {
         battleID = findViewById(R.id.battleID);
         displayText = findViewById(R.id.displayText);
         getButton = findViewById(R.id.getButtonBattle);
+        onlineStar = findViewById(R.id.onlineStar);
+        offlineStar = findViewById(R.id.offlineStar);
+        onlineList = findViewById(R.id.onlineList);
+
+        if (onlineCheck()){
+            offlineStar.setVisibility(View.GONE);
+            onlineStar.setVisibility(View.VISIBLE);
+            onlineList.setText(getOnlineList().toString());
+        } else{
+            offlineStar.setVisibility(View.VISIBLE);
+            onlineStar.setVisibility(View.GONE);
+        }
 
         battlePost.setOnClickListener(new View.OnClickListener() {
             @Override
