@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity{
     private TextView name,pass,status;
     static String Username;
     JSONObject User;
+    static JSONObject UserInfo;
 
     /**
      * gets username
@@ -35,6 +37,9 @@ public class LoginActivity extends AppCompatActivity{
      */
     public static String getUsername(){
         return Username;
+    }
+    public static JSONObject getUserInfo(){
+        return UserInfo;
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +77,10 @@ public class LoginActivity extends AppCompatActivity{
                     @Override
                     public void onResponse(JSONObject response) {
                         //Log.d("Volley Response", response.toString());
-                        //studentexample
-                        //passwrod123
+                        //example
+                        //example
                         if(response != null){
+                            UserInfo= response;
                             // if login successful
                             startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         }
