@@ -90,16 +90,17 @@ public class ClassroomController {
             throw new RuntimeException("path variable id does not match classroom request id");
         }
 
+        request.setId(classroom.getId());
         classroomRepository.save(request);
         return classroomRepository.findById(id);
     }
 
     @PutMapping("/classrooms/{classroomId}/students/{studentId}")
-    String assignClassroomToStudent(@PathVariable int classroomId, @PathVariable int studentId) {
+    Classroom_registrations assignClassroomToStudent(@PathVariable int classroomId, @PathVariable int studentId) {
         Student student = studentRepository.findById(studentId);
         Classroom classroom = classroomRepository.findById(classroomId);
         if(student == null || classroom == null)
-            return failure;
+            return null;
 
         Classroom_registrations cr = new Classroom_registrations(student, classroom);
         student.addClassroomRegistration(cr);
@@ -107,15 +108,15 @@ public class ClassroomController {
 
         studentRepository.save(student);
         classroomRepository.save(classroom);
-        return success;
+        return cr;
     }
 
-    @PutMapping("/classrooms/{code}/students/{studentId}")
-    String assignClassroomToStudentFromCode(@PathVariable int code, @PathVariable int studentId) {
+    @PutMapping("/classroom/code/{code}/students/{studentId}")
+    Classroom_registrations assignClassroomToStudentFromCode(@PathVariable int code, @PathVariable int studentId) {
         Student student = studentRepository.findById(studentId);
         Classroom classroom = classroomRepository.findByCode(code);
         if(student == null || classroom == null)
-            return failure;
+            return null;
 
         Classroom_registrations cr = new Classroom_registrations(student, classroom);
         student.addClassroomRegistration(cr);
@@ -123,7 +124,7 @@ public class ClassroomController {
 
         studentRepository.save(student);
         classroomRepository.save(classroom);
-        return success;
+        return cr;
     }
 
     @DeleteMapping(path = "/classrooms/{id}")

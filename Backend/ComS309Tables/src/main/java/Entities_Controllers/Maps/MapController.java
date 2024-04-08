@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Dalton Clark
- * 
+ *
  */
 
 @RestController
@@ -62,6 +62,7 @@ public class MapController {
             throw new RuntimeException("path variable id does not match map request id");
         }
 
+        request.setId(map.getId());
         mapRepository.save(request);
         return mapRepository.findById(id);
     }

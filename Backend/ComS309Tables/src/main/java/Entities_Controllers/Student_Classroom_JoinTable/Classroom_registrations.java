@@ -21,7 +21,7 @@ public class Classroom_registrations {
     private int id;
     @JsonIgnoreProperties({"classroomRegistrations", "password"})
     @ManyToOne
-    @JoinColumn(name = "student_id")
+    @JoinColumn
     Student student;
     @JsonIgnoreProperties("studentRegistrations")
     @ManyToOne

@@ -113,6 +113,7 @@ public class TeacherController {
             throw new RuntimeException("path variable id does not match classroom request id");
         }
 
+        request.setId(teacher.getId());
         teacherRepository.save(request);
         return teacherRepository.findById(id);
     }

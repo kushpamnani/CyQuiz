@@ -40,7 +40,7 @@ public class EnemyController {
 
     @PostMapping(path = "/enemies")
     <T> T createEnemy(@RequestBody Enemy enemy){
-        if (enemy == null || enemy == enemyRepository.findByName(enemy.getName()) )
+        if (enemy == null)
             return (T) failure;
         enemyRepository.save(enemy);
         return (T) enemy;
@@ -57,6 +57,8 @@ public class EnemyController {
             throw new RuntimeException("path variable id does not match enemy request id");
         }
 
+        request.setId(enemy.getId());
+        request.setFlashcard(enemy.getFlashcard());
         enemyRepository.save(request);
         return enemyRepository.findById(id);
     }

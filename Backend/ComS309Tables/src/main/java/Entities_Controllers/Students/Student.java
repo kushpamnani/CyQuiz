@@ -15,7 +15,7 @@ import static jakarta.persistence.CascadeType.*;
  * 
  */
 @Entity
-public class Student implements User {
+public class Student implements User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

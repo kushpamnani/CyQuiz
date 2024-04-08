@@ -26,6 +26,7 @@ public class Enemy {
     private int health;
     private int attack;
     private int defense;
+    @JsonIgnoreProperties("enemies")
     @ManyToOne
     @JoinColumn(name="flashcard_id")
     private Flashcard flashcard;
@@ -43,7 +44,6 @@ public class Enemy {
     }
 
     public Enemy() {
-
     }
 
     // Getters and Setters

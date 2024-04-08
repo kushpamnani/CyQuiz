@@ -77,6 +77,7 @@ public class Classroom_registrationsController {
             throw new RuntimeException("path variable id does not match classroom request id");
         }
 
+        request.setId(classroom_registration.getId());
         classroom_registrationsRepository.save(request);
         return classroom_registrationsRepository.findById(id);
     }

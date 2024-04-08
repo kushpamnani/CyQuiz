@@ -14,7 +14,7 @@ import static jakarta.persistence.CascadeType.*;
  * @author Dalton Clark
  * 
  */
-public abstract interface User {
+public interface User {
 
     public String getName();
 
