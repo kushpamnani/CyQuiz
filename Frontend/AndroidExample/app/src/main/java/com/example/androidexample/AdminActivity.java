@@ -54,6 +54,7 @@ public class AdminActivity extends AppCompatActivity {
         ReqUrl ="https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Ban_List";
         BanUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Ban";
         UnbanUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Unban";
+        String rmv;
 
         makeJsonObjReq(ReqUrl);
         Ban.setOnClickListener(new View.OnClickListener() {
