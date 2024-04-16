@@ -40,7 +40,7 @@ public class FlashCardActivity extends AppCompatActivity {
     private Button Back;
     private Button Save;
     private Button Next;
-    private String BaseUrl;
+    private String Id;
     private String SqlUrl;
     private JSONObject FlashCard;
     private Date currentTime;
@@ -69,6 +69,7 @@ public class FlashCardActivity extends AppCompatActivity {
         Card_Number_int = 1;
         Card_Number.setText("1");
         FlashCard = new JSONObject();
+        Id = "";
         makeJsonArrayReq(SqlUrl);
         Next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +106,7 @@ public class FlashCardActivity extends AppCompatActivity {
 
                     try {
                         FlashCard.put("CardNumber", Card_Number.getText());
-                        makeJsonObjDel(BaseUrl + "Delete");
+                        makeJsonObjDel(SqlUrl + "/delete/"+Id);
                         Card_Number_int = Math.max(1,Card_Number_int-1);
                         Card_Number.setText(Integer.toString(Card_Number_int));
                         // if there is time can change this to use card_number_int so it all updates at once
@@ -169,6 +170,7 @@ public class FlashCardActivity extends AppCompatActivity {
      */
     private void Json_Parse(JSONArray response) throws JSONException {
         JSONObject FlashCard = response.getJSONObject(Card_Number_int);
+        Id = FlashCard.getString("id");
         Question.setText(FlashCard.getString("question"));
         answer.setText(FlashCard.getString("answer"));
         Wrong_1.setText(FlashCard.getString("option1"));
