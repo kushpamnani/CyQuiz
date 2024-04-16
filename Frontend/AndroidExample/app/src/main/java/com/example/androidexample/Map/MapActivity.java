@@ -71,7 +71,6 @@ public class MapActivity extends AppCompatActivity {
                 try {
                     makeMapDel(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
                 } catch (JSONException e) {
-                    throw new RuntimeException(e);
                 }
                 positon = "start";
                 setUi();
