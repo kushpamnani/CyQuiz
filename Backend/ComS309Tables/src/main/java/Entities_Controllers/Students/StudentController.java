@@ -61,8 +61,26 @@ public class StudentController {
         if(student == null) {
             throw new RuntimeException("student id does not exist");
         }
+        if (request.getName() != null && studentRepository.findByName(request.getName()) != null && student.getId() != studentRepository.findByName(request.getName()).getId() ) {
+            throw new RuntimeException("request name already exists in database");
+        }
 
-        request.setId(student.getId());
+        if (request.getId() == 0) {
+            request.setId(student.getId());
+        }
+        if (request.getName() == null) {
+            request.setName(student.getName());
+        }
+        if (request.getPassword() == null) {
+            request.setPassword(student.getPassword());
+        }
+        if (request.getClassroomRegistrations() == null) {
+            request.setClassroomRegistrations(student.getClassroomRegistrations());
+        }
+        if (request.getIsActive() == false) {
+            request.setIfActive(student.getIsActive());
+        }
+
         studentRepository.save(request);
         return studentRepository.findById(id);
     }

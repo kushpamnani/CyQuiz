@@ -54,8 +54,28 @@ public class EnemyController {
             throw new RuntimeException("enemy id does not exist");
         }
 
-        request.setId(enemy.getId());
-        request.setFlashcard(enemy.getFlashcard());
+        if (request.getId() == 0) {
+            request.setId(enemy.getId());
+        }
+        if (request.getName() == null) {
+            request.setName(enemy.getName());
+        }
+        if (request.getFlashcard() == null) {
+            request.setFlashcard(enemy.getFlashcard());
+        }
+        if (request.getAttack() == 0) {
+            request.setAttack(enemy.getAttack());
+        }
+        if (request.getDefense() == 0) {
+            request.setDefense(enemy.getDefense());
+        }
+        if (request.getHealth() == 0) {
+            request.setHealth(enemy.getHealth());
+        }
+        if (request.getTeacher() == null) {
+            request.setTeacher(enemy.getTeacher());
+        }
+
         enemyRepository.save(request);
         return enemyRepository.findById(id);
     }

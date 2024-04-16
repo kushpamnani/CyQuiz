@@ -109,8 +109,29 @@ public class TeacherController {
         if(teacher == null) {
             throw new RuntimeException("classroom id does not exist");
         }
+        if (request.getName() != null && teacherRepository.findByName(request.getName()) != null && teacher.getId() != teacherRepository.findByName(request.getName()).getId() ) {
+            throw new RuntimeException("request name already exists in database");
+        } // FIX THIS TO CHECK FOR ALL REPOSITORIES AND APPLY TO ALL USERS
 
-        request.setId(teacher.getId());
+        if (request.getId() == 0) {
+            request.setId(teacher.getId());
+        }
+        if (request.getName() == null) {
+            request.setName(teacher.getName());
+        }
+        if (request.getPassword() == null) {
+            request.setPassword(teacher.getPassword());
+        }
+        if (request.getClassrooms() == null) {
+            request.setClassrooms(teacher.getClassrooms());
+        }
+        if (request.getEnemies() == null) {
+            request.setEnemies(teacher.getEnemies());
+        }
+        if (request.getIsActive() == false) {
+            request.setIfActive(teacher.getIsActive());
+        }
+
         teacherRepository.save(request);
         return teacherRepository.findById(id);
     }
