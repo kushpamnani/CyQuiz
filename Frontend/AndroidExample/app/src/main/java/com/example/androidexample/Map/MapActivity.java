@@ -38,7 +38,7 @@ public class MapActivity extends AppCompatActivity {
     static Button a_1, a_2, a_3, b_1, b_2, b_3, b_4, c_1, c_2, boss;
     static TextView start;
     Button option1, option2, option3, option4, load, New, CreateEvent;
-    TextView question,desciption,Effect;
+    TextView question,desciption,Heath;
     StringBuilder seed;
     char type;
     static int hp;
@@ -73,6 +73,7 @@ public class MapActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                 }
                 positon = "start";
+                hp = 100;
                 setUi();
                 seed = new StringBuilder(map.NewMap());
                 try {
@@ -121,6 +122,8 @@ public class MapActivity extends AppCompatActivity {
         start = findViewById(R.id.Start);
         boss = findViewById(R.id.btnBoss);
         start.setText("start");
+        Heath = findViewById(R.id.Heath_val);
+        Heath.setText(Integer.toString(hp));
         a_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,10 +136,9 @@ public class MapActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     a_1.setText(a_1.getText().toString() + "*");
-                    event(a_1_Type);
                     try {
-                        info.put("id",userInfo.getJSONObject("map").getString("id"));
-                        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                        event(a_1_Type);
+                        update();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -155,10 +157,9 @@ public class MapActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     a_2.setText(a_2.getText().toString() + "*");
-                    event(a_2_Type);
                     try {
-                        info.put("id",userInfo.getJSONObject("map").getString("id"));
-                        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                        event(a_2_Type);
+                        update();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -177,10 +178,9 @@ public class MapActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     a_3.setText(a_3.getText().toString() + "*");
-                    event(a_3_Type);
                     try {
-                        info.put("id",userInfo.getJSONObject("map").getString("id"));
-                        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                        event(a_3_Type);
+                        update();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -198,9 +198,9 @@ public class MapActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     b_1.setText(b_1.getText().toString() + "*");
-                    event(b_1_Type);
                     try {
-                        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                        event(b_1_Type);
+                        update();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -218,9 +218,9 @@ public class MapActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     b_2.setText(b_2.getText().toString() + "*");
-                    event(b_2_Type);
                     try {
-                        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                        event(b_2_Type);
+                        update();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -238,9 +238,9 @@ public class MapActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     b_3.setText(b_3.getText().toString() + "*");
-                    event(b_3_Type);
                     try {
-                        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                        event(b_3_Type);
+                        update();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -258,9 +258,9 @@ public class MapActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     b_4.setText(b_4.getText().toString() + "*");
-                    event(b_4_Type);
                     try {
-                        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                        event(b_4_Type);
+                        update();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -278,9 +278,9 @@ public class MapActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     c_1.setText(c_1.getText().toString() + "*");
-                    event(c_1_Type);
                     try {
-                        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                        event(c_1_Type);
+                        update();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -299,9 +299,9 @@ public class MapActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     c_2.setText(c_2.getText().toString() + "*");
-                    event(c_2_Type);
                     try {
-                        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                        event(c_2_Type);
+                        update();
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -330,6 +330,7 @@ public class MapActivity extends AppCompatActivity {
     }
     void changehp(int amount) throws JSONException {
         hp=Math.min(100,hp+amount);
+        Heath.setText(Integer.toString(hp));
         info.put("heath", Integer.toString(hp));
         if(hp<=0){
             makeMapDel(url+"maps/"+userInfo.getString("id"));
@@ -337,17 +338,18 @@ public class MapActivity extends AppCompatActivity {
     }
     void setHp(int amount) throws JSONException {
         hp= amount;
+        Heath.setText(Integer.toString(hp));
         info.put("heath",String.valueOf(hp));
         if(hp<=0){
             makeMapDel(url);
         }
     }
 
-    void event(char event) {
+    void event(char event) throws JSONException {
         if (event == '0') {
             //todo call battle
         } else if (event == '1') {
-            hp = Math.min(100, hp + 20);
+            changehp(20);
         } else if (event == '2') {
             setContentView(R.layout.event_random_event);
             RandomEvents();
@@ -410,6 +412,11 @@ public class MapActivity extends AppCompatActivity {
                 changehp(Integer.getInteger(event.getString("Hp change")));
             }
         }
+    }
+    private void update() throws JSONException {
+        info.put("id",userInfo.getJSONObject("map").getString("id"));
+        info.put("hp",Integer.toString(hp));
+        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
     }
 
     void makeJsonArrayReq(String url) {
