@@ -3,6 +3,7 @@ package Entities_Controllers.Teachers;
 import java.util.List;
 import java.util.Random;
 
+import Entities_Controllers.Admin.AdminRepository;
 import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Classrooms.ClassroomRepository;
 import Entities_Controllers.Students.StudentRepository;
@@ -33,6 +34,9 @@ public class TeacherController {
     @Autowired
     TeacherRepository teacherRepository;
 
+    @Autowired
+    AdminRepository adminRepository;
+
     private final Random rand = new Random();
 
     private String success = "{\"message\":\"success\"}";
@@ -52,7 +56,7 @@ public class TeacherController {
 
     @PostMapping(path = "/teachers")
     <T> T createTeacher(@RequestBody Teacher teacher){
-        if (teacher == null || (teacherRepository.findByName(teacher.getName()) != null) || (studentRepository.findByName(teacher.getName()) != null) )
+        if (teacher == null || (teacherRepository.findByName(teacher.getName()) != null) || (studentRepository.findByName(teacher.getName()) != null) || (adminRepository.findByUsername(teacher.getName()) != null))
             return (T) failure;
         teacherRepository.save(teacher);
         return (T) teacher;
@@ -109,9 +113,18 @@ public class TeacherController {
         if(teacher == null) {
             throw new RuntimeException("classroom id does not exist");
         }
-        if (request.getName() != null && teacherRepository.findByName(request.getName()) != null && teacher.getId() != teacherRepository.findByName(request.getName()).getId() ) {
-            throw new RuntimeException("request name already exists in database");
-        } // FIX THIS TO CHECK FOR ALL REPOSITORIES AND APPLY TO ALL USERS
+        if (request.getName() != null) {
+            if ( teacherRepository.findByName(request.getName()) != null && teacher.getId() != teacherRepository.findByName(request.getName()).getId() ) {
+                throw new RuntimeException("request name already exists in teacher database");
+            }
+            if ( studentRepository.findByName(request.getName()) != null ) {
+                throw new RuntimeException("request name already exists in student database");
+            }
+            if ( adminRepository.findByUsername(request.getName()) != null ) {
+                throw new RuntimeException("request name already exists in admin database");
+            }
+        }
+
 
         if (request.getId() == 0) {
             request.setId(teacher.getId());
@@ -127,9 +140,6 @@ public class TeacherController {
         }
         if (request.getEnemies() == null) {
             request.setEnemies(teacher.getEnemies());
-        }
-        if (request.getIsActive() == false) {
-            request.setIfActive(teacher.getIsActive());
         }
 
         teacherRepository.save(request);

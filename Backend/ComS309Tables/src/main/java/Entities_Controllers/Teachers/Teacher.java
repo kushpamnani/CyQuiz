@@ -33,16 +33,14 @@ public class Teacher implements User {
     @JsonIgnoreProperties("teacher") // might need to fix later
     @OneToMany(mappedBy="teacher", cascade = CascadeType.ALL)
     private Set<Enemy> enemies;
-    private boolean ifActive;
 
     public Teacher(String name, String password) {
         this.name = name;
         this.password = password;
-        this.ifActive = true;
     }
 
     public Teacher() {
-        this.ifActive = true;
+
     }
 
     // =============================== Getters and Setters for each field ================================== //
@@ -92,12 +90,4 @@ public class Teacher implements User {
     }
 
     public void addEnemy(Enemy enemy) { this.enemies.add(enemy); }
-
-    public boolean getIsActive(){
-        return ifActive;
-    }
-
-    public void setIfActive(boolean ifActive){
-        this.ifActive = ifActive;
-    }
 }

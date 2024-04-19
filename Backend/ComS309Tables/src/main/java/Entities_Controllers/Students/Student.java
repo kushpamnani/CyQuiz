@@ -15,7 +15,7 @@ import static jakarta.persistence.CascadeType.*;
  * 
  */
 @Entity
-public class Student implements User{
+public class Student implements User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,17 +25,15 @@ public class Student implements User{
     @JsonIgnoreProperties("student")
     @OneToMany(mappedBy="student", cascade = {MERGE, REMOVE, REFRESH, DETACH})
     private Set<Classroom_registrations> classroomRegistrations;
-    private boolean ifActive;
 
 
     public Student(String name, String password) {
         this.name = name;
         this.password = password;
-        this.ifActive = true;
     }
 
     public Student() {
-        this.ifActive = true;
+
     }
 
     // Getters and Setters
@@ -74,11 +72,4 @@ public class Student implements User{
         this.classroomRegistrations.add(classroom_registration);
     }
 
-    public boolean getIsActive() {
-        return ifActive;
-    }
-
-    public void setIfActive(boolean ifActive) {
-        this.ifActive = ifActive;
-    }
 }

@@ -16,14 +16,7 @@ import static jakarta.persistence.CascadeType.*;
  */
 public interface User {
 
-    public String getName();
-
-    public void setName(String name);
-
     public String getPassword();
 
     public void setPassword(String password);
-    public boolean getIsActive();
-
-    public void setIfActive(boolean ifActive);
 }

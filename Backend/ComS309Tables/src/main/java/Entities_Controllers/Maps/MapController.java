@@ -59,9 +59,34 @@ public class MapController {
             throw new RuntimeException("map id does not exist");
         }
 
-        request.setClassroomRegistration(map.getClassroomRegistration());
-        request.setId(map.getId());
+        if (request.getId() == 0) {
+            request.setId(map.getId());
+        }
+        if (request.getSeed() == null) {
+            request.setSeed(map.getSeed());
+        }
+        if (request.getHealth() == 0) {
+            request.setHealth(map.getHealth());
+        }
+        if (request.getClassroomRegistration() == null) {
+            request.setClassroomRegistration(map.getClassroomRegistration());
+        }
+
         mapRepository.save(request);
+        return mapRepository.findById(id);
+    }
+
+    @PutMapping("/maps/{id}/health/{health}")
+    Map updateMapHealth(@PathVariable int id, @PathVariable int health){
+        Map map = mapRepository.findById(id);
+
+        if(map == null) {
+            throw new RuntimeException("map id does not exist");
+        }
+
+        map.setHealth(health);
+
+        mapRepository.save(map);
         return mapRepository.findById(id);
     }
 

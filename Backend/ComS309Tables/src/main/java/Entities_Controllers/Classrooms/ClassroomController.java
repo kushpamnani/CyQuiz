@@ -87,7 +87,22 @@ public class ClassroomController {
             throw new RuntimeException("classroom id does not exist");
         }
 
-        request.setId(classroom.getId());
+        if (request.getId() == 0) {
+            request.setId(classroom.getId());
+        }
+        if (request.getName() == null) {
+            request.setName(classroom.getName());
+        }
+        if (request.getCode() == 0) {
+            request.setCode(classroom.getCode());
+        }
+        if (request.getTeacher() == null) {
+            request.setTeacher(classroom.getTeacher());
+        }
+        if (request.getStudentRegistrations() == null) {
+            request.setStudentRegistrations(classroom.getStudentRegistrations());
+        }
+
         classroomRepository.save(request);
         return classroomRepository.findById(id);
     }

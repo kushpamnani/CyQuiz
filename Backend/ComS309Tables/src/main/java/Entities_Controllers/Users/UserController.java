@@ -3,6 +3,7 @@ package Entities_Controllers.Users;
 import java.util.ArrayList;
 import java.util.List;
 
+import Entities_Controllers.Admin.AdminRepository;
 import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Classrooms.ClassroomRepository;
 import Entities_Controllers.Students.Student;
@@ -36,6 +37,9 @@ public class UserController {
     @Autowired
     TeacherRepository teacherRepository;
 
+    @Autowired
+    AdminRepository adminRepository;
+
     private String success = "{\"success\": true}";
     private String failure = "{\"success\": false}";
 
@@ -43,6 +47,7 @@ public class UserController {
     List<User> getAllUsers(){
         List<User> list = new ArrayList<>(teacherRepository.findAll());
         list.addAll(studentRepository.findAll());
+        list.addAll(adminRepository.findAll());
         //admins added here
         return list;
     }
@@ -51,11 +56,15 @@ public class UserController {
     User getUserByNameAndPassword(@PathVariable String name, @PathVariable String password) {
         User user = studentRepository.findByName(name);
         User teacher = teacherRepository.findByName(name);
+        User admin = adminRepository.findByUsername(name);
         if (user != null && user.getPassword().equals(password)) {
             return user;
         }
         else if (teacher != null && teacher.getPassword().equals(password)) {
             return teacher;
+        }
+        else if (admin != null && admin.getPassword().equals(password)) {
+            return admin;
         }
         else {
             return null;
@@ -66,11 +75,15 @@ public class UserController {
     User getUserByName(@PathVariable String name) {
         User user = studentRepository.findByName(name);
         User teacher = teacherRepository.findByName(name);
+        User admin = adminRepository.findByUsername(name);
         if (user != null) {
             return user;
         }
         else if (teacher != null) {
             return teacher;
+        }
+        else if (admin != null) {
+            return admin;
         }
         else {
             return null;

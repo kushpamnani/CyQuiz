@@ -80,6 +80,48 @@ public class EnemyController {
         return enemyRepository.findById(id);
     }
 
+    @PutMapping("/enemies/{id}/attack/{attack}")
+    Enemy updateEnemyAttack(@PathVariable int id, @PathVariable int attack){
+        Enemy enemy = enemyRepository.findById(id);
+
+        if(enemy == null) {
+            throw new RuntimeException("enemy id does not exist");
+        }
+
+        enemy.setAttack(attack);
+
+        enemyRepository.save(enemy);
+        return enemyRepository.findById(id);
+    }
+
+    @PutMapping("/enemies/{id}/defense/{defense}")
+    Enemy updateEnemyDefense(@PathVariable int id, @PathVariable int defense){
+        Enemy enemy = enemyRepository.findById(id);
+
+        if(enemy == null) {
+            throw new RuntimeException("enemy id does not exist");
+        }
+
+        enemy.setDefense(defense);
+
+        enemyRepository.save(enemy);
+        return enemyRepository.findById(id);
+    }
+
+    @PutMapping("/enemies/{id}/health/{health}")
+    Enemy updateEnemyHealth(@PathVariable int id, @PathVariable int health){
+        Enemy enemy = enemyRepository.findById(id);
+
+        if(enemy == null) {
+            throw new RuntimeException("enemy id does not exist");
+        }
+
+        enemy.setHealth(health);
+
+        enemyRepository.save(enemy);
+        return enemyRepository.findById(id);
+    }
+
     @PutMapping("/enemies/{enemyId}/teacher/{teacherId}")
     String assignEnemyToClassroom(@PathVariable int enemyId, @PathVariable int teacherId) {
         Enemy enemy = enemyRepository.findById(enemyId);
