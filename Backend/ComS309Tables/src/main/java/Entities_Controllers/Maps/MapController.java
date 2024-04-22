@@ -1,9 +1,8 @@
 package Entities_Controllers.Maps;
 
-import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Classrooms.ClassroomRepository;
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrationsRepository;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registration;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrationRepository;
 import Entities_Controllers.Teachers.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +27,7 @@ public class MapController {
     TeacherRepository teacherRepository;
 
     @Autowired
-    Classroom_registrationsRepository classroom_registrationsRepository;
+    Classroom_registrationRepository classroom_registrationRepository;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -65,15 +64,13 @@ public class MapController {
         if (request.getSeed() == null) {
             request.setSeed(map.getSeed());
         }
-        if (request.getHealth() == 0) {
-            request.setHealth(map.getHealth());
-        }
+        request.setHealth(map.getHealth());
         if (request.getClassroomRegistration() == null) {
             request.setClassroomRegistration(map.getClassroomRegistration());
         }
 
         mapRepository.save(request);
-        return mapRepository.findById(id);
+        return mapRepository.findById(request.getId());
     }
 
     @PutMapping("/maps/{id}/health/{health}")
@@ -93,7 +90,7 @@ public class MapController {
     @PutMapping("/maps/{mapId}/classroom_registrations/{classroomRegistrationsId}")
     String assignMapToClassroom(@PathVariable int mapId, @PathVariable int classroomRegistrationsId) {
         Map map = mapRepository.findById(mapId);
-        Classroom_registrations classroomRegistration = classroom_registrationsRepository.findById(classroomRegistrationsId);
+        Classroom_registration classroomRegistration = classroom_registrationRepository.findById(classroomRegistrationsId);
         if(map == null || classroomRegistration == null)
             return failure;
 
@@ -101,7 +98,7 @@ public class MapController {
         classroomRegistration.setMap(map);
 
         mapRepository.save(map);
-        classroom_registrationsRepository.save(classroomRegistration);
+        classroom_registrationRepository.save(classroomRegistration);
         return success;
     }
 

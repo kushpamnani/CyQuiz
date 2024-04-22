@@ -15,6 +15,4 @@ public interface EnemyRepository extends JpaRepository<Enemy, Long> {
     @Transactional
     void deleteById(int id);
 
-    Enemy findByName(String name);
-
 }

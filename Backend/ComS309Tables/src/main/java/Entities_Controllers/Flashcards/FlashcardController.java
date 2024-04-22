@@ -1,6 +1,8 @@
 package Entities_Controllers.Flashcards;
 
 import java.util.List;
+
+import Entities_Controllers.Admins.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -17,47 +19,65 @@ public class FlashcardController {
     private final String failure = "{\"message\":\"failure\"}";
 
     @GetMapping(path = "/flashcards")
-    public List<Flashcard> getAllFlashcards() {
+    List<Flashcard> getAllFlashcards() {
         return flashcardRepository.findAll();
     }
 
     @GetMapping(path = "/flashcards/{id}")
-    public ResponseEntity<Flashcard> getFlashcardById(@PathVariable Long id) {
-        return flashcardRepository.findById(id)
-                .map(ResponseEntity::ok) // If flashcard is found, return it with 200 OK
-                .orElseGet(() -> ResponseEntity.notFound().build()); // If not found, return 404 Not Found
+    Flashcard getFlashcardById(@PathVariable int id) {
+        return flashcardRepository.findById(id);
     }
 
     @PostMapping(path = "/flashcards")
-    public ResponseEntity<String> createFlashcard(@RequestBody Flashcard flashcard) {
+    <T> T createFlashcard(@RequestBody Flashcard flashcard){
+        if (flashcard == null) {
+            return (T) failure;
+        }
         flashcardRepository.save(flashcard);
-        return ResponseEntity.ok(success);
+        return (T) flashcard;
     }
 
     @PutMapping(path = "/flashcards/{id}")
-    public ResponseEntity<Flashcard> updateFlashcard(@PathVariable Long id, @RequestBody Flashcard request) {
-        Optional<Flashcard> updatedFlashcard = flashcardRepository.findById(id)
-                .map(flashcard -> {
-                    flashcard.setQuestion(request.getQuestion()); // Updating the question
-                    flashcard.setAnswer(request.getAnswer()); // Updating the answer
-                    // Make sure to update other fields as needed
-                    flashcard.setOption1(request.getOption1());
-                    flashcard.setOption2(request.getOption2());
-                    flashcard.setOption3(request.getOption3());
-                    return flashcardRepository.save(flashcard); // Save the updated flashcard
-                });
-        return updatedFlashcard
-                .map(ResponseEntity::ok) // If update is successful, return the updated flashcard
-                .orElseGet(() -> ResponseEntity.notFound().build()); // If original flashcard not found, return 404
+    Flashcard updateFlashcard(@PathVariable int id, @RequestBody Flashcard request) {
+        Flashcard flashcard = flashcardRepository.findById(id);
+
+        if (flashcard == null) {
+            throw new RuntimeException("flashcard id does not exist");
+        }
+        if (request.getId() == 0) {
+            request.setId(flashcard.getId());
+        }
+        if (request.getQuestion() == null) {
+            request.setQuestion(flashcard.getQuestion());
+        }
+        if (request.getAnswer() == null) {
+            request.setAnswer(flashcard.getAnswer());
+        }
+        if (request.getOption1() == null) {
+            request.setOption1(flashcard.getOption1());
+        }
+        if (request.getOption2() == null) {
+            request.setOption2(flashcard.getOption2());
+        }
+        if (request.getOption3() == null) {
+            request.setOption3(flashcard.getOption3());
+        }
+        if (request.getEnemies() == null) {
+            request.setEnemies(flashcard.getEnemies());
+        }
+
+        flashcardRepository.save(request);
+        return flashcardRepository.findById(request.getId());
     }
 
 
     @DeleteMapping(path = "/flashcards/{id}")
-    public ResponseEntity<String> deleteFlashcard(@PathVariable Long id) {
-        if (!flashcardRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
+    String deleteFlashcard(@PathVariable int id) {
+        if (flashcardRepository.findById(id) == null) {
+            return failure;
+        } else {
+            flashcardRepository.deleteById(id);
+            return success;
         }
-        flashcardRepository.deleteById(id);
-        return ResponseEntity.ok(success);
     }
 }

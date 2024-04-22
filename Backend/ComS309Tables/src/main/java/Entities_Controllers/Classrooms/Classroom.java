@@ -3,7 +3,7 @@ package Entities_Controllers.Classrooms;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import Entities_Controllers.Teachers.Teacher;
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registration;
 
 import java.util.Set;
 
@@ -30,7 +30,7 @@ public class Classroom {
 
     @JsonIgnoreProperties("classroom")
     @OneToMany(mappedBy="classroom", cascade = {MERGE, REMOVE, REFRESH, DETACH})
-    private Set<Classroom_registrations> studentRegistrations;
+    private Set<Classroom_registration> studentRegistrations;
 
 
 
@@ -75,15 +75,15 @@ public class Classroom {
         this.teacher = teacher;
     }
 
-    public Set<Classroom_registrations> getStudentRegistrations() {
+    public Set<Classroom_registration> getStudentRegistrations() {
         return studentRegistrations;
     }
 
-    public void setStudentRegistrations(Set<Classroom_registrations> studentRegistrations) {
+    public void setStudentRegistrations(Set<Classroom_registration> studentRegistrations) {
         this.studentRegistrations = studentRegistrations;
     }
 
-    public void addStudentRegistration(Classroom_registrations classroom_registration) {
+    public void addStudentRegistration(Classroom_registration classroom_registration) {
         this.studentRegistrations.add(classroom_registration);
     }
 }

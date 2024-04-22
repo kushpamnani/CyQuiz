@@ -12,15 +12,14 @@ public class Flashcard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     private String question;
     private String answer;
     private String option1;
     private String option2;
     private String option3;
     @JsonIgnoreProperties("flashcard")
-    @OneToMany
-    @JoinColumn(name="enemy_id")
+    @OneToMany(mappedBy="flashcard")
     private Set<Enemy> enemies;
 
     public Flashcard() {
@@ -35,11 +34,12 @@ public class Flashcard {
     }
 
     // Getters and setters
-    public Long getId() {
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

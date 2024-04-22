@@ -1137,7 +1137,7 @@ java.lang.NoSuchMethodException: java.lang.foreign.MemorySegment.getString(long)
 2024-02-29T21:48:48.145-06:00 DEBUG 37177 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
 2024-02-29T21:48:48.149-06:00 DEBUG 37177 --- [main] org.apache.catalina.core.ContainerBase   : Add child StandardWrapper[dispatcherServlet] StandardEngine[Tomcat].StandardHost[localhost].TomcatEmbeddedContext[]
 2024-02-29T21:48:48.172-06:00 DEBUG 37177 --- [main] o.apache.catalina.core.StandardContext   : Configuring application event listeners
-2024-02-29T21:48:48.172-06:00 DEBUG 37177 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Sending application start events
+2024-02-29T21:48:48.172-06:00 DEBUG 37177 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Sending application start event
 2024-02-29T21:48:48.175-06:00 DEBUG 37177 --- [main] o.a.catalina.session.StandardManager     : Start: Loading persisted sessions
 2024-02-29T21:48:48.175-06:00 DEBUG 37177 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Starting filters
 2024-02-29T21:48:48.175-06:00 DEBUG 37177 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       :  Starting filter 'requestContextFilter'
@@ -2833,7 +2833,7 @@ java.sql.SQLException: Access denied for user 'kush'@'localhost' (using password
 2024-02-29T21:48:51.724-06:00 DEBUG 37177 --- [main] o.a.catalina.session.StandardManager     : Stopping
 2024-02-29T21:48:51.724-06:00 DEBUG 37177 --- [main] o.a.catalina.session.StandardManager     : Unloading persisted sessions
 2024-02-29T21:48:51.724-06:00 DEBUG 37177 --- [main] o.a.catalina.session.StandardManager     : No persisted sessions to unload
-2024-02-29T21:48:51.725-06:00 DEBUG 37177 --- [main] o.apache.catalina.core.StandardContext   : Sending application stop events
+2024-02-29T21:48:51.725-06:00 DEBUG 37177 --- [main] o.apache.catalina.core.StandardContext   : Sending application stop event
 2024-02-29T21:48:51.725-06:00 DEBUG 37177 --- [main] o.apache.catalina.core.StandardContext   : Processing standard container shutdown
 2024-02-29T21:48:51.725-06:00 DEBUG 37177 --- [main] o.apache.catalina.loader.WebappLoader    : Stopping this Loader
 2024-02-29T21:48:51.726-06:00 DEBUG 37177 --- [main] o.a.c.loader.WebappClassLoaderBase       : getResourceAsStream(org/apache/catalina/loader/JdbcLeakPrevention.class)
@@ -4219,7 +4219,7 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-29T21:49:58.496-06:00 DEBUG 37197 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
 2024-02-29T21:49:58.497-06:00 DEBUG 37197 --- [main] org.apache.catalina.core.ContainerBase   : Add child StandardWrapper[dispatcherServlet] StandardEngine[Tomcat].StandardHost[localhost].TomcatEmbeddedContext[]
 2024-02-29T21:49:58.508-06:00 DEBUG 37197 --- [main] o.apache.catalina.core.StandardContext   : Configuring application event listeners
-2024-02-29T21:49:58.509-06:00 DEBUG 37197 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Sending application start events
+2024-02-29T21:49:58.509-06:00 DEBUG 37197 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Sending application start event
 2024-02-29T21:49:58.510-06:00 DEBUG 37197 --- [main] o.a.catalina.session.StandardManager     : Start: Loading persisted sessions
 2024-02-29T21:49:58.510-06:00 DEBUG 37197 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Starting filters
 2024-02-29T21:49:58.510-06:00 DEBUG 37197 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       :  Starting filter 'requestContextFilter'
@@ -5875,7 +5875,7 @@ java.sql.SQLException: Access denied for user 'kush'@'localhost' (using password
 2024-02-29T21:50:01.891-06:00 DEBUG 37197 --- [main] o.a.catalina.session.StandardManager     : Stopping
 2024-02-29T21:50:01.891-06:00 DEBUG 37197 --- [main] o.a.catalina.session.StandardManager     : Unloading persisted sessions
 2024-02-29T21:50:01.891-06:00 DEBUG 37197 --- [main] o.a.catalina.session.StandardManager     : No persisted sessions to unload
-2024-02-29T21:50:01.891-06:00 DEBUG 37197 --- [main] o.apache.catalina.core.StandardContext   : Sending application stop events
+2024-02-29T21:50:01.891-06:00 DEBUG 37197 --- [main] o.apache.catalina.core.StandardContext   : Sending application stop event
 2024-02-29T21:50:01.891-06:00 DEBUG 37197 --- [main] o.apache.catalina.core.StandardContext   : Processing standard container shutdown
 2024-02-29T21:50:01.892-06:00 DEBUG 37197 --- [main] o.apache.catalina.loader.WebappLoader    : Stopping this Loader
 2024-02-29T21:50:01.892-06:00 DEBUG 37197 --- [main] o.a.c.loader.WebappClassLoaderBase       : getResourceAsStream(org/apache/catalina/loader/JdbcLeakPrevention.class)
@@ -7215,7 +7215,7 @@ java.lang.NoSuchMethodException: java.lang.foreign.MemorySegment.getString(long)
 2024-02-29T21:50:56.718-06:00 DEBUG 37219 --- [main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: dispatcherServlet urls=[/]
 2024-02-29T21:50:56.720-06:00 DEBUG 37219 --- [main] org.apache.catalina.core.ContainerBase   : Add child StandardWrapper[dispatcherServlet] StandardEngine[Tomcat].StandardHost[localhost].TomcatEmbeddedContext[]
 2024-02-29T21:50:56.731-06:00 DEBUG 37219 --- [main] o.apache.catalina.core.StandardContext   : Configuring application event listeners
-2024-02-29T21:50:56.732-06:00 DEBUG 37219 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Sending application start events
+2024-02-29T21:50:56.732-06:00 DEBUG 37219 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Sending application start event
 2024-02-29T21:50:56.733-06:00 DEBUG 37219 --- [main] o.a.catalina.session.StandardManager     : Start: Loading persisted sessions
 2024-02-29T21:50:56.733-06:00 DEBUG 37219 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Starting filters
 2024-02-29T21:50:56.733-06:00 DEBUG 37219 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       :  Starting filter 'requestContextFilter'
@@ -8892,7 +8892,7 @@ java.sql.SQLException: Access denied for user 'kush'@'localhost' (using password
 2024-02-29T21:50:59.995-06:00 DEBUG 37219 --- [main] o.a.catalina.session.StandardManager     : Stopping
 2024-02-29T21:50:59.995-06:00 DEBUG 37219 --- [main] o.a.catalina.session.StandardManager     : Unloading persisted sessions
 2024-02-29T21:50:59.995-06:00 DEBUG 37219 --- [main] o.a.catalina.session.StandardManager     : No persisted sessions to unload
-2024-02-29T21:50:59.995-06:00 DEBUG 37219 --- [main] o.apache.catalina.core.StandardContext   : Sending application stop events
+2024-02-29T21:50:59.995-06:00 DEBUG 37219 --- [main] o.apache.catalina.core.StandardContext   : Sending application stop event
 2024-02-29T21:50:59.995-06:00 DEBUG 37219 --- [main] o.apache.catalina.core.StandardContext   : Processing standard container shutdown
 2024-02-29T21:50:59.996-06:00 DEBUG 37219 --- [main] o.apache.catalina.loader.WebappLoader    : Stopping this Loader
 2024-02-29T21:50:59.996-06:00 DEBUG 37219 --- [main] o.a.c.loader.WebappClassLoaderBase       : getResourceAsStream(org/apache/catalina/loader/JdbcLeakPrevention.class)

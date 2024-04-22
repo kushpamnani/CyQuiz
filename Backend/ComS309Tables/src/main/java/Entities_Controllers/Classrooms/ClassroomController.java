@@ -6,8 +6,8 @@ import java.util.Random;
 import Entities_Controllers.Students.Student;
 import Entities_Controllers.Students.StudentRepository;
 import Entities_Controllers.Teachers.TeacherRepository;
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrationsRepository;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registration;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +36,7 @@ public class ClassroomController {
     private TeacherRepository teacherRepository;
 
     @Autowired
-    Classroom_registrationsRepository classroom_registrationsRepository;
+    Classroom_registrationRepository classroom_registrationRepository;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -108,13 +108,13 @@ public class ClassroomController {
     }
 
     @PutMapping("/classrooms/{classroomId}/students/{studentId}")
-    Classroom_registrations assignClassroomToStudent(@PathVariable int classroomId, @PathVariable int studentId) {
+    Classroom_registration assignClassroomToStudent(@PathVariable int classroomId, @PathVariable int studentId) {
         Student student = studentRepository.findById(studentId);
         Classroom classroom = classroomRepository.findById(classroomId);
         if(student == null || classroom == null)
             return null;
 
-        Classroom_registrations cr = new Classroom_registrations(student, classroom);
+        Classroom_registration cr = new Classroom_registration(student, classroom);
         student.addClassroomRegistration(cr);
         classroom.addStudentRegistration(cr);
 
@@ -124,13 +124,13 @@ public class ClassroomController {
     }
 
     @PutMapping("/classroom/code/{code}/students/{studentId}")
-    Classroom_registrations assignClassroomToStudentFromCode(@PathVariable int code, @PathVariable int studentId) {
+    Classroom_registration assignClassroomToStudentFromCode(@PathVariable int code, @PathVariable int studentId) {
         Student student = studentRepository.findById(studentId);
         Classroom classroom = classroomRepository.findByCode(code);
         if(student == null || classroom == null)
             return null;
 
-        Classroom_registrations cr = new Classroom_registrations(student, classroom);
+        Classroom_registration cr = new Classroom_registration(student, classroom);
         student.addClassroomRegistration(cr);
         classroom.addStudentRegistration(cr);
 
