@@ -83,7 +83,7 @@ public class MapActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                makeMapSave(url+"/maps");
+                //makeMapSave(url+"/maps");
             }
         });
         load.setOnClickListener(new View.OnClickListener() {
@@ -414,9 +414,9 @@ public class MapActivity extends AppCompatActivity {
         }
     }
     private void update() throws JSONException {
-        info.put("id",userInfo.getJSONObject("map").getString("id"));
-        info.put("hp",Integer.toString(hp));
-        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+        //info.put("id",userInfo.getJSONObject("map").getString("id"));
+        //info.put("hp",Integer.toString(hp));
+        //makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
     }
 
     void makeJsonArrayReq(String url) {

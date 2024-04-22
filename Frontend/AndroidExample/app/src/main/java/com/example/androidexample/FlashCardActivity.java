@@ -53,7 +53,6 @@ public class FlashCardActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_flashcard);
-        //SqlUrl = "https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/FlashCard";
         SqlUrl = "http://coms-309-031.class.las.iastate.edu:8080/flashcards";
         Question = findViewById(R.id.Question);
         answer = findViewById(R.id.Correct);
