@@ -3,21 +3,14 @@ package Entities_Controllers.Users;
 import java.util.ArrayList;
 import java.util.List;
 
-import Entities_Controllers.Admin.AdminRepository;
-import Entities_Controllers.Classrooms.Classroom;
+import Entities_Controllers.Admins.AdminRepository;
 import Entities_Controllers.Classrooms.ClassroomRepository;
-import Entities_Controllers.Students.Student;
 import Entities_Controllers.Students.StudentRepository;
 import Entities_Controllers.Teachers.TeacherRepository;
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -56,7 +49,7 @@ public class UserController {
     User getUserByNameAndPassword(@PathVariable String name, @PathVariable String password) {
         User user = studentRepository.findByName(name);
         User teacher = teacherRepository.findByName(name);
-        User admin = adminRepository.findByUsername(name);
+        User admin = adminRepository.findByName(name);
         if (user != null && user.getPassword().equals(password)) {
             return user;
         }
@@ -75,7 +68,7 @@ public class UserController {
     User getUserByName(@PathVariable String name) {
         User user = studentRepository.findByName(name);
         User teacher = teacherRepository.findByName(name);
-        User admin = adminRepository.findByUsername(name);
+        User admin = adminRepository.findByName(name);
         if (user != null) {
             return user;
         }

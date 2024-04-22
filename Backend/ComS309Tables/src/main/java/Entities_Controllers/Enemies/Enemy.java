@@ -1,15 +1,12 @@
 package Entities_Controllers.Enemies;
 
+import Entities_Controllers.Battles.Battle;
 import Entities_Controllers.Flashcards.Flashcard;
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
 import Entities_Controllers.Teachers.Teacher;
-import Entities_Controllers.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.Set;
-
-import static jakarta.persistence.CascadeType.*;
 
 /**
  * 
@@ -30,10 +27,14 @@ public class Enemy {
     @ManyToOne
     @JoinColumn(name="flashcard_id")
     private Flashcard flashcard;
-    @JsonIgnoreProperties({"classrooms", "password"}) // might need to change
+    @JsonIgnoreProperties({"enemies", "password"})
     @ManyToOne
     @JoinColumn(name="teacher_id")
     private Teacher teacher;
+
+    @JsonIgnoreProperties("boss")
+    @OneToMany(mappedBy="boss", cascade = CascadeType.ALL)
+    private Set<Battle> battles;
 
 
     public Enemy(String name, int health, int attack, int defense) {
@@ -101,5 +102,17 @@ public class Enemy {
 
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
+    }
+
+    public Set<Battle> getBattles() {
+        return battles;
+    }
+
+    public void setBattles(Set<Battle> battles) {
+        this.battles = battles;
+    }
+
+    public void addBattle(Battle battle) {
+        this.battles.add(battle);
     }
 }

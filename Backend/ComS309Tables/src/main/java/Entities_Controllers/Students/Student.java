@@ -1,6 +1,6 @@
 package Entities_Controllers.Students;
 
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registration;
 import Entities_Controllers.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -24,7 +24,7 @@ public class Student implements User {
     private String password;
     @JsonIgnoreProperties("student")
     @OneToMany(mappedBy="student", cascade = {MERGE, REMOVE, REFRESH, DETACH})
-    private Set<Classroom_registrations> classroomRegistrations;
+    private Set<Classroom_registration> classroomRegistrations;
 
 
     public Student(String name, String password) {
@@ -61,14 +61,14 @@ public class Student implements User {
         this.password = password;
     }
 
-    public Set<Classroom_registrations> getClassroomRegistrations() {
+    public Set<Classroom_registration> getClassroomRegistrations() {
         return classroomRegistrations;
     }
 
-    public void setClassroomRegistrations(Set<Classroom_registrations> classroomRegistrations) {
+    public void setClassroomRegistrations(Set<Classroom_registration> classroomRegistrations) {
         this.classroomRegistrations = classroomRegistrations;
     }
-    public void addClassroomRegistration(Classroom_registrations classroom_registration) {
+    public void addClassroomRegistration(Classroom_registration classroom_registration) {
         this.classroomRegistrations.add(classroom_registration);
     }
 

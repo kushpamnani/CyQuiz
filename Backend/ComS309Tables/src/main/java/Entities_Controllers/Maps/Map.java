@@ -1,12 +1,8 @@
 package Entities_Controllers.Maps;
 
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registration;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
-import java.util.Set;
-
-import static jakarta.persistence.CascadeType.*;
 
 /**
  *
@@ -24,7 +20,7 @@ public class Map {
     @JsonIgnoreProperties("map")
     @OneToOne
     @JoinColumn(name = "classroom_registration_id")
-    private Classroom_registrations classroomRegistration;
+    private Classroom_registration classroomRegistration;
 
 
     public Map(String seed, int health) {
@@ -61,11 +57,11 @@ public class Map {
         this.health = health;
     }
 
-    public Classroom_registrations getClassroomRegistration() {
+    public Classroom_registration getClassroomRegistration() {
         return classroomRegistration;
     }
 
-    public void setClassroomRegistration(Classroom_registrations classroomRegistration) {
+    public void setClassroomRegistration(Classroom_registration classroomRegistration) {
         this.classroomRegistration = classroomRegistration;
     }
 }

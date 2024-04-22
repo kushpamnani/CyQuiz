@@ -1,17 +1,14 @@
 package Entities_Controllers.Students;
 
-import Entities_Controllers.Admin.AdminRepository;
+import Entities_Controllers.Admins.AdminRepository;
 import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Classrooms.ClassroomRepository;
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrationsRepository;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrationRepository;
 import Entities_Controllers.Teachers.TeacherRepository;
-import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrations;
-import jakarta.persistence.EntityManager;
+import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Statement;
-import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -35,7 +32,7 @@ public class StudentController {
     AdminRepository adminRepository;
 
     @Autowired
-    Classroom_registrationsRepository classroom_registrationsRepository;
+    Classroom_registrationRepository classroom_registrationRepository;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -52,7 +49,7 @@ public class StudentController {
 
     @PostMapping(path = "/students")
     <T> T createStudent(@RequestBody Student student){
-        if (student == null || (studentRepository.findByName(student.getName()) != null) || (teacherRepository.findByName(student.getName()) != null) || (adminRepository.findByUsername(student.getName()) != null) )
+        if (student == null || (studentRepository.findByName(student.getName()) != null) || (teacherRepository.findByName(student.getName()) != null) || (adminRepository.findByName(student.getName()) != null) )
             return (T) failure;
         studentRepository.save(student);
         return (T) student;
@@ -72,7 +69,7 @@ public class StudentController {
             if ( teacherRepository.findByName(request.getName()) != null ) {
                 throw new RuntimeException("request name already exists in teacher database");
             }
-            if ( adminRepository.findByUsername(request.getName()) != null ) {
+            if ( adminRepository.findByName(request.getName()) != null ) {
                 throw new RuntimeException("request name already exists in admin database");
             }
         }
@@ -91,18 +88,18 @@ public class StudentController {
         }
 
         studentRepository.save(request);
-        return studentRepository.findById(id);
+        return studentRepository.findById(request.getId());
     }
 
 
     @PutMapping("/students/{studentId}/classrooms/{classroomId}")
-    Classroom_registrations assignStudentToClassroom(@PathVariable int studentId, @PathVariable int classroomId) {
+    Classroom_registration assignStudentToClassroom(@PathVariable int studentId, @PathVariable int classroomId) {
         Student student = studentRepository.findById(studentId);
         Classroom classroom = classroomRepository.findById(classroomId);
         if(student == null || classroom == null)
             return null;
 
-        Classroom_registrations cr = new Classroom_registrations(student, classroom);
+        Classroom_registration cr = new Classroom_registration(student, classroom);
         student.addClassroomRegistration(cr);
         classroom.addStudentRegistration(cr);
 
@@ -112,13 +109,13 @@ public class StudentController {
     }
 
     @PutMapping("/students/{studentId}/code/{code}")
-    Classroom_registrations assignStudentToClassroomFromCode(@PathVariable int studentId, @PathVariable int code) {
+    Classroom_registration assignStudentToClassroomFromCode(@PathVariable int studentId, @PathVariable int code) {
         Student student = studentRepository.findById(studentId);
         Classroom classroom = classroomRepository.findByCode(code);
         if(student == null || classroom == null)
             return null;
 
-        Classroom_registrations cr = new Classroom_registrations(student, classroom);
+        Classroom_registration cr = new Classroom_registration(student, classroom);
         student.addClassroomRegistration(cr);
         classroom.addStudentRegistration(cr);
 

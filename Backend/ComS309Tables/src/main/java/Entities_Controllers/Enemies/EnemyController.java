@@ -1,5 +1,7 @@
 package Entities_Controllers.Enemies;
 
+import Entities_Controllers.Battles.Battle;
+import Entities_Controllers.Battles.BattleRepository;
 import Entities_Controllers.Flashcards.Flashcard;
 import Entities_Controllers.Flashcards.FlashcardRepository;
 import Entities_Controllers.Teachers.Teacher;
@@ -24,6 +26,9 @@ public class EnemyController {
 
     @Autowired
     FlashcardRepository flashcardRepository;
+
+    @Autowired
+    BattleRepository battleRepository;
 
     private String success = "{\"message\":\"success\"}";
     private String failure = "{\"message\":\"failure\"}";
@@ -63,17 +68,14 @@ public class EnemyController {
         if (request.getFlashcard() == null) {
             request.setFlashcard(enemy.getFlashcard());
         }
-        if (request.getAttack() == 0) {
-            request.setAttack(enemy.getAttack());
-        }
-        if (request.getDefense() == 0) {
-            request.setDefense(enemy.getDefense());
-        }
-        if (request.getHealth() == 0) {
-            request.setHealth(enemy.getHealth());
-        }
+        request.setAttack(enemy.getAttack());
+        request.setDefense(enemy.getDefense());
+        request.setHealth(enemy.getHealth());
         if (request.getTeacher() == null) {
             request.setTeacher(enemy.getTeacher());
+        }
+        if (request.getBattles() == null) {
+            request.setBattles(enemy.getBattles());
         }
 
         enemyRepository.save(request);
@@ -152,17 +154,20 @@ public class EnemyController {
         return success;
     }
 
-//    @PutMapping("/enemies/{enemyId}/laptops/{laptopId}")
-//    String assignLaptopToEnemy(@PathVariable int enemyId,@PathVariable int laptopId){
-//        Enemy enemy = enemyRepository.findById(enemyId);
-//        Laptop laptop = laptopRepository.findById(laptopId);
-//        if(enemy == null || laptop == null)
-//            return failure;
-//        laptop.setEnemy(enemy);
-//        enemy.setLaptop(laptop);
-//        enemyRepository.save(enemy);
-//        return success;
-//    }
+    @PutMapping("/enemies/{enemyId}/battles/{battleId}")
+    String assignEnemyToBattle(@PathVariable int enemyId, @PathVariable int battleId) {
+        Enemy enemy = enemyRepository.findById(enemyId);
+        Battle battle = battleRepository.findById(battleId);
+        if(enemy == null || battle == null)
+            return failure;
+
+        enemy.addBattle(battle);
+        battle.setBoss(enemy);
+
+        enemyRepository.save(enemy);
+        battleRepository.save(battle);
+        return success;
+    }
 
     @DeleteMapping(path = "/enemies/{id}")
     String deleteTeacher(@PathVariable int id){

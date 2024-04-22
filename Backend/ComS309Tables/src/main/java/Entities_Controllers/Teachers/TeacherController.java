@@ -3,7 +3,7 @@ package Entities_Controllers.Teachers;
 import java.util.List;
 import java.util.Random;
 
-import Entities_Controllers.Admin.AdminRepository;
+import Entities_Controllers.Admins.AdminRepository;
 import Entities_Controllers.Classrooms.Classroom;
 import Entities_Controllers.Classrooms.ClassroomRepository;
 import Entities_Controllers.Students.StudentRepository;
@@ -56,7 +56,7 @@ public class TeacherController {
 
     @PostMapping(path = "/teachers")
     <T> T createTeacher(@RequestBody Teacher teacher){
-        if (teacher == null || (teacherRepository.findByName(teacher.getName()) != null) || (studentRepository.findByName(teacher.getName()) != null) || (adminRepository.findByUsername(teacher.getName()) != null))
+        if (teacher == null || (teacherRepository.findByName(teacher.getName()) != null) || (studentRepository.findByName(teacher.getName()) != null) || (adminRepository.findByName(teacher.getName()) != null))
             return (T) failure;
         teacherRepository.save(teacher);
         return (T) teacher;
@@ -120,7 +120,7 @@ public class TeacherController {
             if ( studentRepository.findByName(request.getName()) != null ) {
                 throw new RuntimeException("request name already exists in student database");
             }
-            if ( adminRepository.findByUsername(request.getName()) != null ) {
+            if ( adminRepository.findByName(request.getName()) != null ) {
                 throw new RuntimeException("request name already exists in admin database");
             }
         }
@@ -143,7 +143,7 @@ public class TeacherController {
         }
 
         teacherRepository.save(request);
-        return teacherRepository.findById(id);
+        return teacherRepository.findById(request.getId());
     }
 
     @DeleteMapping(path = "/teachers/{id}")
