@@ -24,6 +24,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.StringEndsWith.endsWith;
 
+import android.os.Looper;
 import android.view.View;
 
 
@@ -54,10 +55,10 @@ public class AlexSystemTest {
     @Test
     public void SetHp(){
     }
-    @Rule
-    public ActivityScenarioRule<FlashCardActivity> flashcardRule = new ActivityScenarioRule<>(FlashCardActivity.class);
     @Test
     public void GetFlashcard() throws JSONException {
+        Looper.prepare();
+        FlashCardActivity test = new FlashCardActivity();
         JSONObject flashcard1= new JSONObject();
         flashcard1.put("id",4);
         flashcard1.put("question","correct question");
@@ -75,6 +76,7 @@ public class AlexSystemTest {
         JSONArray flashcardArray = new JSONArray();
         flashcardArray.put(flashcard1);
         flashcardArray.put(flashcard2);
+        String[] response = test.getFlashCardStringArray(1,flashcardArray);
         try {
         Thread.sleep(1000);
         }catch (InterruptedException e){
