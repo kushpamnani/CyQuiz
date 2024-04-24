@@ -60,22 +60,16 @@ public class MapActivity extends AppCompatActivity {
         load.setText("Load game");
         url = "http://coms-309-031.class.las.iastate.edu:8080/";
         url_event = "http://coms-309-031.class.las.iastate.edu:8080/events";
-        try {
-            if(LoginActivity.getUserInfo().getJSONArray("classroomRegistrations") != null){
-                try {
-                    userInfo = LoginActivity.getUserInfo().getJSONArray("classroomRegistrations").getJSONObject(0);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if(LoginActivity.getUserInfo() !=null){
+            userInfo = LoginActivity.getUserInfo();
         }
         New.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    makeMapDel(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                    if(LoginActivity.getUserInfo().getJSONArray("classroomRegistrations").getJSONObject(0) != null){
+                        makeMapDel(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                    }
                 } catch (JSONException e) {
                 }
                 positon = "start";
@@ -90,11 +84,20 @@ public class MapActivity extends AppCompatActivity {
                 }
 
                 makeMapSave(url+"/maps");
+                try {
+                    makeMapUpdate(url+"/maps/"+id+"/classroomRegistrations/"+userInfo.getJSONArray("classroomRegistrations").getJSONObject(0).getString("id"));
+                } catch (JSONException e) {
+                }
             }
         });
         load.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                try {
+                    userInfo = LoginActivity.getUserInfo().getJSONArray("classroomRegistrations").getJSONObject(0);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
                 setUi();
                 try {
                     seed = new StringBuilder(userInfo.getJSONObject("map").getString("seed"));
