@@ -29,19 +29,19 @@ import java.util.Map;
 
 public class BossCreatorActivity extends AppCompatActivity {
 
-    private TextView healthGet;
-    private TextView dmgGet;
+    TextView healthGet;
+    TextView dmgGet;
     private TextView flashGet;
-    private TextView errorText;
-    private TextView defenseGet;
+    TextView errorText;
+    TextView defenseGet;
     private Button addFlash;
-    private TextView nameGet;
-    private Button sendInfo;
-    private Button updateButton;
+    TextView nameGet;
+    Button sendInfo;
+    Button updateButton;
     private Button deleteButton;
-    private JSONObject bossJSON;
+    JSONObject bossJSON;
     private boolean flashcardExist = true;
-    private TextView idGet;
+    TextView idGet;
     private Button getButton;
     private ImageView onlineStar;
     private ImageView offlineStar;
@@ -207,7 +207,7 @@ public class BossCreatorActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonArrReq);
     }
 
-    private void makeJsonObjReq() {
+    void makeJsonObjReq() {
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
 
@@ -247,7 +247,7 @@ public class BossCreatorActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
-    private void makeJsonObjReqPut() {
+    void makeJsonObjReqPut() {
 
 
 
@@ -422,6 +422,7 @@ public class BossCreatorActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+
 
 
 }

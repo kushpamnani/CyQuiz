@@ -145,7 +145,7 @@ public class StringReqActivity extends JsonObjReqActivity {
         TestUrl = TestUrl + "/teachers/";
     }
     else {
-        TestUrl = TestUrl + "/users/";
+        TestUrl = TestUrl + "/students/";
     }
     TestUrl = TestUrl + GetID.getText().toString();
         StringRequest stringRequest = new StringRequest(
