@@ -55,6 +55,7 @@ public class AlexSystemTest {
     @Test
     public void SetHp(){
     }
+
     @Test
     public void GetFlashcard() throws JSONException {
         Looper.prepare();

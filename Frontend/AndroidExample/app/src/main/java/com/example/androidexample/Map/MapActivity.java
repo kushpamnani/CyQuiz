@@ -60,10 +60,12 @@ public class MapActivity extends AppCompatActivity {
         load.setText("Load game");
         url = "http://coms-309-031.class.las.iastate.edu:8080/";
         url_event = "http://coms-309-031.class.las.iastate.edu:8080/events";
-        try {
-            userInfo = LoginActivity.getUserInfo().getJSONArray("classroomRegistrations").getJSONObject(0);
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        if(LoginActivity.getUserInfo() != null){
+            try {
+                userInfo = LoginActivity.getUserInfo().getJSONArray("classroomRegistrations").getJSONObject(0);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
         }
         New.setOnClickListener(new View.OnClickListener() {
             @Override
