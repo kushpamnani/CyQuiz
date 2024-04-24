@@ -21,12 +21,9 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.core.StringEndsWith.endsWith;
 
-/**
- * This testing file uses ActivityScenarioRule instead of ActivityTestRule
- * to demonstrate system testings cases
- */
+
 @RunWith(AndroidJUnit4ClassRunner.class)
-@LargeTest   // large execution time
+@LargeTest
 public class NoelSystemTest {
 
     private static final int SIMULATED_DELAY_MS = 500;
@@ -46,7 +43,7 @@ public class NoelSystemTest {
 }
     @Test
     public void deleteBossInfo() {
-        onView(withId(R.id.idInput)).perform(typeText("26"), closeSoftKeyboard()); // Assuming you provide an ID
+        onView(withId(R.id.idInput)).perform(typeText("26"), closeSoftKeyboard());
         onView(withId(R.id.deleteBtn)).perform(click());
 
         onView(withId(R.id.errorText)).check(matches(withText(containsString("failure"))));
