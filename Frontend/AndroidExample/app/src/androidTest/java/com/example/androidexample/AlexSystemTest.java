@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -24,6 +25,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.core.StringEndsWith.endsWith;
 
+import android.content.Context;
 import android.os.Looper;
 import android.view.View;
 
@@ -32,6 +34,7 @@ import android.view.View;
 @RunWith(AndroidJUnit4ClassRunner.class)
 @LargeTest   // large execution time
 public class AlexSystemTest {
+
     private static final int SIMULATED_DELAY_MS = 5000;
     @Rule
     public ActivityScenarioRule<MainActivity> activityScenarioRule = new ActivityScenarioRule<>(MainActivity.class);
@@ -59,30 +62,14 @@ public class AlexSystemTest {
     @Test
     public void GetFlashcard() throws JSONException {
         Looper.prepare();
-        FlashCardActivity test = new FlashCardActivity();
-        JSONObject flashcard1= new JSONObject();
-        flashcard1.put("id",4);
-        flashcard1.put("question","correct question");
-        flashcard1.put("answer","Correct answer");
-        flashcard1.put("option1","Correct option1");
-        flashcard1.put("option2","Correct option2");
-        flashcard1.put("option3","Correct option3");
-        JSONObject flashcard2= new JSONObject();
-        flashcard2.put("id",4);
-        flashcard2.put("question","correct question");
-        flashcard2.put("answer","Correct answer");
-        flashcard2.put("option1","Correct option1");
-        flashcard2.put("option2","Correct option2");
-        flashcard2.put("option3","Correct option3");
-        JSONArray flashcardArray = new JSONArray();
-        flashcardArray.put(flashcard1);
-        flashcardArray.put(flashcard2);
-        String[] response = test.getFlashCardStringArray(1,flashcardArray);
+        onView(withId(R.id.btnFlashCard)).perform(click());
         try {
-        Thread.sleep(1000);
+         Thread.sleep(1000);
         }catch (InterruptedException e){
 
          }
+        onView(withId(R.id.Question)).check(matches(withText("What is the capital of France?")));
+
     }
     @Test
     public void SaveAndDeleteFlashcard(){
