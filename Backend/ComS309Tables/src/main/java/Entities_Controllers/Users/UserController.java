@@ -41,7 +41,6 @@ public class UserController {
         List<User> list = new ArrayList<>(teacherRepository.findAll());
         list.addAll(studentRepository.findAll());
         list.addAll(adminRepository.findAll());
-        //admins added here
         return list;
     }
 

@@ -1,0 +1,254 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > UserController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Entities_Controllers.Users</a>
+</div>
+
+<h1>Coverage Summary for Class: UserController (Entities_Controllers.Users)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UserController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Entities_Controllers.Users;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import Entities_Controllers.Admins.AdminRepository;
+&nbsp;import Entities_Controllers.Classrooms.ClassroomRepository;
+&nbsp;import Entities_Controllers.Students.StudentRepository;
+&nbsp;import Entities_Controllers.Teachers.TeacherRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;
+&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+&nbsp;import org.springframework.web.bind.annotation.PathVariable;
+&nbsp;import org.springframework.web.bind.annotation.RestController;
+&nbsp;
+&nbsp;/**
+&nbsp; *
+&nbsp; * @author Dalton Clark
+&nbsp; *
+&nbsp; */
+&nbsp;
+&nbsp;@RestController
+<b class="nc">&nbsp;public class UserController {</b>
+&nbsp;    @Autowired
+&nbsp;    StudentRepository studentRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    ClassroomRepository classroomRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    TeacherRepository teacherRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    AdminRepository adminRepository;
+&nbsp;
+<b class="nc">&nbsp;    private String success = &quot;{\&quot;success\&quot;: true}&quot;;</b>
+<b class="nc">&nbsp;    private String failure = &quot;{\&quot;success\&quot;: false}&quot;;</b>
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/users&quot;) //                                 THIS IS A SECURITY RISK
+&nbsp;    List&lt;User&gt; getAllUsers(){
+<b class="nc">&nbsp;        List&lt;User&gt; list = new ArrayList&lt;&gt;(teacherRepository.findAll());</b>
+<b class="nc">&nbsp;        list.addAll(studentRepository.findAll());</b>
+<b class="nc">&nbsp;        list.addAll(adminRepository.findAll());</b>
+<b class="nc">&nbsp;        return list;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/users/{name}/{password}&quot;)
+&nbsp;    User getUserByNameAndPassword(@PathVariable String name, @PathVariable String password) {
+<b class="nc">&nbsp;        User user = studentRepository.findByName(name);</b>
+<b class="nc">&nbsp;        User teacher = teacherRepository.findByName(name);</b>
+<b class="nc">&nbsp;        User admin = adminRepository.findByName(name);</b>
+<b class="nc">&nbsp;        if (user != null &amp;&amp; user.getPassword().equals(password)) {</b>
+<b class="nc">&nbsp;            return user;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (teacher != null &amp;&amp; teacher.getPassword().equals(password)) {</b>
+<b class="nc">&nbsp;            return teacher;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (admin != null &amp;&amp; admin.getPassword().equals(password)) {</b>
+<b class="nc">&nbsp;            return admin;</b>
+&nbsp;        }
+&nbsp;        else {
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/users/{name}&quot;)
+&nbsp;    User getUserByName(@PathVariable String name) {
+<b class="nc">&nbsp;        User user = studentRepository.findByName(name);</b>
+<b class="nc">&nbsp;        User teacher = teacherRepository.findByName(name);</b>
+<b class="nc">&nbsp;        User admin = adminRepository.findByName(name);</b>
+<b class="nc">&nbsp;        if (user != null) {</b>
+<b class="nc">&nbsp;            return user;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (teacher != null) {</b>
+<b class="nc">&nbsp;            return teacher;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        else if (admin != null) {</b>
+<b class="nc">&nbsp;            return admin;</b>
+&nbsp;        }
+&nbsp;        else {
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;//    @PostMapping(path = &quot;/users&quot;)
+&nbsp;//    &lt;T&gt; T createUser(@RequestBody User user){
+&nbsp;//        if (user == null || (userRepository.findByName(user.getName()) != null))
+&nbsp;//            return (T) failure;
+&nbsp;//        userRepository.save(user);
+&nbsp;//        return (T) user;
+&nbsp;//    }
+&nbsp;
+&nbsp;//    @PutMapping(&quot;/users/{id}&quot;)
+&nbsp;//    User updateUser(@PathVariable int id, @RequestBody User request){
+&nbsp;//        User user = userRepository.findById(id);
+&nbsp;//
+&nbsp;//        if(user == null) {
+&nbsp;//            throw new RuntimeException(&quot;user id does not exist&quot;);
+&nbsp;//        }
+&nbsp;//        else if (request.getId() != id){
+&nbsp;//            throw new RuntimeException(&quot;path variable id does not match user request id&quot;);
+&nbsp;//        }
+&nbsp;//
+&nbsp;//        userRepository.save(request);
+&nbsp;//        return userRepository.findById(id);
+&nbsp;//    }
+&nbsp;
+&nbsp;//    @PutMapping(&quot;/users/{userId}/classrooms/{classroomId}&quot;)
+&nbsp;//    String assignUserToClassroom(@PathVariable int userId, @PathVariable int classroomId) {
+&nbsp;//        User user = userRepository.findById(userId);
+&nbsp;//        Classroom classroom = classroomRepository.findById(classroomId);
+&nbsp;//        if(user == null || classroom == null)
+&nbsp;//            return failure;
+&nbsp;//
+&nbsp;//        Classroom_registrations cr = new Classroom_registrations(user, classroom);
+&nbsp;//        user.addClassroomRegistration(cr);
+&nbsp;//        classroom.addStudentRegistration(cr);
+&nbsp;//
+&nbsp;//        userRepository.save(user);
+&nbsp;//        classroomRepository.save(classroom);
+&nbsp;//        return success;
+&nbsp;//    }
+&nbsp;
+&nbsp;//    @PutMapping(&quot;/users/{userId}/classrooms/{code}&quot;)
+&nbsp;//    String assignUserToClassroomFromCode(@PathVariable int userId, @PathVariable int code) {
+&nbsp;//        User user = userRepository.findById(userId);
+&nbsp;//        Classroom classroom = classroomRepository.findByCode(code);
+&nbsp;//        if(user == null || classroom == null)
+&nbsp;//            return failure;
+&nbsp;//
+&nbsp;//        Classroom_registrations cr = new Classroom_registrations(user, classroom);
+&nbsp;//        user.addClassroomRegistration(cr);
+&nbsp;//        classroom.addStudentRegistration(cr);
+&nbsp;//
+&nbsp;//        userRepository.save(user);
+&nbsp;//        classroomRepository.save(classroom);
+&nbsp;//        return success;
+&nbsp;//    }
+&nbsp;
+&nbsp;//    @DeleteMapping(path = &quot;/users/{id}&quot;)
+&nbsp;//    String deleteTeacher(@PathVariable int id){
+&nbsp;//        if (userRepository.findById(id) == null) {
+&nbsp;//            return failure;
+&nbsp;//        } else {
+&nbsp;//            userRepository.deleteById(id);
+&nbsp;//            return success;
+&nbsp;//        }
+&nbsp;//    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-24 20:14</div>
+</div>
+</body>
+</html>

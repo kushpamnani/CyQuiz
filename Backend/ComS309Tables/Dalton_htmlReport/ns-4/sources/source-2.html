@@ -1,0 +1,255 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > ClassroomController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Entities_Controllers.Classrooms</a>
+</div>
+
+<h1>Coverage Summary for Class: ClassroomController (Entities_Controllers.Classrooms)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ClassroomController</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/53)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Entities_Controllers.Classrooms;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Random;
+&nbsp;
+&nbsp;import Entities_Controllers.Students.Student;
+&nbsp;import Entities_Controllers.Students.StudentRepository;
+&nbsp;import Entities_Controllers.Teachers.TeacherRepository;
+&nbsp;import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registration;
+&nbsp;import Entities_Controllers.Student_Classroom_JoinTable.Classroom_registrationRepository;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.web.bind.annotation.DeleteMapping;
+&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+&nbsp;import org.springframework.web.bind.annotation.PathVariable;
+&nbsp;import org.springframework.web.bind.annotation.PostMapping;
+&nbsp;import org.springframework.web.bind.annotation.PutMapping;
+&nbsp;import org.springframework.web.bind.annotation.RequestBody;
+&nbsp;import org.springframework.web.bind.annotation.RestController;
+&nbsp;
+&nbsp;/**
+&nbsp; *
+&nbsp; * @author Dalton Clark
+&nbsp; *
+&nbsp; */
+&nbsp;
+&nbsp;@RestController
+<b class="nc">&nbsp;public class ClassroomController {</b>
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private StudentRepository studentRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private ClassroomRepository classroomRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    private TeacherRepository teacherRepository;
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    Classroom_registrationRepository classroom_registrationRepository;
+&nbsp;
+<b class="nc">&nbsp;    private String success = &quot;{\&quot;message\&quot;:\&quot;success\&quot;}&quot;;</b>
+<b class="nc">&nbsp;    private String failure = &quot;{\&quot;message\&quot;:\&quot;failure\&quot;}&quot;;</b>
+&nbsp;
+<b class="nc">&nbsp;    private Random rand = new Random();</b>
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/classrooms&quot;)
+&nbsp;    List&lt;Classroom&gt; getAllClassrooms(){
+<b class="nc">&nbsp;        return classroomRepository.findAll();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/classrooms/{id}&quot;)
+&nbsp;    Classroom getClassroomById( @PathVariable int id){
+<b class="nc">&nbsp;        return classroomRepository.findById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(path = &quot;/classrooms/code/{code}&quot;)
+<b class="nc">&nbsp;    Classroom getClassroomByCode(@PathVariable int code) { return classroomRepository.findByCode(code); }</b>
+&nbsp;
+&nbsp;    @PostMapping(path = &quot;/classrooms&quot;)
+&nbsp;    Classroom createClassroom(@RequestBody Classroom classroom){
+<b class="nc">&nbsp;        if (classroom == null)</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;        int tempCode;
+&nbsp;        do {
+<b class="nc">&nbsp;            tempCode = rand.nextInt(1000,10000);</b>
+<b class="nc">&nbsp;        } while(getClassroomByCode(tempCode) != null);</b>
+<b class="nc">&nbsp;        classroom.setCode(tempCode);</b>
+<b class="nc">&nbsp;        classroomRepository.save(classroom);</b>
+<b class="nc">&nbsp;        return classroom;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /* not safe to update */
+&nbsp;//    @PutMapping(&quot;/students/{id}&quot;)
+&nbsp;//    Student updateStudent(@PathVariable int id, @RequestBody Student request){
+&nbsp;//        Student student = studentRepository.findById(id);
+&nbsp;//        if(student == null)
+&nbsp;//            return null;
+&nbsp;//        studentRepository.save(request);
+&nbsp;//        return studentRepository.findById(id);
+&nbsp;//    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/classrooms/{id}&quot;)
+&nbsp;    Classroom updateClassroom(@PathVariable int id, @RequestBody Classroom request){
+<b class="nc">&nbsp;        Classroom classroom = classroomRepository.findById(id);</b>
+&nbsp;
+<b class="nc">&nbsp;        if(classroom == null) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(&quot;classroom id does not exist&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (request.getId() == 0) {</b>
+<b class="nc">&nbsp;            request.setId(classroom.getId());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (request.getName() == null) {</b>
+<b class="nc">&nbsp;            request.setName(classroom.getName());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (request.getCode() == 0) {</b>
+<b class="nc">&nbsp;            request.setCode(classroom.getCode());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (request.getTeacher() == null) {</b>
+<b class="nc">&nbsp;            request.setTeacher(classroom.getTeacher());</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (request.getStudentRegistrations() == null) {</b>
+<b class="nc">&nbsp;            request.setStudentRegistrations(classroom.getStudentRegistrations());</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        classroomRepository.save(request);</b>
+<b class="nc">&nbsp;        return classroomRepository.findById(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/classrooms/{classroomId}/students/{studentId}&quot;)
+&nbsp;    Classroom_registration assignClassroomToStudent(@PathVariable int classroomId, @PathVariable int studentId) {
+<b class="nc">&nbsp;        Student student = studentRepository.findById(studentId);</b>
+<b class="nc">&nbsp;        Classroom classroom = classroomRepository.findById(classroomId);</b>
+<b class="nc">&nbsp;        if(student == null || classroom == null)</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;
+<b class="nc">&nbsp;        Classroom_registration cr = new Classroom_registration(student, classroom);</b>
+<b class="nc">&nbsp;        student.addClassroomRegistration(cr);</b>
+<b class="nc">&nbsp;        classroom.addStudentRegistration(cr);</b>
+&nbsp;
+<b class="nc">&nbsp;        studentRepository.save(student);</b>
+<b class="nc">&nbsp;        classroomRepository.save(classroom);</b>
+<b class="nc">&nbsp;        return cr;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/classroom/code/{code}/students/{studentId}&quot;)
+&nbsp;    Classroom_registration assignClassroomToStudentFromCode(@PathVariable int code, @PathVariable int studentId) {
+<b class="nc">&nbsp;        Student student = studentRepository.findById(studentId);</b>
+<b class="nc">&nbsp;        Classroom classroom = classroomRepository.findByCode(code);</b>
+<b class="nc">&nbsp;        if(student == null || classroom == null)</b>
+<b class="nc">&nbsp;            return null;</b>
+&nbsp;
+<b class="nc">&nbsp;        Classroom_registration cr = new Classroom_registration(student, classroom);</b>
+<b class="nc">&nbsp;        student.addClassroomRegistration(cr);</b>
+<b class="nc">&nbsp;        classroom.addStudentRegistration(cr);</b>
+&nbsp;
+<b class="nc">&nbsp;        studentRepository.save(student);</b>
+<b class="nc">&nbsp;        classroomRepository.save(classroom);</b>
+<b class="nc">&nbsp;        return cr;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(path = &quot;/classrooms/{id}&quot;)
+&nbsp;    String deleteClassroom(@PathVariable int id){
+<b class="nc">&nbsp;        if (classroomRepository.findById(id) == null) {</b>
+<b class="nc">&nbsp;            return failure;</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            classroomRepository.deleteById(id);</b>
+<b class="nc">&nbsp;            return success;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-04-24 20:14</div>
+</div>
+</body>
+</html>
