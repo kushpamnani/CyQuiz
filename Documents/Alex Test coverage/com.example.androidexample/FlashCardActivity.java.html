@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FlashCardActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.androidexample</a> &gt; <span class="el_source">FlashCardActivity.java</span></div><h1>FlashCardActivity.java</h1><pre class="source lang-java linenums">package com.example.androidexample;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+<span class="fc" id="L28">public class FlashCardActivity extends AppCompatActivity {</span>
+
+    private TextView answer;
+    private TextView Wrong_1;
+    private TextView Wrong_2;
+    private TextView Wrong_3;
+    private TextView Question;
+    private TextView Card_Number;
+    private TextView Save_Check;
+    private int Card_Number_int;
+    private int Total_Cards;
+    private Button Home;
+    private Button Back;
+    private Button Save;
+    private Button Next;
+    private String Id;
+    private String SqlUrl;
+    private JSONObject FlashCard;
+    private Date currentTime;
+
+
+    /**
+     * Initilizes ui and Gets the first Flash Card
+     * @param savedInstanceState
+     */
+    public void onCreate(Bundle savedInstanceState) {
+<span class="fc" id="L54">        super.onCreate(savedInstanceState);</span>
+<span class="fc" id="L55">        setContentView(R.layout.activity_flashcard);</span>
+<span class="fc" id="L56">        SqlUrl = &quot;http://coms-309-031.class.las.iastate.edu:8080/flashcards&quot;;</span>
+<span class="fc" id="L57">        Question = findViewById(R.id.Question);</span>
+<span class="fc" id="L58">        answer = findViewById(R.id.Correct);</span>
+<span class="fc" id="L59">        Wrong_1 = findViewById(R.id.Wrong_1);</span>
+<span class="fc" id="L60">        Wrong_2 = findViewById(R.id.Wrong_2);</span>
+<span class="fc" id="L61">        Wrong_3 = findViewById(R.id.Wrong_3);</span>
+<span class="fc" id="L62">        Save_Check = findViewById(R.id.Save_Check);</span>
+<span class="fc" id="L63">        Card_Number = findViewById(R.id.Card_number);</span>
+<span class="fc" id="L64">        Home = findViewById(R.id.Home);</span>
+<span class="fc" id="L65">        Back = findViewById(R.id.Prev_Card);</span>
+<span class="fc" id="L66">        Next = findViewById(R.id.Next_Card);</span>
+<span class="fc" id="L67">        Save = findViewById(R.id.Save);</span>
+<span class="fc" id="L68">        Card_Number_int = 1;</span>
+<span class="fc" id="L69">        Card_Number.setText(&quot;1&quot;);</span>
+<span class="fc" id="L70">        FlashCard = new JSONObject();</span>
+<span class="fc" id="L71">        Id = &quot;&quot;;</span>
+<span class="fc" id="L72">        makeJsonArrayReq(SqlUrl);</span>
+<span class="fc" id="L73">        Next.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="fc" id="L76">                Card_Number_int++;</span>
+<span class="fc" id="L77">                Card_Number.setText(Integer.toString(Card_Number_int));</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">                if(Total_Cards&gt;Card_Number_int){</span>
+<span class="fc" id="L79">                    makeJsonArrayReq(SqlUrl);</span>
+                }
+                else{
+<span class="nc" id="L82">                    Question.setText(&quot;&quot;);</span>
+<span class="nc" id="L83">                    answer.setText(&quot;&quot;);</span>
+<span class="nc" id="L84">                    Wrong_1.setText(&quot;&quot;);</span>
+<span class="nc" id="L85">                    Wrong_2.setText(&quot;&quot;);</span>
+<span class="nc" id="L86">                    Wrong_3.setText(&quot;&quot;);</span>
+                }
+<span class="fc" id="L88">            }</span>
+        });
+<span class="fc" id="L90">        Back.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="fc" id="L93">                Card_Number_int = Math.max(1,Card_Number_int-1);</span>
+<span class="fc" id="L94">                Card_Number.setText(Integer.toString(Card_Number_int));</span>
+                // if there is time can change this to use card_number_int so it all updates at once
+<span class="fc" id="L96">                makeJsonArrayReq(SqlUrl);</span>
+<span class="fc" id="L97">            }</span>
+        });
+<span class="fc" id="L99">        Save.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="fc" id="L102">                String test = &quot;&quot;;</span>
+<span class="fc" id="L103">                test = test+ Question.getText();</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">                if (test == &quot;&quot;) {</span>
+
+                    try {
+<span class="nc" id="L107">                        FlashCard.put(&quot;CardNumber&quot;, Card_Number.getText());</span>
+<span class="nc" id="L108">                        makeJsonObjDel(SqlUrl + &quot;/&quot;+Id);</span>
+<span class="nc" id="L109">                        Card_Number_int = Math.max(1,Card_Number_int-1);</span>
+<span class="nc" id="L110">                        Card_Number.setText(Integer.toString(Card_Number_int));</span>
+                        // if there is time can change this to use card_number_int so it all updates at once
+<span class="nc" id="L112">                        makeJsonArrayReq(SqlUrl);</span>
+
+<span class="nc" id="L114">                    } catch (JSONException e) {</span>
+<span class="nc" id="L115">                        throw new RuntimeException(e);</span>
+<span class="nc" id="L116">                    }</span>
+                }
+                else {
+                    try {
+<span class="fc" id="L120">                        FlashCard.put(&quot;question&quot;, Question.getText());</span>
+<span class="fc" id="L121">                        FlashCard.put(&quot;answer&quot;, answer.getText());</span>
+<span class="fc" id="L122">                        FlashCard.put(&quot;option1&quot;, Wrong_1.getText());</span>
+<span class="fc" id="L123">                        FlashCard.put(&quot;option2&quot;, Wrong_2.getText());</span>
+<span class="fc" id="L124">                        FlashCard.put(&quot;option3&quot;, Wrong_3.getText());</span>
+<span class="nc" id="L125">                    } catch (JSONException e) {</span>
+<span class="nc" id="L126">                        throw new RuntimeException(e);</span>
+<span class="fc" id="L127">                    }</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">                    if(Total_Cards&gt;Card_Number_int){</span>
+<span class="fc" id="L129">                        makeJsonObjSave(SqlUrl +&quot;/&quot;+Id);</span>
+                    }
+                    else{
+<span class="nc" id="L132">                        makeJsonObjPost(SqlUrl+&quot;/&quot;+Id);</span>
+                    }
+                }
+
+<span class="fc" id="L136">            }</span>
+        });
+<span class="fc" id="L138">        Home.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L141">                Intent test = new Intent(FlashCardActivity.this, MainActivity.class);</span>
+<span class="nc" id="L142">                startActivity(test);</span>
+<span class="nc" id="L143">            }</span>
+        });
+
+<span class="fc" id="L146">    }</span>
+    /**
+     * call to get a flash card JSONObject
+     * @param number of flash card you want
+     * @return JSONOBJECT
+     */
+    public JSONObject getFlashCardJSON(int number,JSONArray card) throws JSONException {
+<span class="nc" id="L153">       return card.getJSONObject(number);</span>
+    }
+
+    /**
+     * call to get a flash card String[]
+     *
+     * @param number
+     * @return String[]
+     */
+    public String[] getFlashCardStringArray(int number,JSONArray card) throws JSONException {
+<span class="nc" id="L163">        JSONObject temp = card.getJSONObject(number);</span>
+<span class="nc" id="L164">        return new String[]{temp.getString(&quot;question&quot;),temp.getString(&quot;answer&quot;),temp.getString(&quot;option1&quot;),temp.getString(&quot;option2&quot;),temp.getString(&quot;option3&quot;)};</span>
+    }
+    /**
+     * Parses JSON Array
+     * @param response
+     */
+    private void Json_Parse(JSONArray response) throws JSONException {
+<span class="fc" id="L171">        JSONObject FlashCard = response.getJSONObject(Card_Number_int);</span>
+<span class="fc" id="L172">        Id = FlashCard.getString(&quot;id&quot;);</span>
+<span class="fc" id="L173">        Question.setText(FlashCard.getString(&quot;question&quot;));</span>
+<span class="fc" id="L174">        answer.setText(FlashCard.getString(&quot;answer&quot;));</span>
+<span class="fc" id="L175">        Wrong_1.setText(FlashCard.getString(&quot;option1&quot;));</span>
+<span class="fc" id="L176">        Wrong_2.setText(FlashCard.getString(&quot;option2&quot;));</span>
+<span class="fc" id="L177">        Wrong_3.setText(FlashCard.getString(&quot;option3&quot;));</span>
+<span class="fc" id="L178">    }</span>
+
+
+    /**
+     * Gets Flash Card
+     * @param url
+     */
+    public void makeJsonArrayReq(String url) {
+<span class="fc" id="L186">        JsonArrayRequest jsonObjReq = new JsonArrayRequest(</span>
+                Request.Method.GET,
+                url,
+                null, // Pass null as the request body since it's a GET request
+<span class="fc" id="L190">                new Response.Listener&lt;JSONArray&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONArray response) {
+<span class="fc" id="L193">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+                        try {
+<span class="fc" id="L195">                            Total_Cards=response.length();</span>
+<span class="fc" id="L196">                            Json_Parse(response);</span>
+<span class="nc" id="L197">                        } catch (JSONException e) {</span>
+<span class="nc" id="L198">                            throw new RuntimeException(e);</span>
+<span class="fc" id="L199">                        }</span>
+
+<span class="fc" id="L201">                    }</span>
+                },
+<span class="fc" id="L203">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L206">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L207">                    }</span>
+                }
+<span class="fc" id="L209">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="fc" id="L212">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+//                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="fc" id="L215">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L220">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L223">                return params;</span>
+            }
+        };
+        // Adding request to request queue
+<span class="fc" id="L227">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);</span>
+<span class="fc" id="L228">    }</span>
+
+    /**
+     * Saves new FlashCard
+     * @param url
+     */
+    private void makeJsonObjPost(String url) {
+<span class="nc" id="L235">        JsonObjectRequest jsonObjReq = new JsonObjectRequest(</span>
+                Request.Method.POST,
+                url,
+                FlashCard,
+<span class="nc" id="L239">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="nc" id="L242">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L243">                        currentTime = Calendar.getInstance().getTime();</span>
+<span class="nc" id="L244">                        Save_Check.setText(&quot;Save Successful &quot;+currentTime.toString());</span>
+<span class="nc" id="L245">                    }</span>
+                },
+<span class="nc" id="L247">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L250">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L251">                    }</span>
+                }
+<span class="nc" id="L253">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L256">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+//                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L259">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L264">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L267">                return params;</span>
+            }
+        };
+        // Adding request to request queue
+<span class="nc" id="L271">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);</span>
+<span class="nc" id="L272">    }</span>
+
+    /**
+     * Deletes FlashCard
+     * @param url
+     */
+    private void makeJsonObjDel(String url) {
+<span class="nc" id="L279">        JsonObjectRequest jsonObjReq = new JsonObjectRequest(</span>
+                Request.Method.DELETE,
+                url,
+                FlashCard,
+<span class="nc" id="L283">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="nc" id="L286">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L287">                        currentTime = Calendar.getInstance().getTime();</span>
+<span class="nc" id="L288">                        Save_Check.setText(&quot;Delete Successful &quot;+currentTime.toString());</span>
+<span class="nc" id="L289">                    }</span>
+                },
+<span class="nc" id="L291">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L294">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L295">                    }</span>
+                }
+<span class="nc" id="L297">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L300">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+//                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L303">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L308">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L311">                return params;</span>
+            }
+        };
+        // Adding request to request queue
+<span class="nc" id="L315">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);</span>
+<span class="nc" id="L316">    }</span>
+
+    /**
+     * Updates FlashCard
+     * @param url
+     */
+    private void makeJsonObjSave(String url) {
+<span class="fc" id="L323">        JsonObjectRequest jsonObjReq = new JsonObjectRequest(</span>
+                Request.Method.PUT,
+                url,
+                FlashCard,
+<span class="fc" id="L327">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="fc" id="L330">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="fc" id="L331">                        currentTime = Calendar.getInstance().getTime();</span>
+<span class="fc" id="L332">                        Save_Check.setText(&quot;Delete Successful &quot;+currentTime.toString());</span>
+<span class="fc" id="L333">                    }</span>
+                },
+<span class="fc" id="L335">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L338">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L339">                    }</span>
+                }
+<span class="fc" id="L341">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="fc" id="L344">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+//                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="fc" id="L347">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L352">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L355">                return params;</span>
+            }
+        };
+        // Adding request to request queue
+<span class="fc" id="L359">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);</span>
+<span class="fc" id="L360">    }</span>
+
+
+
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>
