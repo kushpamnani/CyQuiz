@@ -42,6 +42,20 @@ public class AlexSystemTest {
      * Start the server and run this test
      */
     @Test
+    public void Login() throws JSONException {
+        onView(withId(R.id.btnSIgnOut)).perform(click());
+        onView(withId(R.id.User_Name)).perform(typeText("example"));
+        onView(withId(R.id.Password)).perform(typeText("example"));
+        onView(withId(R.id.btnLogin)).perform(click());
+        try {
+            Thread.sleep(5000);
+        }catch (InterruptedException e){
+
+        }
+        String test = LoginActivity.getUserInfo().getString("name");
+        assert  LoginActivity.getUserInfo().getString("name") == "example";
+    }
+    @Test
     public void GenerateMap(){
         //try {
            // Thread.sleep(1000);
@@ -70,9 +84,6 @@ public class AlexSystemTest {
          }
         onView(withId(R.id.Question)).check(matches(withText("What is the capital of France?")));
 
-    }
-    @Test
-    public void SaveAndDeleteFlashcard(){
     }
 }
 
