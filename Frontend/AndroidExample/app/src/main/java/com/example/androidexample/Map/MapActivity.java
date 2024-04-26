@@ -83,11 +83,11 @@ public class MapActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                makeMapSave(url+"/maps");
-                try {
-                    makeMapUpdate(url+"/maps/"+id+"/classroomRegistrations/"+userInfo.getJSONArray("classroomRegistrations").getJSONObject(0).getString("id"));
-                } catch (JSONException e) {
-                }
+                //makeMapSave(url+"/maps");
+                //try {
+                   // makeMapUpdate(url+"/maps/"+id+"/classroomRegistrations/"+userInfo.getJSONArray("classroomRegistrations").getJSONObject(0).getString("id"));
+                //} catch (JSONException e) {
+                //}
             }
         });
         load.setOnClickListener(new View.OnClickListener() {

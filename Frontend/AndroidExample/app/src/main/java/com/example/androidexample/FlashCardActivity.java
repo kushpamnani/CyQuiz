@@ -105,7 +105,7 @@ public class FlashCardActivity extends AppCompatActivity {
 
                     try {
                         FlashCard.put("CardNumber", Card_Number.getText());
-                        makeJsonObjDel(SqlUrl + "/delete/"+Id);
+                        makeJsonObjDel(SqlUrl + "/"+Id);
                         Card_Number_int = Math.max(1,Card_Number_int-1);
                         Card_Number.setText(Integer.toString(Card_Number_int));
                         // if there is time can change this to use card_number_int so it all updates at once
@@ -126,10 +126,10 @@ public class FlashCardActivity extends AppCompatActivity {
                         throw new RuntimeException(e);
                     }
                     if(Total_Cards>Card_Number_int){
-                        makeJsonObjSave(SqlUrl);
+                        makeJsonObjSave(SqlUrl +"/"+Id);
                     }
                     else{
-                        makeJsonObjPost(SqlUrl);
+                        makeJsonObjPost(SqlUrl+"/"+Id);
                     }
                 }
 
