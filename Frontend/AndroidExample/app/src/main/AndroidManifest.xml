@@ -16,9 +16,6 @@
         android:theme="@style/Theme.AndroidExample"
         tools:targetApi="31">
         <activity
-            android:name=".JsonArrReqActivity"
-            android:exported="false" />
-        <activity
             android:name=".BossCreatorActivity"
             android:exported="false" />
         <activity
@@ -29,9 +26,6 @@
             android:exported="false" />
         <activity
             android:name=".OnlineTrackerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ImageReqActivity"
             android:exported="false" />
         <activity
             android:name=".EnemyCreatorActivity"
