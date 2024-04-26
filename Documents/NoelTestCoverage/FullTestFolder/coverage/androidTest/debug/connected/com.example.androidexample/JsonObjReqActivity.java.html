@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonObjReqActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.androidexample</a> &gt; <span class="el_source">JsonObjReqActivity.java</span></div><h1>JsonObjReqActivity.java</h1><pre class="source lang-java linenums">package com.example.androidexample;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Area where users can be created or deleted, as well as updated
+ */
+<span class="fc" id="L26">public class JsonObjReqActivity extends AppCompatActivity {</span>
+
+    /**
+    Sends json Objects
+     */
+    private Button btnJsonObjReq;
+    /**
+    shows the message the server responds
+     */
+    private TextView msgResponse;
+
+    /**
+    Json Object building base
+     */
+    private JSONObject TestLog;
+
+    /**
+    test text var
+     */
+    private TextView testText;
+
+    /**
+    user enters their name here
+     */
+    private TextView NameGet;
+
+   /**
+   user enters their password here
+    */
+    private TextView PassGet;
+
+    /**
+    button for submitting a put update
+     */
+    private Button putButton;
+
+   /**
+   button to select adding a user
+    */
+    private Button addUser;
+
+    /**
+    button to select adding a teacher
+     */
+    private Button addTeacher;
+
+   /**
+   button to select adding a class
+    */
+    private Button addClass;
+
+    /**
+     * place for user to ender their ID
+     */
+    private TextView userID;
+
+    /**
+     * place for user to enter a classroom ID
+     */
+    private TextView classID;
+
+    /**
+     * button to delete
+     */
+    private Button deleteButton;
+
+
+
+    //private static final String URL_JSON_OBJECT = &quot;https://87c2ba07-6f71-4b03-adcb-747b9cb5798c.mock.pstmn.io/PostTester/&quot;;
+    //private static final String URL_JSON_OBJECT = &quot;https://bb1bfe69-3299-49d4-8006-e8e24e5faf63.mock.pstmn.io/PostTest/&quot;;
+    //private static final String URL_JSON_OBJECT = &quot;https://bb1bfe69-3299-49d4-8006-e8e24e5faf63.mock.pstmn.io/DemoDelete/&quot;;
+
+    /**
+     * base URL string for the server
+     */
+    private static final String URL_JSON_OBJECT = &quot;http://coms-309-031.class.las.iastate.edu:8080&quot;;
+    //private static final String URL_JSON_OBJECT = &quot;http://coms-309-031.class.las.iastate.edu:8080/teachers/11/add_classroom&quot;;
+   //private static final String URL_JSON_OBJECT = &quot;http://coms-309-031.class.las.iastate.edu:8080/users/72/classrooms/25&quot;;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="fc" id="L106">        super.onCreate(savedInstanceState);</span>
+<span class="fc" id="L107">        setContentView(R.layout.activity_json_obj_req);</span>
+
+<span class="fc" id="L109">        btnJsonObjReq = findViewById(R.id.btnJsonObj);</span>
+<span class="fc" id="L110">        msgResponse = findViewById(R.id.msgResponse);</span>
+<span class="fc" id="L111">        testText = findViewById(R.id.textView3);</span>
+<span class="fc" id="L112">        NameGet  = findViewById(R.id.NameBox);</span>
+<span class="fc" id="L113">        PassGet = findViewById(R.id.PassBox);</span>
+<span class="fc" id="L114">        putButton = findViewById(R.id.putButton);</span>
+<span class="fc" id="L115">        addUser = findViewById(R.id.AddUser);</span>
+<span class="fc" id="L116">        addClass = findViewById(R.id.AddClass);</span>
+<span class="fc" id="L117">        addTeacher = findViewById(R.id.AddTeacher);</span>
+<span class="fc" id="L118">       userID = findViewById(R.id.userIDBox);</span>
+<span class="fc" id="L119">       classID = findViewById(R.id.classIDBox);</span>
+<span class="fc" id="L120">       deleteButton = findViewById(R.id.deleteButton);</span>
+
+<span class="fc" id="L122">        btnJsonObjReq.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+
+                try{
+<span class="nc" id="L127">                   TestLog = new JSONObject();</span>
+<span class="nc" id="L128">                    TestLog.put(&quot;name&quot;, NameGet.getText().toString());</span>
+<span class="nc" id="L129">                    TestLog.put(&quot;password&quot;, PassGet.getText().toString());</span>
+//                    TestLog.put(&quot;name&quot;, &quot;TestNoel&quot;);
+//                    TestLog.put(&quot;password&quot;, &quot;TestNoelPass&quot;);
+<span class="nc" id="L132">                } catch (JSONException e) {</span>
+<span class="nc" id="L133">                    throw new RuntimeException(e);</span>
+<span class="nc" id="L134">                }</span>
+<span class="nc" id="L135">                makeJsonObjReq();</span>
+<span class="nc" id="L136">            }</span>
+        });
+<span class="fc" id="L138">        deleteButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L141">                makeJsonObjReqDelete();</span>
+<span class="nc" id="L142">            }</span>
+        });
+<span class="fc" id="L144">        putButton.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc bnc" id="L147" title="All 4 branches missed.">                if (addClass.isActivated() &amp;&amp; addUser.isActivated()){</span>
+                    try{
+<span class="nc" id="L149">                        TestLog = new JSONObject();</span>
+<span class="nc" id="L150">                        TestLog.put(&quot;name&quot;, NameGet.getText().toString());</span>
+
+
+<span class="nc" id="L153">                    } catch (JSONException e) {</span>
+<span class="nc" id="L154">                        throw new RuntimeException(e);</span>
+<span class="nc" id="L155">                    }</span>
+                }
+
+                try{
+<span class="nc" id="L159">                    TestLog = new JSONObject();</span>
+<span class="nc" id="L160">                    TestLog.put(&quot;name&quot;, NameGet.getText().toString());</span>
+<span class="nc" id="L161">                } catch (JSONException e) {</span>
+<span class="nc" id="L162">                    throw new RuntimeException(e);</span>
+<span class="nc" id="L163">                }</span>
+<span class="nc" id="L164">                makeJsonObjReqPut();</span>
+<span class="nc" id="L165">            }</span>
+        });
+<span class="fc" id="L167">        addClass.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc bnc" id="L170" title="All 2 branches missed.">                addClass.setActivated(!addClass.isActivated());</span>
+<span class="nc" id="L171">            }</span>
+        });
+<span class="fc" id="L173">        addTeacher.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc bnc" id="L176" title="All 2 branches missed.">                addTeacher.setActivated(!addTeacher.isActivated());</span>
+<span class="nc" id="L177">            }</span>
+        });
+<span class="fc" id="L179">        addUser.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc bnc" id="L182" title="All 2 branches missed.">                addUser.setActivated(!addUser.isActivated());</span>
+<span class="nc" id="L183">            }</span>
+        });
+
+<span class="fc" id="L186">    }</span>
+
+    /**
+     * builds the URL that is necessary to complete the put action that the user would like
+     */
+    private void makeJsonObjReqPut() {
+<span class="nc" id="L192">        String baseURL = URL_JSON_OBJECT;</span>
+<span class="nc bnc" id="L193" title="All 4 branches missed.">        if (addClass.isActivated() &amp;&amp; addTeacher.isActivated()){</span>
+<span class="nc" id="L194">            baseURL = baseURL + &quot;/teachers/&quot; + userID.getText().toString() + &quot;/add_classroom&quot;;</span>
+        }
+<span class="nc bnc" id="L196" title="All 4 branches missed.">        else if (addClass.isActivated() &amp;&amp; addUser.isActivated()){</span>
+<span class="nc" id="L197">            baseURL = baseURL + &quot;/students/&quot; + userID.getText().toString() + &quot;/classrooms/&quot; + classID.getText().toString();</span>
+        }else{
+<span class="nc" id="L199">            msgResponse.setText(&quot;Dont do that pls&quot;);</span>
+        }
+
+
+
+<span class="nc" id="L204">        JsonObjectRequest jsonObjReq = new JsonObjectRequest(</span>
+
+                Request.Method.PUT,
+                baseURL,
+                TestLog,
+                // Pass null as the request body since it's a GET request
+<span class="nc" id="L210">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="nc" id="L213">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L214">                        msgResponse.setText(response.toString());</span>
+//
+
+
+
+<span class="nc" id="L219">                    }</span>
+                },
+<span class="nc" id="L221">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L224">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L225">                    }</span>
+                }
+<span class="nc" id="L227">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L230">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+//                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L233">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L238">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L241">                return params;</span>
+            }
+        };
+
+        // Adding request to request queue
+<span class="nc" id="L246">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);</span>
+<span class="nc" id="L247">    }</span>
+
+    /**
+     * builds the correct URL for the user to delete what they would like
+     */
+    private void makeJsonObjReqDelete() {
+<span class="nc" id="L253">        String baseURL = URL_JSON_OBJECT;</span>
+<span class="nc bnc" id="L254" title="All 2 branches missed.">        if (addClass.isActivated()){</span>
+<span class="nc" id="L255">            baseURL = baseURL + &quot;/classrooms/&quot; + classID.getText().toString();</span>
+        }
+<span class="nc bnc" id="L257" title="All 2 branches missed.">        else if (addUser.isActivated()){</span>
+<span class="nc" id="L258">            baseURL = baseURL + &quot;/students/&quot; + userID.getText().toString();</span>
+        }
+<span class="nc bnc" id="L260" title="All 2 branches missed.">        else if(addTeacher.isActivated()){</span>
+<span class="nc" id="L261">            baseURL = baseURL + &quot;/teachers/&quot; + userID.getText().toString();</span>
+        }
+        else{
+<span class="nc" id="L264">            msgResponse.setText(&quot;Dont do that pls&quot;);</span>
+        }
+
+
+
+<span class="nc" id="L269">        JsonObjectRequest jsonObjReq = new JsonObjectRequest(</span>
+
+                Request.Method.DELETE,
+                baseURL,
+                TestLog,
+                // Pass null as the request body since it's a GET request
+<span class="nc" id="L275">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="nc" id="L278">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L279">                        msgResponse.setText(response.toString());</span>
+//
+
+
+
+<span class="nc" id="L284">                    }</span>
+                },
+<span class="nc" id="L286">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L289">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L290">                    }</span>
+                }
+<span class="nc" id="L292">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L295">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+//                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L298">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L303">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L306">                return params;</span>
+            }
+        };
+
+        // Adding request to request queue
+<span class="nc" id="L311">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);</span>
+<span class="nc" id="L312">    }</span>
+    /**
+     * Builds the URL for a custom OBJ request
+     */
+
+    private void makeJsonObjReq() {
+<span class="nc" id="L318">        String baseURL = URL_JSON_OBJECT;</span>
+<span class="nc bnc" id="L319" title="All 2 branches missed.">        if (addTeacher.isActivated()){</span>
+<span class="nc" id="L320">            baseURL = baseURL + &quot;/teachers&quot;;</span>
+<span class="nc bnc" id="L321" title="All 2 branches missed.">        } else if (addUser.isActivated()){</span>
+<span class="nc" id="L322">            baseURL = baseURL + &quot;/students&quot;;</span>
+        }
+<span class="nc" id="L324">        JsonObjectRequest jsonObjReq = new JsonObjectRequest(</span>
+
+                Request.Method.POST,
+                baseURL,
+                TestLog,
+                 // Pass null as the request body since it's a GET request
+<span class="nc" id="L330">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="nc" id="L333">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L334">                        msgResponse.setText(response.toString());</span>
+                        try {
+<span class="nc" id="L336">                            String IDget = response.getString(&quot;id&quot;);</span>
+<span class="nc" id="L337">                            testText.setText(&quot;ID is: &quot; + IDget) ;</span>
+<span class="nc" id="L338">                        } catch (JSONException e) {</span>
+<span class="nc" id="L339">                            throw new RuntimeException(e);</span>
+<span class="nc" id="L340">                        }</span>
+
+
+
+<span class="nc" id="L344">                    }</span>
+                },
+<span class="nc" id="L346">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L349">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L350">                    }</span>
+                }
+<span class="nc" id="L352">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L355">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+//                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L358">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L363">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L366">                return params;</span>
+            }
+        };
+
+        // Adding request to request queue
+<span class="nc" id="L371">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);</span>
+<span class="nc" id="L372">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>

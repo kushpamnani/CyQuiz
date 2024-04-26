@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminActivity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=0;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">debug</a> &gt; <a href="index.source.html" class="el_package">com.example.androidexample</a> &gt; <span class="el_source">AdminActivity.java</span></div><h1>AdminActivity.java</h1><pre class="source lang-java linenums">package com.example.androidexample;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.json.JSONObject;
+
+
+<span class="nc" id="L27">public class AdminActivity extends AppCompatActivity {</span>
+    private TextView User_name;
+    private TextView Banned_list;
+    private TextView Save_Check;
+    private Button Ban;
+    private Button Unban;
+    private Button Home;
+    private String ReqUrl;
+    private String BanUrl;
+    private String UnbanUrl;
+    private JSONObject Ban_Post;
+    private Date currentTime;
+
+    /**
+     * Generates Ui and Gets ban list
+     * @param savedInstanceState
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+<span class="nc" id="L46">        super.onCreate(savedInstanceState);</span>
+<span class="nc" id="L47">        setContentView(R.layout.activity_admin);</span>
+<span class="nc" id="L48">        User_name = findViewById(R.id.Ban);</span>
+<span class="nc" id="L49">        Banned_list = findViewById(R.id.Banned_List);</span>
+<span class="nc" id="L50">        Ban = findViewById(R.id.Ban_button);</span>
+<span class="nc" id="L51">        Unban = findViewById(R.id.Unban);</span>
+<span class="nc" id="L52">        Home = findViewById(R.id.Home);</span>
+<span class="nc" id="L53">        Save_Check = findViewById(R.id.Save_check);</span>
+<span class="nc" id="L54">        ReqUrl =&quot;https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Ban_List&quot;;</span>
+<span class="nc" id="L55">        BanUrl = &quot;https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Ban&quot;;</span>
+<span class="nc" id="L56">        UnbanUrl = &quot;https://1b8a5bc2-eeac-4f16-a22c-dbcde8bfecdd.mock.pstmn.io/Unban&quot;;</span>
+        String rmv;
+
+<span class="nc" id="L59">        makeJsonObjReq(ReqUrl);</span>
+<span class="nc" id="L60">        Ban.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L63">                Ban_Post = new JSONObject();</span>
+                try {
+<span class="nc" id="L65">                    Ban_Post.put(&quot;User&quot;,User_name.toString());</span>
+<span class="nc" id="L66">                } catch (JSONException e) {</span>
+<span class="nc" id="L67">                    throw new RuntimeException(e);</span>
+<span class="nc" id="L68">                }</span>
+<span class="nc" id="L69">                makeJsonObjPost(BanUrl);</span>
+
+<span class="nc" id="L71">            }</span>
+        });
+<span class="nc" id="L73">        Unban.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L76">                Ban_Post = new JSONObject();</span>
+                try {
+<span class="nc" id="L78">                    Ban_Post.put(&quot;User&quot;,User_name.toString());</span>
+<span class="nc" id="L79">                } catch (JSONException e) {</span>
+<span class="nc" id="L80">                    throw new RuntimeException(e);</span>
+<span class="nc" id="L81">                }</span>
+<span class="nc" id="L82">                makeJsonObjPost(UnbanUrl);</span>
+
+<span class="nc" id="L84">            }</span>
+        });
+<span class="nc" id="L86">        Home.setOnClickListener(new View.OnClickListener() {</span>
+            @Override
+            public void onClick(View v) {
+<span class="nc" id="L89">                Intent test = new Intent(AdminActivity.this, MainActivity.class);</span>
+<span class="nc" id="L90">                startActivity(test);</span>
+<span class="nc" id="L91">            }</span>
+        });
+
+<span class="nc" id="L94">    }</span>
+
+    /**
+     * Parses Jason Object
+     * @param response
+     * @return
+     */
+    private String Json_Parse(JSONObject response){
+<span class="nc" id="L102">        int x = 0;</span>
+<span class="nc" id="L103">        int i = 0;</span>
+<span class="nc" id="L104">        String text = response.toString();</span>
+<span class="nc" id="L105">        String parsed=&quot;&quot;;</span>
+<span class="nc bnc" id="L106" title="All 2 branches missed.">        while (x&lt; text.length()-1){</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">            if(text.charAt(x)== '\&quot;'){</span>
+<span class="nc" id="L108">                i++;</span>
+            }
+<span class="nc bnc" id="L110" title="All 2 branches missed.">            else if(x!=0){</span>
+<span class="nc" id="L111">                parsed = parsed + text.charAt(x);</span>
+            }
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            if(i==4){</span>
+<span class="nc" id="L114">                parsed = parsed +'\n';</span>
+<span class="nc" id="L115">                i=0;</span>
+<span class="nc" id="L116">                x++;</span>
+            }
+<span class="nc" id="L118">            x++;</span>
+        }
+<span class="nc" id="L120">        return parsed;</span>
+    }
+
+    /**
+     * Request Ban List
+     * @param url
+     */
+    private void makeJsonObjReq(String url) {
+<span class="nc" id="L128">        JsonObjectRequest jsonObjReq = new JsonObjectRequest(</span>
+                Request.Method.GET,
+                url,
+                null, // Pass null as the request body since it's a GET request
+<span class="nc" id="L132">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="nc" id="L135">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L136">                        Banned_list.setText(Json_Parse(response));</span>
+<span class="nc" id="L137">                    }</span>
+                },
+<span class="nc" id="L139">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L142">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L143">                    }</span>
+                }
+<span class="nc" id="L145">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L148">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+//                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L151">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L156">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L159">                return params;</span>
+            }
+        };
+        // Adding request to request queue
+<span class="nc" id="L163">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);</span>
+<span class="nc" id="L164">    }</span>
+
+    /**
+     * Ban A User
+     * @param url
+     */
+    private void makeJsonObjPost(String url) {
+<span class="nc" id="L171">        JsonObjectRequest jsonObjReq = new JsonObjectRequest(</span>
+                Request.Method.POST,
+                url,
+                Ban_Post,
+<span class="nc" id="L175">                new Response.Listener&lt;JSONObject&gt;() {</span>
+                    @Override
+                    public void onResponse(JSONObject response) {
+<span class="nc" id="L178">                        Log.d(&quot;Volley Response&quot;, response.toString());</span>
+<span class="nc" id="L179">                        currentTime = Calendar.getInstance().getTime();</span>
+<span class="nc" id="L180">                        Save_Check.setText(Json_Parse(response)+currentTime.toString());</span>
+<span class="nc" id="L181">                    }</span>
+                },
+<span class="nc" id="L183">                new Response.ErrorListener() {</span>
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+<span class="nc" id="L186">                        Log.e(&quot;Volley Error&quot;, error.toString());</span>
+<span class="nc" id="L187">                    }</span>
+                }
+<span class="nc" id="L189">        ) {</span>
+            @Override
+            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {
+<span class="nc" id="L192">                HashMap&lt;String, String&gt; headers = new HashMap&lt;String, String&gt;();</span>
+//                headers.put(&quot;Authorization&quot;, &quot;Bearer YOUR_ACCESS_TOKEN&quot;);
+//                headers.put(&quot;Content-Type&quot;, &quot;application/json&quot;);
+<span class="nc" id="L195">                return headers;</span>
+            }
+
+            @Override
+            protected Map&lt;String, String&gt; getParams() {
+<span class="nc" id="L200">                Map&lt;String, String&gt; params = new HashMap&lt;String, String&gt;();</span>
+//                params.put(&quot;param1&quot;, &quot;value1&quot;);
+//                params.put(&quot;param2&quot;, &quot;value2&quot;);
+<span class="nc" id="L203">                return params;</span>
+            }
+        };
+        // Adding request to request queue
+<span class="nc" id="L207">        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);</span>
+<span class="nc" id="L208">    }</span>
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span>Generated by the Android Gradle plugin 8.0.0</div></body></html>
