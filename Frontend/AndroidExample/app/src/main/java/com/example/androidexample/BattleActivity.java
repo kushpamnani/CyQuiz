@@ -28,6 +28,14 @@ public class BattleActivity extends AppCompatActivity {
     private String responseJSON = "";
     private int smallEnemies;
     private int largeEnemies;
+    private int health;
+    private int[] smallEnemyTemp = new int[3];
+    private int[] largeEnemyTemp = new int[3];
+    private int smallHealth, smallAttack, smallDefense;
+    private int largeHealth, largeAttack, largeDefense;
+    private Button spearHit, swordHit;
+    private boolean fightingSmall, fightingLarge, fightingBoss;
+
     private TextView debugging;
 
 
@@ -39,17 +47,42 @@ public class BattleActivity extends AppCompatActivity {
         battleID = findViewById(R.id.battleIDInput);
         startButton = findViewById(R.id.startBattleBtn);
         debugging = findViewById(R.id.debugging);
+        swordHit = findViewById(R.id.swordHit);
+        spearHit = findViewById(R.id.spearHit);
+
+        swordHit.setVisibility(View.GONE);
+        spearHit.setVisibility(View.GONE);
+        startButton.setVisibility(View.VISIBLE);
+        battleID.setVisibility(View.VISIBLE);
+        fightingSmall = true;
+        fightingLarge = true;
+        fightingBoss = false;
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!battleID.getText().toString().equals("")){
                     makeJsonObjReqGet();
-
                 }
+            }
+        });
+        swordHit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fightingSmall()){
+                    debugging.setText(Integer.toString(smallEnemies));
+                    smallHealth = smallHealth - (15-smallDefense);
+                    if (smallHealth <= 0){
+                       // smallEnemies = smallEnemies-1;
+                        debugging.setText(Integer.toString(smallEnemies));
 
-
-
+                    }
+                }
+            }
+        });
+        spearHit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
@@ -81,7 +114,17 @@ public class BattleActivity extends AppCompatActivity {
                         if (!Objects.equals(responseJSON, "")){
                             startButton.setVisibility(View.GONE);
                             battleID.setVisibility(View.GONE);
+                            swordHit.setVisibility(View.VISIBLE);
+                            spearHit.setVisibility(View.VISIBLE);
                         }
+
+
+                          smallEnemies = response.optInt("smallEnemiesCount");
+
+
+                         largeEnemies = response.optInt("largeEnemiesCount");
+
+                        battleFight();
 
 
 
@@ -114,6 +157,56 @@ public class BattleActivity extends AppCompatActivity {
 
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+/*
+temp array holds in this order: Health, Attack, Defense. take in that order.
+ */
+    private void battleFight(){
+           smallEnemyTemp = smallEnemyCreate();
+           smallHealth = smallEnemyTemp[0];
+           smallAttack = smallEnemyTemp[1];
+           smallDefense = smallEnemyTemp[2];
+           debugging.setText(Integer.toString(smallHealth));
+
+
+
+
+    }
+    private int[] smallEnemyCreate(){
+        smallEnemyTemp[0] = (int)Math.floor(Math.random() * (20 - 5 + 1) + 5);
+        smallEnemyTemp[1] = (int)Math.floor(Math.random() * (8 - 2 + 1) + 2);
+        smallEnemyTemp[2] = (int)Math.floor(Math.random() * (10 - 2 + 1) + 2);
+
+        return smallEnemyTemp;
+    }
+    private int[] largeEnemyCreate(){
+        largeEnemyTemp[0] = (int)Math.floor(Math.random() * (35 - 10 + 1) + 5);
+        largeEnemyTemp[1] = (int)Math.floor(Math.random() * (12 - 5 + 1) + 5);
+        largeEnemyTemp[2] = (int)Math.floor(Math.random() * (15 - 5 + 1) + 5);
+
+        return largeEnemyTemp;
+    }
+    private boolean fightingSmall(){
+        if (smallEnemies == 0){
+            fightingSmall = false;
+        }
+
+        return fightingSmall;
+    }
+    private boolean fightingLarge(){
+        if (largeEnemies == 0){
+            fightingLarge = false;
+        }
+
+        return fightingLarge;
+    }
+    private boolean fightingBoss(){
+        if (!fightingSmall && !fightingLarge){
+            fightingBoss = true;
+        }
+
+        return fightingLarge;
+    }
+    public int healthGet() {return health;}
 
 
 }
