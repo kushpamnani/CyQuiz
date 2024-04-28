@@ -33,7 +33,7 @@ public class Enemy {
     private Teacher teacher;
 
     @JsonIgnoreProperties("boss")
-    @OneToMany(mappedBy="boss", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="boss")
     private Set<Battle> battles;
 
 
