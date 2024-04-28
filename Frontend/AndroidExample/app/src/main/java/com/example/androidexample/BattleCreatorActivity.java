@@ -49,6 +49,7 @@ public class BattleCreatorActivity extends AppCompatActivity {
     private ImageView onlineStar;
     private ImageView offlineStar;
     private TextView onlineList;
+    private Button addBossButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,11 +68,7 @@ public class BattleCreatorActivity extends AppCompatActivity {
         onlineStar = findViewById(R.id.onlineStar);
         offlineStar = findViewById(R.id.offlineStar);
         onlineList = findViewById(R.id.onlineList);
-        healthGet = findViewById(R.id.healthInput);
-        dmgGet = findViewById(R.id.dmgInput);
-        flashGet = findViewById(R.id.cardInput);
-        defenseGet = findViewById(R.id.defenseInput);
-        nameGet = findViewById(R.id.bossNameInput);
+        addBossButton = findViewById(R.id.addBoss);
 
         if (onlineCheck()){
             offlineStar.setVisibility(View.GONE);
@@ -91,16 +88,19 @@ public class BattleCreatorActivity extends AppCompatActivity {
                     battleJSON.put("smallEnemiesCount", smallEnemies.getText().toString());
                     battleJSON.put("largeEnemiesCount", largeEnemies.getText().toString());
                    // battleJSON.put("boss", bossNum.getText().toString());
-                    battleJSON.put("name", nameGet.getText().toString());
-                    battleJSON.put("health", healthGet.getText().toString());
-                    battleJSON.put("attack", dmgGet.getText().toString());
-                    battleJSON.put("defense", defenseGet.getText().toString());
-                    battleJSON.put("flashcards", flashGet.getText().toString());
+
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
                 makeJsonObjReq();
 
+
+            }
+        });
+        addBossButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                makeJsonObjReqPutBoss();
 
             }
         });
@@ -187,7 +187,7 @@ public class BattleCreatorActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
 
                 Request.Method.PUT,
-                baseURL + "battle/" + battleID.getText().toString(),
+                baseURL + "battles/" + battleID.getText().toString(),
                 battleJSON,
 
                 new Response.Listener<JSONObject>() {
@@ -233,7 +233,7 @@ public class BattleCreatorActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
 
                 Request.Method.GET,
-                baseURL + "battle/" + battleID.getText().toString(),
+                baseURL + "battles/" + battleID.getText().toString(),
                 null,
 
                 new Response.Listener<JSONObject>() {
@@ -282,7 +282,7 @@ public class BattleCreatorActivity extends AppCompatActivity {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
 
                 Request.Method.DELETE,
-                baseURL + "battle/" + battleID.getText().toString(),
+                baseURL + "battles/" + battleID.getText().toString(),
                 null,
 
                 new Response.Listener<JSONObject>() {
@@ -320,7 +320,51 @@ public class BattleCreatorActivity extends AppCompatActivity {
 
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
+    private void makeJsonObjReqPutBoss() {
 
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+
+                Request.Method.PUT,
+                baseURL + "battles/" + battleID.getText().toString() + "/enemies/" + bossNum.getText().toString(),
+                null,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        displayText.setText(response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
 
 
 

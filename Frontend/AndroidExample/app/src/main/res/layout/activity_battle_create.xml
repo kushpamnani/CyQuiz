@@ -42,10 +42,10 @@
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.603" />
+        app:layout_constraintVertical_bias="0.615" />
 
     <Button
         android:id="@+id/postButton"
@@ -71,21 +71,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.246" />
-
-    <EditText
-        android:id="@+id/cardInput"
-        android:layout_width="176dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Enter Flashcard"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.809" />
+        app:layout_constraintVertical_bias="0.395" />
 
     <Button
         android:id="@+id/updateButtonBattle"
@@ -168,60 +154,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.084" />
-    <EditText
-        android:id="@+id/bossNameInput"
-        android:layout_width="174dp"
-        android:layout_height="52dp"
-        android:ems="10"
-        android:hint="Enter Name"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.315" />
-    <EditText
-        android:id="@+id/defenseInput"
-        android:layout_width="174dp"
-        android:layout_height="52dp"
-        android:ems="10"
-        android:hint="Enter defense (1-20)"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.409" />
 
-    <EditText
-        android:id="@+id/dmgInput"
-        android:layout_width="174dp"
-        android:layout_height="52dp"
-        android:ems="10"
-        android:hint="Enter Damage (1-15)"
-        android:inputType="number"
+    <Button
+        android:id="@+id/addBoss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Boss"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.932"
+        app:layout_constraintHorizontal_bias="0.102"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.592" />
-
-    <EditText
-        android:id="@+id/healthInput"
-        android:layout_width="176dp"
-        android:layout_height="54dp"
-        android:ems="10"
-        android:hint="Enter Health (1-250)"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.072" />
+        app:layout_constraintVertical_bias="0.815" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
