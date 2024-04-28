@@ -33,10 +33,10 @@ public class BattleActivity extends AppCompatActivity {
     private int[] largeEnemyTemp = new int[3];
     private int smallHealth, smallAttack, smallDefense;
     private int largeHealth, largeAttack, largeDefense;
-    private Button spearHit, swordHit;
+    private Button spearHit, swordHit, nextFight;
     private boolean fightingSmall, fightingLarge, fightingBoss;
 
-    private TextView debugging;
+    private TextView debugging, enemyHealthText, enemyDefenseText, enemyLeftText;
 
 
 
@@ -49,11 +49,20 @@ public class BattleActivity extends AppCompatActivity {
         debugging = findViewById(R.id.debugging);
         swordHit = findViewById(R.id.swordHit);
         spearHit = findViewById(R.id.spearHit);
+        enemyHealthText = findViewById(R.id.enemyHealth);
+        enemyDefenseText = findViewById(R.id.enemyDefense);
+        enemyLeftText = findViewById(R.id.enemyLeft);
+        nextFight = findViewById(R.id.nextFight);
 
         swordHit.setVisibility(View.GONE);
         spearHit.setVisibility(View.GONE);
+        nextFight.setVisibility(View.GONE);
+        enemyLeftText.setVisibility(View.GONE);
+        enemyDefenseText.setVisibility(View.GONE);
+        enemyHealthText.setVisibility(View.GONE);
         startButton.setVisibility(View.VISIBLE);
         battleID.setVisibility(View.VISIBLE);
+
         fightingSmall = true;
         fightingLarge = true;
         fightingBoss = false;
@@ -66,24 +75,140 @@ public class BattleActivity extends AppCompatActivity {
                 }
             }
         });
+        nextFight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                swordHit.setVisibility(View.VISIBLE);
+                spearHit.setVisibility(View.VISIBLE);
+                nextFight.setVisibility(View.GONE);
+                if(!fightingSmall && fightingLarge) {
+                    battleFight();
+                    enemyLeftText.setText("large enemies left: " + Integer.toString(largeEnemies));
+                    enemyHealthText.setText("large health left: " + Integer.toString(largeHealth));
+                    enemyDefenseText.setText("enemy defense: " + Integer.toString(largeDefense));
+                }
+
+            }
+        });
         swordHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (fightingSmall()){
-                    debugging.setText(Integer.toString(smallEnemies));
+                    enemyLeftText.setText("small enemies left: " +  Integer.toString(smallEnemies));
+                    enemyHealthText.setText("enemy health left: " +  Integer.toString(smallHealth));
+                    enemyDefenseText.setText("enemy defense: " +  Integer.toString(smallDefense));
                     smallHealth = smallHealth - (15-smallDefense);
+                    enemyHealthText.setText("enemy health left: " +  Integer.toString(smallHealth));
+
                     if (smallHealth <= 0){
-                       // smallEnemies = smallEnemies-1;
-                        debugging.setText(Integer.toString(smallEnemies));
+                       if (smallEnemies == 1){
+                           enemyLeftText.setText("you have beaten all of the small enemies");
+                       fightingSmall = false;
+                           swordHit.setVisibility(View.GONE);
+                           spearHit.setVisibility(View.GONE);
+                           nextFight.setVisibility(View.VISIBLE);
+                       }
+                       else{
+                           smallEnemies = smallEnemies-1;
+                           enemyLeftText.setText("small enemies left: " +  Integer.toString(smallEnemies));
+                           battleFight();
+                           enemyLeftText.setText("small enemies left: " +  Integer.toString(smallEnemies));
+                           enemyHealthText.setText("enemy health left: " +  Integer.toString(smallHealth));
+                           enemyDefenseText.setText("enemy defense: " +  Integer.toString(smallDefense));
+
+                       }
 
                     }
+                }
+                else if (fightingLarge()) {
+                    enemyLeftText.setText("large enemies left: " +  Integer.toString(largeEnemies));
+                    enemyHealthText.setText("large health left: " +  Integer.toString(largeHealth));
+                    enemyDefenseText.setText("enemy defense: " +  Integer.toString(largeDefense));
+                    if (largeDefense < 15) {
+                        largeHealth = largeHealth - (15-largeDefense);
+                        enemyHealthText.setText("large health left: " +  Integer.toString(largeHealth));
+
+                    }
+                    if (largeHealth <= 0){
+                        if (largeEnemies == 1){
+                            enemyLeftText.setText("you have beaten all of the large enemies");
+                            fightingLarge = false;
+                            swordHit.setVisibility(View.GONE);
+                            spearHit.setVisibility(View.GONE);
+                            nextFight.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            largeEnemies = largeEnemies-1;
+                            enemyLeftText.setText("large enemies left: " +  Integer.toString(largeEnemies));
+                            battleFight();
+                            enemyLeftText.setText("large enemies left: " +  Integer.toString(largeEnemies));
+                            enemyHealthText.setText("large health left: " +  Integer.toString(largeHealth));
+                            enemyDefenseText.setText("enemy defense: " +  Integer.toString(largeDefense));
+
+                        }
+
+                    }
+
                 }
             }
         });
         spearHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (fightingSmall()){
+                    enemyLeftText.setText("small enemies left: " +  Integer.toString(smallEnemies));
+                    enemyHealthText.setText("enemy health left: " +  Integer.toString(smallHealth));
+                    enemyDefenseText.setText("enemy defense: " +  Integer.toString(smallDefense));
+                    smallHealth = smallHealth - 7;
+                    enemyHealthText.setText("enemy health left: " +  Integer.toString(smallHealth));
 
+                    if (smallHealth <= 0){
+                        if (smallEnemies == 1){
+                            enemyLeftText.setText("you have beaten all of the small enemies");
+                            fightingSmall = false;
+                            swordHit.setVisibility(View.GONE);
+                            spearHit.setVisibility(View.GONE);
+                            nextFight.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            smallEnemies = smallEnemies-1;
+                            enemyLeftText.setText("small enemies left: " +  Integer.toString(smallEnemies));
+                            battleFight();
+                            enemyLeftText.setText("small enemies left: " +  Integer.toString(smallEnemies));
+                            enemyHealthText.setText("enemy health left: " +  Integer.toString(smallHealth));
+                            enemyDefenseText.setText("enemy defense: " +  Integer.toString(smallDefense));
+
+                        }
+
+                    }
+                }
+                else if (fightingLarge()) {
+                    enemyLeftText.setText("large enemies left: " +  Integer.toString(largeEnemies));
+                    enemyHealthText.setText("large health left: " +  Integer.toString(largeHealth));
+                    enemyDefenseText.setText("enemy defense: " +  Integer.toString(largeDefense));
+                        largeHealth = largeHealth - 7;
+                        enemyHealthText.setText("large health left: " +  Integer.toString(largeHealth));
+                    if (largeHealth <= 0){
+                        if (largeEnemies == 1){
+                            enemyLeftText.setText("you have beaten all of the large enemies");
+                            fightingLarge = false;
+                            swordHit.setVisibility(View.GONE);
+                            spearHit.setVisibility(View.GONE);
+                            nextFight.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            largeEnemies = largeEnemies-1;
+                            enemyLeftText.setText("large enemies left: " +  Integer.toString(largeEnemies));
+                            battleFight();
+                            enemyLeftText.setText("large enemies left: " +  Integer.toString(largeEnemies));
+                            enemyHealthText.setText("large health left: " +  Integer.toString(largeHealth));
+                            enemyDefenseText.setText("enemy defense: " +  Integer.toString(largeDefense));
+
+                        }
+
+                    }
+
+                }
             }
         });
 
@@ -116,6 +241,9 @@ public class BattleActivity extends AppCompatActivity {
                             battleID.setVisibility(View.GONE);
                             swordHit.setVisibility(View.VISIBLE);
                             spearHit.setVisibility(View.VISIBLE);
+                            enemyLeftText.setVisibility(View.VISIBLE);
+                            enemyDefenseText.setVisibility(View.VISIBLE);
+                            enemyHealthText.setVisibility(View.VISIBLE);
                         }
 
 
@@ -125,6 +253,10 @@ public class BattleActivity extends AppCompatActivity {
                          largeEnemies = response.optInt("largeEnemiesCount");
 
                         battleFight();
+                        enemyLeftText.setText("small enemies left: " +  Integer.toString(smallEnemies));
+                        enemyHealthText.setText("enemy health left: " +  Integer.toString(smallHealth));
+                        enemyDefenseText.setText("enemy defense: " +  Integer.toString(smallDefense));
+
 
 
 
@@ -161,11 +293,21 @@ public class BattleActivity extends AppCompatActivity {
 temp array holds in this order: Health, Attack, Defense. take in that order.
  */
     private void battleFight(){
-           smallEnemyTemp = smallEnemyCreate();
-           smallHealth = smallEnemyTemp[0];
-           smallAttack = smallEnemyTemp[1];
-           smallDefense = smallEnemyTemp[2];
-           debugging.setText(Integer.toString(smallHealth));
+
+        if (fightingSmall()) {
+            smallEnemyTemp = smallEnemyCreate();
+            smallHealth = smallEnemyTemp[0];
+            smallAttack = smallEnemyTemp[1];
+            smallDefense = smallEnemyTemp[2];
+        }
+        else if (fightingLarge()) {
+            largeEnemyTemp = largeEnemyCreate();
+            largeHealth = largeEnemyTemp[0];
+            largeAttack = largeEnemyTemp[1];
+            largeDefense = largeEnemyTemp[2];
+        }else {
+
+        }
 
 
 
@@ -181,12 +323,13 @@ temp array holds in this order: Health, Attack, Defense. take in that order.
     private int[] largeEnemyCreate(){
         largeEnemyTemp[0] = (int)Math.floor(Math.random() * (35 - 10 + 1) + 5);
         largeEnemyTemp[1] = (int)Math.floor(Math.random() * (12 - 5 + 1) + 5);
-        largeEnemyTemp[2] = (int)Math.floor(Math.random() * (15 - 5 + 1) + 5);
+        largeEnemyTemp[2] = (int)Math.floor(Math.random() * (14 - 5 + 1) + 5);
+
 
         return largeEnemyTemp;
     }
     private boolean fightingSmall(){
-        if (smallEnemies == 0){
+        if (smallEnemies <= 0){
             fightingSmall = false;
         }
 
@@ -196,6 +339,7 @@ temp array holds in this order: Health, Attack, Defense. take in that order.
         if (largeEnemies == 0){
             fightingLarge = false;
         }
+
 
         return fightingLarge;
     }
