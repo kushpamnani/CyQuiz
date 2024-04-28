@@ -19,8 +19,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         anouncments= findViewById(R.id.anouncments);
         strBtn = findViewById(R.id.btnStringRequest);
         jsonObjBtn = findViewById(R.id.btnJsonObjRequest);
-        jsonArrBtn = findViewById(R.id.btnJsonArrRequest);
-        imgBtn = findViewById(R.id.btnImageRequest);
         flashCardBtn = findViewById(R.id.btnFlashCard);
         adminBtn = findViewById(R.id.btnAdmin);
         signout = findViewById(R.id.btnSIgnOut);
@@ -31,8 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         /* button click listeners */
         strBtn.setOnClickListener(this);
         jsonObjBtn.setOnClickListener(this);
-        jsonArrBtn.setOnClickListener(this);
-        imgBtn.setOnClickListener(this);
         flashCardBtn.setOnClickListener(this);
         adminBtn.setOnClickListener(this);
         signout.setOnClickListener(this);
@@ -49,11 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, StringReqActivity.class));
         } else if (id == R.id.btnJsonObjRequest) {
             startActivity(new Intent(MainActivity.this, JsonObjReqActivity.class));
-        } else if (id == R.id.btnJsonArrRequest) {
-            startActivity(new Intent(MainActivity.this, JsonArrReqActivity.class));
-        } else if (id == R.id.btnImageRequest) {
-            startActivity(new Intent(MainActivity.this, ImageReqActivity.class));
-        } else if (id == R.id.btnFlashCard) {
+        }else if (id == R.id.btnFlashCard) {
             startActivity(new Intent(MainActivity.this, FlashCardActivity.class));
         } else if (id == R.id.btnAdmin) {
             startActivity(new Intent(MainActivity.this, AdminActivity.class));
