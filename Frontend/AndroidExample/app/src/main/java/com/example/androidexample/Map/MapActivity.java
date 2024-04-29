@@ -429,6 +429,10 @@ public class MapActivity extends AppCompatActivity {
         //makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
     }
 
+    public static int getHp() {
+        return hp;
+    }
+
     void makeJsonArrayReq(String url) {
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(
                 Request.Method.GET,
