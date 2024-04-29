@@ -58,7 +58,7 @@ public class BattleCreatorActivity extends AppCompatActivity {
 
         smallEnemies = findViewById(R.id.smallEnemies);
         largeEnemies = findViewById(R.id.largeEnemies);
-        bossNum = findViewById(R.id.bossID);
+        bossNum = findViewById(R.id.bossIDEnter);
         battlePost = findViewById(R.id.postButton);
         updateButton = findViewById(R.id.updateButtonBattle);
         deleteButton = findViewById(R.id.deleteButtonBattle);

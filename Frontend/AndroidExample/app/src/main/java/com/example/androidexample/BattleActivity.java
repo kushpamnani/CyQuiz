@@ -1,9 +1,13 @@
 package com.example.androidexample;
 
+import static com.example.androidexample.OnlineTrackerActivity.getOnlineList;
+import static com.example.androidexample.OnlineTrackerActivity.onlineCheck;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -39,6 +43,9 @@ public class BattleActivity extends AppCompatActivity {
     private boolean fightingSmall, fightingLarge, fightingBoss;
     private TextView healthNum;
     private ProgressBar healthBar;
+    private ImageView onlineStar;
+    private ImageView offlineStar;
+    private TextView onlineList;
 
     private TextView debugging, enemyHealthText, enemyDefenseText, enemyLeftText;
 
@@ -59,6 +66,17 @@ public class BattleActivity extends AppCompatActivity {
         nextFight = findViewById(R.id.nextFight);
         healthBar = findViewById(R.id.healthBar);
         healthNum = findViewById(R.id.healthNum);
+        onlineStar = findViewById(R.id.onlineStar);
+        offlineStar = findViewById(R.id.offlineStar);
+        onlineList = findViewById(R.id.onlineList);
+        if (onlineCheck()){
+            offlineStar.setVisibility(View.GONE);
+            onlineStar.setVisibility(View.VISIBLE);
+            onlineList.setText(getOnlineList().toString());
+        } else{
+            offlineStar.setVisibility(View.VISIBLE);
+            onlineStar.setVisibility(View.GONE);
+        }
 
         swordHit.setVisibility(View.GONE);
         spearHit.setVisibility(View.GONE);

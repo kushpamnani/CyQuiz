@@ -1,16 +1,24 @@
 package com.example.androidexample;
 
+import static com.example.androidexample.OnlineTrackerActivity.getOnlineList;
+import static com.example.androidexample.OnlineTrackerActivity.onlineCheck;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.androidexample.Map.MapActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button strBtn, battleBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout, map, enemyCreateBtn,anouncments, onlineButton;
+    private ImageView onlineStar;
+    private ImageView offlineStar;
+    private TextView onlineList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         enemyCreateBtn = findViewById(R.id.btnEnemyCreate);
         onlineButton = findViewById(R.id.onlineScreen);
         battleBtn = findViewById(R.id.battleScreen);
+
+
 
         /* button click listeners */
         strBtn.setOnClickListener(this);
