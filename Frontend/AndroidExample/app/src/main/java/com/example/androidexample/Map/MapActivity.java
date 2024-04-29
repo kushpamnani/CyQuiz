@@ -16,6 +16,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.example.androidexample.BattleActivity;
 import com.example.androidexample.ChatActivity;
 import com.example.androidexample.EnemyCreatorActivity;
 import com.example.androidexample.FlashCardActivity;
@@ -356,7 +357,7 @@ public class MapActivity extends AppCompatActivity {
 
     void event(char event) throws JSONException {
         if (event == '0') {
-            //todo call battle
+            startActivity(new Intent(MapActivity.this, BattleActivity.class));
         } else if (event == '1') {
             changehp(20);
         } else if (event == '2') {

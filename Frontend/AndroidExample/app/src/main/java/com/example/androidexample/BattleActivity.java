@@ -1,5 +1,6 @@
 package com.example.androidexample;
 
+import static com.example.androidexample.Map.MapActivity.getHp;
 import static com.example.androidexample.OnlineTrackerActivity.getOnlineList;
 import static com.example.androidexample.OnlineTrackerActivity.onlineCheck;
 
@@ -84,6 +85,8 @@ public class BattleActivity extends AppCompatActivity {
         answerThree = findViewById(R.id.answerThree);
         answerFour = findViewById(R.id.answerFour);
         questionBox = findViewById(R.id.questionBox);
+
+        health = getHp();
 
         if (onlineCheck()){
             offlineStar.setVisibility(View.GONE);
