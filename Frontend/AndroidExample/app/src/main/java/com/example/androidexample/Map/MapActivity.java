@@ -41,7 +41,7 @@ public class MapActivity extends AppCompatActivity {
     static Button a_1, a_2, a_3, b_1, b_2, b_3, b_4, c_1, c_2, boss;
     static TextView start;
     Button option1, option2, option3, option4, load, New, CreateEvent;
-    TextView question,desciption,Heath;
+    TextView question,desciption,Heath,Hpchange,Description,Conditon;
     StringBuilder seed;
     char type;
     static int hp;
@@ -86,11 +86,10 @@ public class MapActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
-                //makeMapSave(url+"/maps");
-                //try {
-                   // makeMapUpdate(url+"/maps/"+id+"/classroomRegistrations/"+userInfo.getJSONArray("classroomRegistrations").getJSONObject(0).getString("id"));
-                //} catch (JSONException e) {
-                //}
+                try {
+                    makeMapSave(url+"maps/"+id+"/classroom_registrations"+userInfo.getJSONArray("classroomRegistations").getInt(0));
+                } catch (JSONException e) {
+                }
             }
         });
         load.setOnClickListener(new View.OnClickListener() {
@@ -385,6 +384,7 @@ public class MapActivity extends AppCompatActivity {
 
     void Quiz(String[] card) {
         question.setText(card[0]);
+        Random rand = new Random();
         option1.setText(card[1]);
         option2.setText(card[2]);
         option3.setText(card[3]);
@@ -403,30 +403,35 @@ public class MapActivity extends AppCompatActivity {
         makerandomEventreq(url_event);
     }
     void RandomEvents(JSONArray events) throws JSONException {
-        // event.put("Condition 1","");
-        //event.put("Condition 2", "");
         Random rand = new Random();
-        int rom = rand.nextInt(events.length());
         JSONObject event = events.getJSONObject(Math.abs(rand.nextInt(events.length())));
-        desciption.setText("desciption");
-        if(event.getString("Condition 1")!=""&&event.getString("Condition 2")!=""){
-            desciption.setText("if hp is more then" +event.getString("Condition 1")+"and hp is less then"+ event.getString("Condition 2")+"change hp by"+event.getString("Hp change"));
-            if(hp>Integer.parseInt(event.getString("Condition 1"))&&hp<Integer.parseInt(event.getString("Condition 2"))){
-                changehp(Integer.getInteger(event.getString("Hp change")));
+        Hpchange = findViewById(R.id.RE_HealAmount);
+        Description = findViewById(R.id.RE_Description);
+        Conditon = findViewById(R.id.RE_Condition);
+        Hpchange.setText(event.getString("hpChange"));
+        Description.setText(event.getString("description"));
+        if(!event.getString("condition1").equals("")&&!event.getString("condition2").equals("")){
+            Conditon.setText("If hp is more then "+event.getString("condition2")+"Hp is less then "+event.getString("condition1"));
+            if(hp<Integer.parseInt(event.getString("condition1"))&&hp>Integer.parseInt(event.getString("condition2"))){
+                changehp(Integer.parseInt(event.getString("hpChange")));
+            }
+        } else if (!event.getString("condition1").equals("")) {
+            Conditon.setText("If hp is less then "+event.getString("condition1"));
+            if(hp<Integer.parseInt(event.getString("condition1"))){
+                changehp(Integer.parseInt(event.getString("hpChange")));
             }
         }
-        else if(event.getString("Condition 1")!=""){
-            desciption.setText("if hp is more then" +event.getString("Condition 1")+"change hp by"+event.getString("Hp change"));
-            if(hp>Integer.parseInt(event.getString("Condition 1"))){
-                changehp(Integer.getInteger(event.getString("Hp change")));
+        else if (!event.getString("condition2").equals("")) {
+            Conditon.setText("If hp is more then "+event.getString("condition2"));
+            if(hp>Integer.parseInt(event.getString("condition2"))){
+                changehp(Integer.parseInt(event.getString("hpChange")));
             }
         }
-        else if(event.getString("Condition 2")!=""){
-            desciption.setText("if hp is less then" +event.getString("Condition 2")+"change hp by"+event.getString("Hp change"));
-            if(hp<Integer.parseInt(event.getString("Condition 1"))){
-                changehp(Integer.getInteger(event.getString("Hp change")));
-            }
+        else{
+            Conditon.setText("");
+            changehp(Integer.parseInt(event.getString("hpChange")));
         }
+
     }
     private void update() throws JSONException {
         //info.put("id",userInfo.getJSONObject("map").getString("id"));

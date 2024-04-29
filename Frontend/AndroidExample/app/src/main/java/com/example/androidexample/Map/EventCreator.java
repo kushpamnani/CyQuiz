@@ -50,14 +50,17 @@ public class EventCreator extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    if(title.getText() == null){
-                        event.put("title"," ");
-                    }
-                    else if (description.getText().toString()==null){
-                        event.put("description"," ");
+                    String test = title.getText().toString();
+                    if(title.getText().toString().equals("")){
+                        event.put("title","null");
                     }
                     else{
                         event.put("title",title.getText().toString());
+                    }
+                    if (description.getText().toString().equals("")){
+                        event.put("description","null");
+                    }
+                    else{
                         event.put("description",description.getText().toString());
                     }
                     if (morehp.isChecked()&&lesshp.isChecked()){
@@ -66,17 +69,22 @@ public class EventCreator extends AppCompatActivity {
                     }
                     else if (morehp.isChecked()){
                         event.put("condition1",hpmax.getText().toString());
-                        event.put("condition2", "");
+                        event.put("condition2", "null");
                     }
                     else if (lesshp.isChecked()){
-                        event.put("condition1","");
+                        event.put("condition1","null");
                         event.put("condition2", hpmin.getText().toString());
                     }
                     else{
-                        event.put("condition1","");
-                        event.put("condition2", "");
+                        event.put("condition1","null");
+                        event.put("condition2", "null");
                     }
-                    event.put("hp_change",healamount.getText().toString());
+                    if(healamount.getText().toString().equals("")){
+                        event.put("hp_change","null");
+                    }
+                    else{
+                        event.put("hp_change",healamount.getText().toString());
+                    }
                     makerandomEventSave(url);
                 }
                 catch (JSONException e) {
