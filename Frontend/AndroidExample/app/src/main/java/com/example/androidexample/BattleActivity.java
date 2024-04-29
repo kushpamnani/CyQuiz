@@ -1,5 +1,6 @@
 package com.example.androidexample;
 
+import static com.example.androidexample.Map.MapActivity.afterbattleHp;
 import static com.example.androidexample.Map.MapActivity.getHp;
 import static com.example.androidexample.OnlineTrackerActivity.getOnlineList;
 import static com.example.androidexample.OnlineTrackerActivity.onlineCheck;
@@ -19,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.androidexample.Map.MapActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -135,6 +137,8 @@ public class BattleActivity extends AppCompatActivity {
                     enemyLeftText.setText("YOU WIN!");
                     dodgeButton.setVisibility(View.GONE);
                     answerBox.setVisibility(View.GONE);
+                    afterbattleHp(health);
+                    finish();
                 }else{
                     enemyLeftText.setText("You missed the question and got hit!");
                     health = health - 25;
