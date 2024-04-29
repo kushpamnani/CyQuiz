@@ -1,5 +1,7 @@
 package com.example.androidexample.Map;
 
+import static com.example.androidexample.BattleActivity.healthGet;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -357,7 +359,9 @@ public class MapActivity extends AppCompatActivity {
 
     void event(char event) throws JSONException {
         if (event == '0') {
+            setHp(healthGet());
             startActivity(new Intent(MapActivity.this, BattleActivity.class));
+
         } else if (event == '1') {
             changehp(20);
         } else if (event == '2') {

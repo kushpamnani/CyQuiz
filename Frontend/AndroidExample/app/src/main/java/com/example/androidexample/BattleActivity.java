@@ -38,7 +38,7 @@ public class BattleActivity extends AppCompatActivity {
     private String responseJSON = "";
     private int smallEnemies;
     private int largeEnemies;
-    private int health = 100;
+    private static int health = 100;
     private int[] smallEnemyTemp = new int[3];
     private int[] largeEnemyTemp = new int[3];
     private int smallHealth, smallAttack, smallDefense;
@@ -85,7 +85,6 @@ public class BattleActivity extends AppCompatActivity {
         answerThree = findViewById(R.id.answerThree);
         answerFour = findViewById(R.id.answerFour);
         questionBox = findViewById(R.id.questionBox);
-
         health = getHp();
 
         if (onlineCheck()){
@@ -328,6 +327,7 @@ public class BattleActivity extends AppCompatActivity {
 
                     } else{
                         health = health-5;
+
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
                     }
@@ -360,6 +360,7 @@ public class BattleActivity extends AppCompatActivity {
 
                     } else{
                         health = health-bossAttack;
+
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
                     }
@@ -535,7 +536,7 @@ temp array holds in this order: Health, Attack, Defense. take in that order.
 
         return fightingLarge;
     }
-    public int healthGet() {return health;}
+    public static int healthGet() {return health;}
 
 
 }
