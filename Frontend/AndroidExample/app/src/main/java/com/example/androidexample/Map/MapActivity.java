@@ -401,7 +401,6 @@ public class MapActivity extends AppCompatActivity {
         // event.put("Condition 1","");
         //event.put("Condition 2", "");
         Random rand = new Random();
-        int rom = rand.nextInt(events.length());
         JSONObject event = events.getJSONObject(Math.abs(rand.nextInt(events.length())));
         desciption.setText("desciption");
         if(event.getString("Condition 1")!=""&&event.getString("Condition 2")!=""){
