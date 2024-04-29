@@ -19,9 +19,9 @@
         <Button
             android:id="@+id/btnBoss"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_weight="1"
-            android:text="BOSS" />
+            android:text="Final Fight" />
     </LinearLayout>
 
     <LinearLayout
