@@ -77,6 +77,15 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
+
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.12.1</version>
+        <configuration>
+          <fork>true</fork>
+          <executable>/usr/lib/jvm/java-17-openjdk-17.0.6.0.10-3.el9.x86_64/bin/java</executable>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   
