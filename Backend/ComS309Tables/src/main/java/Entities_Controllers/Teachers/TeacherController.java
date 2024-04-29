@@ -96,16 +96,6 @@ public class TeacherController {
         return success;
     }
 
-    /* not safe to update */
-//    @PutMapping("/students/{id}")
-//    Student updateStudent(@PathVariable int id, @RequestBody Student request){
-//        Student student = studentRepository.findById(id);
-//        if(student == null)
-//            return null;
-//        studentRepository.save(request);
-//        return studentRepository.findById(id);
-//    }
-
     @PutMapping("/teachers/{id}")
     Teacher updateTeacher(@PathVariable int id, @RequestBody Teacher request){
         Teacher teacher = teacherRepository.findById(id);

@@ -124,18 +124,6 @@ public class StudentController {
         return cr;
     }
 
-//    @PutMapping("/students/{studentId}/laptops/{laptopId}")
-//    String assignLaptopToStudent(@PathVariable int studentId,@PathVariable int laptopId){
-//        Student student = studentRepository.findById(studentId);
-//        Laptop laptop = laptopRepository.findById(laptopId);
-//        if(student == null || laptop == null)
-//            return failure;
-//        laptop.setStudent(student);
-//        student.setLaptop(laptop);
-//        studentRepository.save(student);
-//        return success;
-//    }
-
     @DeleteMapping(path = "/students/{id}")
     String deleteStudent(@PathVariable int id){
         if (studentRepository.findById(id) == null) {

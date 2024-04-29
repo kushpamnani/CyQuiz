@@ -91,18 +91,6 @@ public class Classroom_registrationController {
         return classroom_registrationRepository.findById(request.getId());
     }
 
-//    @PutMapping("/students/{studentId}/laptops/{laptopId}")
-//    String assignLaptopToStudent(@PathVariable int studentId,@PathVariable int laptopId){
-//        Student student = studentRepository.findById(studentId);
-//        Laptop laptop = laptopRepository.findById(laptopId);
-//        if(student == null || laptop == null)
-//            return failure;
-//        laptop.setStudent(student);
-//        student.setLaptop(laptop);
-//        studentRepository.save(student);
-//        return success;
-//    }
-
     @DeleteMapping(path = "/classroom_registrations/{id}")
     String deleteClassroom_registration(@PathVariable int id){
         if (classroom_registrationRepository.findById(id) == null) {
