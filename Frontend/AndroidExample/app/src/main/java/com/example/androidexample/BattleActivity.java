@@ -23,9 +23,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class BattleActivity extends AppCompatActivity {
     private String baseURL = "http://coms-309-031.class.las.iastate.edu:8080";
@@ -46,6 +49,11 @@ public class BattleActivity extends AppCompatActivity {
     private ImageView onlineStar;
     private ImageView offlineStar;
     private TextView onlineList;
+    private int bossHealth, bossAttack, bossDefense;
+    private String answer, opt1, opt2, opt3, opt4, question;
+    private TextView answerBox;
+    private Button dodgeButton;
+    private TextView questionBox, answerOne, answerTwo, answerThree, answerFour;
 
     private TextView debugging, enemyHealthText, enemyDefenseText, enemyLeftText;
 
@@ -69,6 +77,14 @@ public class BattleActivity extends AppCompatActivity {
         onlineStar = findViewById(R.id.onlineStar);
         offlineStar = findViewById(R.id.offlineStar);
         onlineList = findViewById(R.id.onlineList);
+        answerBox = findViewById(R.id.answerBox);
+        dodgeButton = findViewById(R.id.dodgeButton);
+        answerOne = findViewById(R.id.answerOne);
+        answerTwo = findViewById(R.id.answerTwo);
+        answerThree = findViewById(R.id.answerThree);
+        answerFour = findViewById(R.id.answerFour);
+        questionBox = findViewById(R.id.questionBox);
+
         if (onlineCheck()){
             offlineStar.setVisibility(View.GONE);
             onlineStar.setVisibility(View.VISIBLE);
@@ -83,11 +99,19 @@ public class BattleActivity extends AppCompatActivity {
         healthNum.setVisibility(View.GONE);
         healthBar.setVisibility(View.GONE);
         nextFight.setVisibility(View.GONE);
+        dodgeButton.setVisibility(View.GONE);
+        answerBox.setVisibility(View.GONE);
         enemyLeftText.setVisibility(View.GONE);
         enemyDefenseText.setVisibility(View.GONE);
         enemyHealthText.setVisibility(View.GONE);
         startButton.setVisibility(View.VISIBLE);
         battleID.setVisibility(View.VISIBLE);
+        answerOne.setVisibility(View.GONE);
+        answerTwo.setVisibility(View.GONE);
+        answerThree.setVisibility(View.GONE);
+        answerFour.setVisibility(View.GONE);
+        questionBox.setVisibility(View.GONE);
+
 
         fightingSmall = true;
         fightingLarge = true;
@@ -101,17 +125,38 @@ public class BattleActivity extends AppCompatActivity {
                 }
             }
         });
+        dodgeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (answerBox.getText().toString().equals(answer)){
+                    enemyLeftText.setText("YOU WIN!");
+                    dodgeButton.setVisibility(View.GONE);
+                    answerBox.setVisibility(View.GONE);
+                }else{
+                    enemyLeftText.setText("You missed the question and got hit!");
+                    health = health - 25;
+                    healthNum.setText(Integer.toString(health));
+                    healthBar.setProgress(health);
+                }
+            }
+        });
         nextFight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 swordHit.setVisibility(View.VISIBLE);
                 spearHit.setVisibility(View.VISIBLE);
                 nextFight.setVisibility(View.GONE);
-                if(!fightingSmall && fightingLarge) {
+                if(fightingLarge) {
                     battleFight();
                     enemyLeftText.setText("large enemies left: " + Integer.toString(largeEnemies));
                     enemyHealthText.setText("large health left: " + Integer.toString(largeHealth));
                     enemyDefenseText.setText("enemy defense: " + Integer.toString(largeDefense));
+                } else if(fightingBoss){
+                    enemyLeftText.setText("You are fighting the boss!!");
+                    enemyHealthText.setText("Boss health left: " +  Integer.toString(bossHealth));
+                    enemyDefenseText.setText("enemy defense: " +  Integer.toString(bossDefense));
+
                 }
 
             }
@@ -146,7 +191,7 @@ public class BattleActivity extends AppCompatActivity {
 
                     }
                     else{
-                        health = health-3;
+                        health = health-2;
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
                     }
@@ -158,12 +203,12 @@ public class BattleActivity extends AppCompatActivity {
                     if (largeDefense < 15) {
                         largeHealth = largeHealth - (15-largeDefense);
                         enemyHealthText.setText("large health left: " +  Integer.toString(largeHealth));
-
                     }
                     if (largeHealth <= 0){
                         if (largeEnemies == 1){
                             enemyLeftText.setText("you have beaten all of the large enemies");
                             fightingLarge = false;
+                            fightingBoss = true;
                             swordHit.setVisibility(View.GONE);
                             spearHit.setVisibility(View.GONE);
                             nextFight.setVisibility(View.VISIBLE);
@@ -179,10 +224,41 @@ public class BattleActivity extends AppCompatActivity {
                         }
 
                     } else{
-                        health = health-7;
+                        health = health-5;
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
                     }
+
+                }
+                else if (fightingBoss){
+                    enemyLeftText.setText("You are fighting the boss!!");
+                    enemyHealthText.setText("Boss health left: " +  Integer.toString(bossHealth));
+                    enemyDefenseText.setText("Boss defense: " +  Integer.toString(bossDefense));
+                    if (bossDefense < 15) {
+                        bossHealth = bossHealth - (15-bossDefense);
+                        enemyHealthText.setText("Boss health left: " +  Integer.toString(bossHealth));
+                    }
+                    if (bossHealth <= 0){
+                        enemyLeftText.setText("The boss has been slain! Watch out for the final attack!");
+                        enemyDefenseText.setVisibility(View.GONE);
+                        enemyHealthText.setVisibility(View.GONE);
+                        dodgeButton.setVisibility(View.VISIBLE);
+                        answerBox.setVisibility(View.VISIBLE);
+                        swordHit.setVisibility(View.GONE);
+                        spearHit.setVisibility(View.GONE);
+                        answerOne.setVisibility(View.VISIBLE);
+                        answerTwo.setVisibility(View.VISIBLE);
+                        answerThree.setVisibility(View.VISIBLE);
+                        answerFour.setVisibility(View.VISIBLE);
+                        questionBox.setVisibility(View.VISIBLE);
+
+
+                    } else{
+                        health = health-bossAttack;
+                        healthNum.setText(Integer.toString(health));
+                        healthBar.setProgress(health);
+                    }
+
 
                 }
             }
@@ -217,7 +293,7 @@ public class BattleActivity extends AppCompatActivity {
 
                     }
                     else{
-                        health = health-3;
+                        health = health-2;
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
                     }
@@ -232,6 +308,7 @@ public class BattleActivity extends AppCompatActivity {
                         if (largeEnemies == 1){
                             enemyLeftText.setText("you have beaten all of the large enemies");
                             fightingLarge = false;
+                            fightingBoss = true;
                             swordHit.setVisibility(View.GONE);
                             spearHit.setVisibility(View.GONE);
                             nextFight.setVisibility(View.VISIBLE);
@@ -247,10 +324,43 @@ public class BattleActivity extends AppCompatActivity {
                         }
 
                     } else{
-                        health = health-7;
+                        health = health-5;
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
                     }
+
+                }
+                else if (fightingBoss){
+                    enemyLeftText.setText("You are fighting the boss!!");
+                    enemyHealthText.setText("Boss health left: " +  Integer.toString(bossHealth));
+                    enemyDefenseText.setText("Boss defense: " +  Integer.toString(bossDefense));
+                    bossHealth = bossHealth - 7;
+                        enemyHealthText.setText("Boss health left: " +  Integer.toString(bossHealth));
+
+                    if (bossHealth <= 0){
+                        enemyLeftText.setText("The boss has been slain! Watch out for the final attack!");
+                        enemyDefenseText.setVisibility(View.GONE);
+                        enemyHealthText.setVisibility(View.GONE);
+                        dodgeButton.setVisibility(View.VISIBLE);
+                        answerBox.setVisibility(View.VISIBLE);
+                        swordHit.setVisibility(View.GONE);
+                        spearHit.setVisibility(View.GONE);
+                        answerOne.setVisibility(View.VISIBLE);
+                        answerTwo.setVisibility(View.VISIBLE);
+                        answerThree.setVisibility(View.VISIBLE);
+                        answerFour.setVisibility(View.VISIBLE);
+                        questionBox.setVisibility(View.VISIBLE);
+                        questionBox.setText(question);
+
+
+
+
+                    } else{
+                        health = health-bossAttack;
+                        healthNum.setText(Integer.toString(health));
+                        healthBar.setProgress(health);
+                    }
+
 
                 }
             }
@@ -293,12 +403,38 @@ public class BattleActivity extends AppCompatActivity {
                             healthNum.setText(Integer.toString(health));
                             healthBar.setProgress(health);
                         }
+                        JSONObject helper, helper2;
+                        helper = response.optJSONObject("boss");
 
 
                           smallEnemies = response.optInt("smallEnemiesCount");
 
 
                          largeEnemies = response.optInt("largeEnemiesCount");
+                        bossHealth = helper.optInt("health");
+                         bossAttack = helper.optInt("attack");
+                         bossDefense = helper.optInt("defense");
+                         helper2 = helper.optJSONObject("flashcard");
+                         answer = helper2.optString("answer");
+                        opt1 = helper2.optString("option1");
+                        opt2 = helper2.optString("option2");
+                        opt3 = helper2.optString("option3");
+                        question = helper2.optString("question");
+                        questionBox.setText(question);
+                        ArrayList<String> answerList = new ArrayList<String>();
+                        answerList.add(opt1);
+                        answerList.add(opt2);
+                        answerList.add(opt3);
+                        answerList.add(answer);
+                        Collections.shuffle(answerList);
+                        answerOne.setText(answerList.get(0));
+                        answerTwo.setText(answerList.get(1));
+                        answerThree.setText(answerList.get(2));
+                        answerFour.setText(answerList.get(3));
+
+
+
+
 
                         battleFight();
                         enemyLeftText.setText("small enemies left: " +  Integer.toString(smallEnemies));
@@ -353,8 +489,6 @@ temp array holds in this order: Health, Attack, Defense. take in that order.
             largeHealth = largeEnemyTemp[0];
             largeAttack = largeEnemyTemp[1];
             largeDefense = largeEnemyTemp[2];
-        }else {
-
         }
 
 
