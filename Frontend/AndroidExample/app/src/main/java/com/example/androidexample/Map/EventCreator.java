@@ -50,8 +50,16 @@ public class EventCreator extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    event.put("title",title.getText().toString());
-                    event.put("description",description.getText().toString());
+                    if(title.getText() == null){
+                        event.put("title"," ");
+                    }
+                    else if (description.getText().toString()==null){
+                        event.put("description"," ");
+                    }
+                    else{
+                        event.put("title",title.getText().toString());
+                        event.put("description",description.getText().toString());
+                    }
                     if (morehp.isChecked()&&lesshp.isChecked()){
                         event.put("condition1",hpmax.getText().toString());
                         event.put("condition2",hpmin.getText().toString());
