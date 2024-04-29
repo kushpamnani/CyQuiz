@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,13 +30,15 @@ public class BattleActivity extends AppCompatActivity {
     private String responseJSON = "";
     private int smallEnemies;
     private int largeEnemies;
-    private int health;
+    private int health = 100;
     private int[] smallEnemyTemp = new int[3];
     private int[] largeEnemyTemp = new int[3];
     private int smallHealth, smallAttack, smallDefense;
     private int largeHealth, largeAttack, largeDefense;
     private Button spearHit, swordHit, nextFight;
     private boolean fightingSmall, fightingLarge, fightingBoss;
+    private TextView healthNum;
+    private ProgressBar healthBar;
 
     private TextView debugging, enemyHealthText, enemyDefenseText, enemyLeftText;
 
@@ -53,9 +57,13 @@ public class BattleActivity extends AppCompatActivity {
         enemyDefenseText = findViewById(R.id.enemyDefense);
         enemyLeftText = findViewById(R.id.enemyLeft);
         nextFight = findViewById(R.id.nextFight);
+        healthBar = findViewById(R.id.healthBar);
+        healthNum = findViewById(R.id.healthNum);
 
         swordHit.setVisibility(View.GONE);
         spearHit.setVisibility(View.GONE);
+        healthNum.setVisibility(View.GONE);
+        healthBar.setVisibility(View.GONE);
         nextFight.setVisibility(View.GONE);
         enemyLeftText.setVisibility(View.GONE);
         enemyDefenseText.setVisibility(View.GONE);
@@ -119,6 +127,11 @@ public class BattleActivity extends AppCompatActivity {
                        }
 
                     }
+                    else{
+                        health = health-3;
+                        healthNum.setText(Integer.toString(health));
+                        healthBar.setProgress(health);
+                    }
                 }
                 else if (fightingLarge()) {
                     enemyLeftText.setText("large enemies left: " +  Integer.toString(largeEnemies));
@@ -147,6 +160,10 @@ public class BattleActivity extends AppCompatActivity {
 
                         }
 
+                    } else{
+                        health = health-7;
+                        healthNum.setText(Integer.toString(health));
+                        healthBar.setProgress(health);
                     }
 
                 }
@@ -181,6 +198,11 @@ public class BattleActivity extends AppCompatActivity {
                         }
 
                     }
+                    else{
+                        health = health-3;
+                        healthNum.setText(Integer.toString(health));
+                        healthBar.setProgress(health);
+                    }
                 }
                 else if (fightingLarge()) {
                     enemyLeftText.setText("large enemies left: " +  Integer.toString(largeEnemies));
@@ -206,6 +228,10 @@ public class BattleActivity extends AppCompatActivity {
 
                         }
 
+                    } else{
+                        health = health-7;
+                        healthNum.setText(Integer.toString(health));
+                        healthBar.setProgress(health);
                     }
 
                 }
@@ -244,6 +270,10 @@ public class BattleActivity extends AppCompatActivity {
                             enemyLeftText.setVisibility(View.VISIBLE);
                             enemyDefenseText.setVisibility(View.VISIBLE);
                             enemyHealthText.setVisibility(View.VISIBLE);
+                            healthNum.setVisibility(View.VISIBLE);
+                            healthBar.setVisibility(View.VISIBLE);
+                            healthNum.setText(Integer.toString(health));
+                            healthBar.setProgress(health);
                         }
 
 
