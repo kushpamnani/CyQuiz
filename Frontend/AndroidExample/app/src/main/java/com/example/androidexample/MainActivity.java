@@ -10,7 +10,7 @@ import android.widget.Button;
 import com.example.androidexample.Map.MapActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button strBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout, map, enemyCreateBtn,anouncments, onlineButton;
+    private Button strBtn, battleBtn, jsonObjBtn, jsonArrBtn, imgBtn, flashCardBtn, adminBtn, signout, map, enemyCreateBtn,anouncments, onlineButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         map = findViewById(R.id.btnMapTest);
         enemyCreateBtn = findViewById(R.id.btnEnemyCreate);
         onlineButton = findViewById(R.id.onlineScreen);
+        battleBtn = findViewById(R.id.battleScreen);
 
         /* button click listeners */
         strBtn.setOnClickListener(this);
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         enemyCreateBtn.setOnClickListener(this);
         anouncments.setOnClickListener(this);
         onlineButton.setOnClickListener(this);
+        battleBtn.setOnClickListener(this);
     }
 
     @Override
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(MainActivity.this, ChatActivity.class));
         } else if (id == R.id.onlineScreen){
             startActivity(new Intent(MainActivity.this, OnlineTrackerActivity.class));
+        } else if (id == R.id.battleScreen){
+            startActivity(new Intent(MainActivity.this, BattleActivity.class));
         }
     }
 }
