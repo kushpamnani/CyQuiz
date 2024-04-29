@@ -83,6 +83,11 @@ public class MapActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
 
+                try {
+                    makeMapSave(url+"maps/"+id+"/classroom_registrations"+userInfo.getJSONArray("classroomRegistations").getInt(0));
+                } catch (JSONException e) {
+                }
+
                 //makeMapSave(url+"/maps");
                 //try {
                    // makeMapUpdate(url+"/maps/"+id+"/classroomRegistrations/"+userInfo.getJSONArray("classroomRegistrations").getJSONObject(0).getString("id"));
@@ -380,6 +385,7 @@ public class MapActivity extends AppCompatActivity {
 
     void Quiz(String[] card) {
         question.setText(card[0]);
+        Random rand = new Random();
         option1.setText(card[1]);
         option2.setText(card[2]);
         option3.setText(card[3]);
