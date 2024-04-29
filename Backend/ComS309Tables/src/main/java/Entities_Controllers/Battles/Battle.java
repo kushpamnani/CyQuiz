@@ -9,7 +9,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 
-
+/**
+ *
+ * @author Dalton Clark
+ *
+ */
 @Entity
 public class Battle {
 

@@ -6,7 +6,11 @@ import jakarta.persistence.*;
 
 import java.util.Set;
 
-
+/**
+ *
+ * @author Dalton Clark
+ *
+ */
 @Entity
 public class Flashcard {
 

@@ -6,7 +6,11 @@ import Entities_Controllers.Students.StudentRepository;
 import Entities_Controllers.Teachers.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+/**
+ *
+ * @author Dalton Clark
+ *
+ */
 @RestController
 public class AdminController {
 

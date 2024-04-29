@@ -5,7 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+/**
+ *
+ * @author Dalton Clark
+ *
+ */
 @Entity
 public class Admin implements User {
 
