@@ -1,9 +1,13 @@
 package com.example.androidexample;
 
+import static com.example.androidexample.OnlineTrackerActivity.getOnlineList;
+import static com.example.androidexample.OnlineTrackerActivity.onlineCheck;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +27,9 @@ public class EnemyCreatorActivity extends AppCompatActivity{
     private static final String URL_JSON_OBJECT = "http://coms-309-031.class.las.iastate.edu:8080";
     private Button teacherCheck, battleButton, bossButton;
     private TextView testText;
+    private ImageView onlineStar;
+    private ImageView offlineStar;
+    private TextView onlineList;
 
 
 
@@ -34,8 +41,19 @@ public class EnemyCreatorActivity extends AppCompatActivity{
         testText = findViewById(R.id.testingText);
         bossButton = findViewById(R.id.bossCreateButton);
         battleButton = findViewById(R.id.battleCreateButton);
+        onlineStar = findViewById(R.id.onlineStar);
+        offlineStar = findViewById(R.id.offlineStar);
+        onlineList = findViewById(R.id.onlineList);
         battleButton.setVisibility(View.GONE);
         bossButton.setVisibility(View.GONE);
+        if (onlineCheck()){
+            offlineStar.setVisibility(View.GONE);
+            onlineStar.setVisibility(View.VISIBLE);
+            onlineList.setText(getOnlineList().toString());
+        } else{
+            offlineStar.setVisibility(View.VISIBLE);
+            onlineStar.setVisibility(View.GONE);
+        }
 
 
 

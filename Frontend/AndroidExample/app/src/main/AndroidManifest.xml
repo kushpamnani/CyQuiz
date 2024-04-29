@@ -19,6 +19,9 @@
             android:name=".BossCreatorActivity"
             android:exported="false" />
         <activity
+            android:name=".BattleActivity"
+            android:exported="false" />
+        <activity
             android:name=".BattleCreatorActivity"
             android:exported="false" />
         <activity
