@@ -48,8 +48,11 @@ public class NoelSystemTest {
 
 
         onView(withId(R.id.bossNameInput)).perform(replaceText("BossName"), closeSoftKeyboard());
+        Thread.sleep(100);
         onView(withId(R.id.healthInput)).perform(replaceText("100"), closeSoftKeyboard());
+        Thread.sleep(100);
         onView(withId(R.id.dmgInput)).perform(replaceText("50"), closeSoftKeyboard());
+        Thread.sleep(100);
         onView(withId(R.id.defenseInput)).perform(replaceText("20"), closeSoftKeyboard());
         onView(withId(R.id.sendBtn)).perform(click());
         Thread.sleep(500);
@@ -148,13 +151,20 @@ public class NoelSystemTest {
         onView(withId(R.id.battleIDInput)).perform(typeText("49"), closeSoftKeyboard());
         onView(withId(R.id.startBattleBtn)).perform(click());
         Thread.sleep(500);
-
-
-
-
         onView(withId(R.id.enemyLeft)).check(matches(withText(containsString("small enemies left: 2"))));
 
     }
+    @Test
+    public void checkHealthInfo() throws InterruptedException {
+        onView(withId(R.id.battleScreen)).perform(click());
+        Thread.sleep(50);
+        onView(withId(R.id.battleIDInput)).perform(typeText("49"), closeSoftKeyboard());
+        Thread.sleep(50);
+        onView(withId(R.id.startBattleBtn)).perform(click());
+        Thread.sleep(500);
+        onView(withId(R.id.healthNum)).check(matches(withText(containsString("0"))));
+    }
+
 
 
 
