@@ -18,13 +18,14 @@ android:orientation="vertical">
         android:hint="message"
         android:textSize="20dp"
         android:id="@+id/msgEdt" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Send"
-        android:id="@+id/sendBtn" />
 </LinearLayout>
 
+
+    <Button
+        android:id="@+id/sendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send" />
 
     <ScrollView
         android:layout_width="match_parent"

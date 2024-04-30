@@ -120,5 +120,16 @@ public class AlexSystemTest {
         onView(withId(R.id.Question)).check(matches(withText("What is the capital of France?")));
 
     }
+    @Test
+    public void NonAdminChat(){
+        onView(withId(R.id.btnSIgnOut)).perform(click());
+        onView(withId(R.id.User_Name)).perform(typeText("example"));
+        onView(withId(R.id.Password)).perform(typeText("example"));
+        onView(withId(R.id.btnLogin)).perform(click());
+        onView(withId(R.id.anouncments)).perform(click());
+        onView(withId(R.id.msgEdt)).perform(typeText("No text should show"));
+        onView(withId(R.id.sendBtn)).perform(click());
+        onView(withId(R.id.tx1)).check(matches(withText("")));
+    }
 }
 
