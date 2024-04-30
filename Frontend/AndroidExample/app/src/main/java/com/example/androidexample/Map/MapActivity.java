@@ -50,7 +50,6 @@ public class MapActivity extends AppCompatActivity {
     TextView Description;
     TextView Conditon;
     StringBuilder seed;
-    char type;
     static int hp;
     static char a_1_Type, a_2_Type, a_3_Type, b_1_Type, b_2_Type, b_3_Type, b_4_Type, c_1_Type, c_2_Type;
     String  positon;
@@ -78,7 +77,8 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View view) {
                 try {
                     if(LoginActivity.getUserInfo().getJSONArray("classroomRegistrations").getJSONObject(0) != null){
-                        makeMapDel(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+                        String test = String.valueOf(userInfo.getJSONArray("classroomRegistrations").getJSONObject(0).getJSONObject("map").getInt("id"));
+                        makeMapDel(url+"maps/"+String.valueOf(userInfo.getJSONArray("classroomRegistrations").getJSONObject(0).getJSONObject("map").getInt("id")));
                     }
                 } catch (JSONException e) {
                 }
@@ -92,11 +92,7 @@ public class MapActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-
-                try {
-                    makeMapSave(url+"maps/"+id+"/classroom_registrations"+userInfo.getJSONArray("classroomRegistations").getInt(0));
-                } catch (JSONException e) {
-                }
+                makeMapSave(url+"maps");
             }
         });
         load.setOnClickListener(new View.OnClickListener() {
@@ -459,9 +455,9 @@ public class MapActivity extends AppCompatActivity {
         });
     }
     private void update() throws JSONException {
-        //info.put("id",userInfo.getJSONObject("map").getString("id"));
-        //info.put("hp",Integer.toString(hp));
-        //makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
+        info.put("id",userInfo.getJSONObject("map").getString("id"));
+        info.put("hp",Integer.toString(hp));
+        makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
     }
 
     
@@ -511,57 +507,6 @@ public class MapActivity extends AppCompatActivity {
         // Adding request to request queue
         VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
     }
-    private void makeMapReqest(String url) {
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Volley Response", response.toString());
-                        try {
-                            startingPositon(response.getString("seed").toString());
-                            MapGenerator map = new MapGenerator();
-                            setUi();
-                            seed= new StringBuilder(response.getString("seed").toString());
-                            info.put("seed",response.get("seed"));
-                            id=response.getString("id").toString();
-                            info.put("id",response.get("id").toString());
-                            setHp((Integer) response.get("heath"));
-                            map.newMap(response.getString("seed"));
-                        } catch (JSONException e) {
-                            throw new RuntimeException(e);
-                        }
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Volley Error", error.toString());
-                    }
-                }
-        ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-//                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-//                params.put("param1", "value1");
-//                params.put("param2", "value2");
-                return params;
-            }
-        };
-        // Adding request to request queue
-        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
-    }
 
     private void makeMapSave(String url) {
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
@@ -571,6 +516,14 @@ public class MapActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        try {
+                            String temp = response.getString("id");
+                            String test = userInfo.getJSONArray("classroomRegistrations").getJSONObject(0).getString("id");
+                            String tempurl = url+"/"+response.getString("id")+"/classroom_registrations/"+userInfo.getJSONArray("classroomRegistrations").getJSONObject(0).getString("id");
+                            makeMaplink(url+"/"+response.getString("id")+"/classroom_registrations/"+userInfo.getJSONArray("classroomRegistrations").getJSONObject(0).getString("id"));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                         Log.d("Volley Response", response.toString());
                     }
                 },
@@ -605,6 +558,43 @@ public class MapActivity extends AppCompatActivity {
                 Request.Method.DELETE,
                 url,
                 info,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    private void makeMaplink(String url) {
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+                Request.Method.PUT,
+                url,
+                null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
