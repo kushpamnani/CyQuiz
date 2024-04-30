@@ -144,6 +144,26 @@ public class BattleActivity extends AppCompatActivity {
                     health = health - 25;
                     healthNum.setText(Integer.toString(health));
                     healthBar.setProgress(health);
+                    if (health <= 0){
+                        dodgeButton.setVisibility(View.GONE);
+                        answerBox.setVisibility(View.GONE);
+                        answerOne.setVisibility(View.GONE);
+                        answerTwo.setVisibility(View.GONE);
+                        answerThree.setVisibility(View.GONE);
+                        answerFour.setVisibility(View.GONE);
+                        questionBox.setVisibility(View.GONE);
+                        swordHit.setVisibility(View.GONE);
+                        spearHit.setVisibility(View.GONE);
+                        healthNum.setVisibility(View.GONE);
+                        healthBar.setVisibility(View.GONE);
+                        nextFight.setVisibility(View.GONE);
+                        dodgeButton.setVisibility(View.GONE);
+                        answerBox.setVisibility(View.GONE);
+                        enemyDefenseText.setVisibility(View.GONE);
+                        enemyHealthText.setVisibility(View.GONE);
+                        enemyLeftText.setText("YOU HAVE DIED!");
+
+                    }
                 }
             }
         });
@@ -200,6 +220,26 @@ public class BattleActivity extends AppCompatActivity {
                         health = health-2;
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
+                        if (health <= 0){
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            answerOne.setVisibility(View.GONE);
+                            answerTwo.setVisibility(View.GONE);
+                            answerThree.setVisibility(View.GONE);
+                            answerFour.setVisibility(View.GONE);
+                            questionBox.setVisibility(View.GONE);
+                            swordHit.setVisibility(View.GONE);
+                            spearHit.setVisibility(View.GONE);
+                            healthNum.setVisibility(View.GONE);
+                            healthBar.setVisibility(View.GONE);
+                            nextFight.setVisibility(View.GONE);
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            enemyDefenseText.setVisibility(View.GONE);
+                            enemyHealthText.setVisibility(View.GONE);
+                            enemyLeftText.setText("YOU HAVE DIED!");
+
+                        }
                     }
                 }
                 else if (fightingLarge()) {
@@ -233,6 +273,26 @@ public class BattleActivity extends AppCompatActivity {
                         health = health-5;
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
+                        if (health <= 0){
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            answerOne.setVisibility(View.GONE);
+                            answerTwo.setVisibility(View.GONE);
+                            answerThree.setVisibility(View.GONE);
+                            answerFour.setVisibility(View.GONE);
+                            questionBox.setVisibility(View.GONE);
+                            swordHit.setVisibility(View.GONE);
+                            spearHit.setVisibility(View.GONE);
+                            healthNum.setVisibility(View.GONE);
+                            healthBar.setVisibility(View.GONE);
+                            nextFight.setVisibility(View.GONE);
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            enemyDefenseText.setVisibility(View.GONE);
+                            enemyHealthText.setVisibility(View.GONE);
+                            enemyLeftText.setText("YOU HAVE DIED!");
+
+                        }
                     }
 
                 }
@@ -263,6 +323,26 @@ public class BattleActivity extends AppCompatActivity {
                         health = health-bossAttack;
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
+                        if (health <= 0){
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            answerOne.setVisibility(View.GONE);
+                            answerTwo.setVisibility(View.GONE);
+                            answerThree.setVisibility(View.GONE);
+                            answerFour.setVisibility(View.GONE);
+                            questionBox.setVisibility(View.GONE);
+                            swordHit.setVisibility(View.GONE);
+                            spearHit.setVisibility(View.GONE);
+                            healthNum.setVisibility(View.GONE);
+                            healthBar.setVisibility(View.GONE);
+                            nextFight.setVisibility(View.GONE);
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            enemyDefenseText.setVisibility(View.GONE);
+                            enemyHealthText.setVisibility(View.GONE);
+                            enemyLeftText.setText("YOU HAVE DIED!");
+
+                        }
                     }
 
 
@@ -302,6 +382,26 @@ public class BattleActivity extends AppCompatActivity {
                         health = health-2;
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
+                        if (health <= 0){
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            answerOne.setVisibility(View.GONE);
+                            answerTwo.setVisibility(View.GONE);
+                            answerThree.setVisibility(View.GONE);
+                            answerFour.setVisibility(View.GONE);
+                            questionBox.setVisibility(View.GONE);
+                            swordHit.setVisibility(View.GONE);
+                            spearHit.setVisibility(View.GONE);
+                            healthNum.setVisibility(View.GONE);
+                            healthBar.setVisibility(View.GONE);
+                            nextFight.setVisibility(View.GONE);
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            enemyDefenseText.setVisibility(View.GONE);
+                            enemyHealthText.setVisibility(View.GONE);
+                            enemyLeftText.setText("YOU HAVE DIED!");
+
+                        }
                     }
                 }
                 else if (fightingLarge()) {
@@ -334,6 +434,26 @@ public class BattleActivity extends AppCompatActivity {
 
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
+                        if (health <= 0){
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            answerOne.setVisibility(View.GONE);
+                            answerTwo.setVisibility(View.GONE);
+                            answerThree.setVisibility(View.GONE);
+                            answerFour.setVisibility(View.GONE);
+                            questionBox.setVisibility(View.GONE);
+                            swordHit.setVisibility(View.GONE);
+                            spearHit.setVisibility(View.GONE);
+                            healthNum.setVisibility(View.GONE);
+                            healthBar.setVisibility(View.GONE);
+                            nextFight.setVisibility(View.GONE);
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            enemyDefenseText.setVisibility(View.GONE);
+                            enemyHealthText.setVisibility(View.GONE);
+                            enemyLeftText.setText("YOU HAVE DIED!");
+
+                        }
                     }
 
                 }
@@ -367,6 +487,26 @@ public class BattleActivity extends AppCompatActivity {
 
                         healthNum.setText(Integer.toString(health));
                         healthBar.setProgress(health);
+                        if (health <= 0){
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            answerOne.setVisibility(View.GONE);
+                            answerTwo.setVisibility(View.GONE);
+                            answerThree.setVisibility(View.GONE);
+                            answerFour.setVisibility(View.GONE);
+                            questionBox.setVisibility(View.GONE);
+                            swordHit.setVisibility(View.GONE);
+                            spearHit.setVisibility(View.GONE);
+                            healthNum.setVisibility(View.GONE);
+                            healthBar.setVisibility(View.GONE);
+                            nextFight.setVisibility(View.GONE);
+                            dodgeButton.setVisibility(View.GONE);
+                            answerBox.setVisibility(View.GONE);
+                            enemyDefenseText.setVisibility(View.GONE);
+                            enemyHealthText.setVisibility(View.GONE);
+                            enemyLeftText.setText("YOU HAVE DIED!");
+
+                        }
                     }
 
 
