@@ -121,11 +121,12 @@ public class BossCreatorActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-                makeJsonObjReqPut();
-                makeJsonObjReqPutAttack();
-                makeJsonObjReqPutHealth();
-                makeJsonObjReqPutDefense();
-
+                for (int i = 0; i < 5; i++) {
+                    makeJsonObjReqPut();
+                    makeJsonObjReqPutAttack();
+                    makeJsonObjReqPutHealth();
+                    makeJsonObjReqPutDefense();
+                }
 
 
 

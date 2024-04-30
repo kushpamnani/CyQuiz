@@ -116,9 +116,11 @@ public class BattleCreatorActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
-                makeJsonObjReqPut();
-                makeJsonObjReqPutSmall();
-                makeJsonObjReqPutLarge();
+                for (int i = 0; i < 5; i++) {
+                    makeJsonObjReqPut();
+                    makeJsonObjReqPutSmall();
+                    makeJsonObjReqPutLarge();
+                }
 
 
             }
