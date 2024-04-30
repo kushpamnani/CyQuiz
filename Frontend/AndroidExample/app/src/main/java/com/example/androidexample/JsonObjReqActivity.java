@@ -334,7 +334,7 @@ public class JsonObjReqActivity extends AppCompatActivity {
                         msgResponse.setText(response.toString());
                         try {
                             String IDget = response.getString("id");
-                            testText.setText("ID is: " + IDget) ;
+                            //testText.setText("ID is: " + IDget) ;
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }

@@ -277,7 +277,7 @@ public class StringReqActivity extends JsonObjReqActivity {
                              }
                          }
 
-                        TestText.setText("ID is: " + ID);
+                        //TestText.setText("ID is: " + ID);
 
                     }
                 },

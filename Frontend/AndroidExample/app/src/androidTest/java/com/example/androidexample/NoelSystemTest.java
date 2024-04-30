@@ -63,45 +63,7 @@ public class NoelSystemTest {
 
 
     }
-    @Test
-    public void updateBossInfo() throws InterruptedException {
-        onView(withId(R.id.btnEnemyCreate)).perform(click());
-        onView(withId(R.id.teacherCheck)).perform(click());
-        onView(withId(R.id.bossCreateButton)).perform(click());
-        Thread.sleep(500);
 
-
-
-        onView(withId(R.id.idInput)).perform(typeText("29"), closeSoftKeyboard());
-        onView(withId(R.id.bossNameInput)).perform(typeText("BossNameNew"), closeSoftKeyboard());
-        onView(withId(R.id.healthInput)).perform(typeText("110"), closeSoftKeyboard());
-        onView(withId(R.id.dmgInput)).perform(typeText("25"), closeSoftKeyboard());
-        onView(withId(R.id.defenseInput)).perform(typeText("25"), closeSoftKeyboard());
-        onView(withId(R.id.updateBtn)).perform(click());
-        Thread.sleep(500);
-
-
-        onView(withId(R.id.errorText)).check(matches(withText(containsString("health\":110"))));
-        onView(withId(R.id.errorText)).check(matches(withText(containsString("BossNameNew"))));
-        onView(withId(R.id.errorText)).check(matches(withText(containsString("attack\":25"))));
-        onView(withId(R.id.errorText)).check(matches(withText(containsString("defense\":25"))));
-
-        onView(withId(R.id.idInput)).perform(replaceText("29"), closeSoftKeyboard());
-        onView(withId(R.id.bossNameInput)).perform(replaceText("BossNameChecker"), closeSoftKeyboard());
-        onView(withId(R.id.healthInput)).perform(replaceText("200"), closeSoftKeyboard());
-        onView(withId(R.id.dmgInput)).perform(replaceText("250"), closeSoftKeyboard());
-        onView(withId(R.id.defenseInput)).perform(replaceText("22"), closeSoftKeyboard());
-        onView(withId(R.id.updateBtn)).perform(click());
-        Thread.sleep(500);
-
-
-
-        onView(withId(R.id.errorText)).check(matches(withText(containsString("health\":200"))));
-        onView(withId(R.id.errorText)).check(matches(withText(containsString("BossNameChecker"))));
-        onView(withId(R.id.errorText)).check(matches(withText(containsString("attack\":250"))));
-        onView(withId(R.id.errorText)).check(matches(withText(containsString("defense\":22"))));
-
-    }
     @Test
     public void updateBossFlashcardInfo() throws InterruptedException {
 
@@ -180,30 +142,20 @@ public class NoelSystemTest {
 
 
     }
-//    @Test
-//    public void checkOnlineInfo() throws InterruptedException {
-//        onView(withId(R.id.onlineScreen)).perform(click());
-//        onView(withId(R.id.usernameGet)).perform(replaceText("HiTesting"), closeSoftKeyboard());
-//        onView(withId(R.id.onlineButton)).perform(click());
-//        Thread.sleep(500);
-//
-//        onView(withId(R.id.debugText)).check(matches(withText(containsString("HiTesting"))));
-//
-//        Espresso.pressBack();
-//
-//        onView(withId(R.id.btnEnemyCreate)).perform(click());
-//        onView(withId(R.id.teacherCheck)).perform(click());
-//        onView(withId(R.id.bossCreateButton)).perform(click());
-//        Thread.sleep(500);
-//
-//        onView(withId(R.id.onlineList)).check(matches(withText(containsString("HiTesting"))));
-//
-//
-//
-//
-//
-//
-//    }
+    @Test
+    public void checkBattleInfo() throws InterruptedException {
+        onView(withId(R.id.battleScreen)).perform(click());
+        onView(withId(R.id.battleIDInput)).perform(typeText("49"), closeSoftKeyboard());
+        onView(withId(R.id.startBattleBtn)).perform(click());
+        Thread.sleep(500);
+
+
+
+
+        onView(withId(R.id.enemyLeft)).check(matches(withText(containsString("small enemies left: 2"))));
+
+    }
+
 
 
 

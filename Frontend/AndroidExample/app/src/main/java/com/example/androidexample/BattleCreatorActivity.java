@@ -117,6 +117,8 @@ public class BattleCreatorActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
                 makeJsonObjReqPut();
+                makeJsonObjReqPutSmall();
+                makeJsonObjReqPutLarge();
 
 
             }
@@ -188,6 +190,98 @@ public class BattleCreatorActivity extends AppCompatActivity {
 
                 Request.Method.PUT,
                 baseURL + "battles/" + battleID.getText().toString(),
+                battleJSON,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        displayText.setText(response.toString());
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    private void makeJsonObjReqPutSmall() {
+
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+
+                Request.Method.PUT,
+                baseURL + "battles/" + battleID.getText().toString() + "/small_enemies/" + smallEnemies.getText().toString(),
+                battleJSON,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        displayText.setText(response.toString());
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Authorization", "Bearer YOUR_ACCESS_TOKEN");
+//                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+//                params.put("param1", "value1");
+//                params.put("param2", "value2");
+                return params;
+            }
+        };
+
+
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    private void makeJsonObjReqPutLarge() {
+
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+
+                Request.Method.PUT,
+                baseURL + "battles/" + battleID.getText().toString() + "/large_enemies/" + largeEnemies.getText().toString(),
                 battleJSON,
 
                 new Response.Listener<JSONObject>() {

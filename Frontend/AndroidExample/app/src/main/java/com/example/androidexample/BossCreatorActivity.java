@@ -117,18 +117,17 @@ public class BossCreatorActivity extends AppCompatActivity {
                     bossJSON.put("health", healthGet.getText().toString());
                     bossJSON.put("attack", dmgGet.getText().toString());
                     bossJSON.put("defense", defenseGet.getText().toString());
-                    bossJSON.put("id", idGet.getText().toString());
+                    //bossJSON.put("id", idGet.getText().toString());
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
                 makeJsonObjReqPut();
+                makeJsonObjReqPutAttack();
+                makeJsonObjReqPutHealth();
+                makeJsonObjReqPutDefense();
 
 
-//                makeJsonArrayReq();
-//
-//                if (flashcardExist) {
-//                    makeJsonObjReqPut();
-//                }
+
 
 
             }
@@ -271,7 +270,140 @@ public class BossCreatorActivity extends AppCompatActivity {
                         Log.e("Volley Error", error.toString());
                     }
                 }
-        ) {
+        )
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    void makeJsonObjReqPutHealth() {
+
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+
+                Request.Method.PUT,
+                baseURL + "/enemies/" + idGet.getText().toString() + "/health/" + healthGet.getText().toString(),
+                bossJSON,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        errorText.setText(response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        )
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    void makeJsonObjReqPutDefense() {
+
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+
+                Request.Method.PUT,
+                baseURL + "/enemies/" + idGet.getText().toString() + "/defense/" + defenseGet.getText().toString(),
+                bossJSON,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        errorText.setText(response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        )
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+
+                return headers;
+            }
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+        };
+
+        // Adding request to request queue
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjReq);
+    }
+    void makeJsonObjReqPutAttack() {
+
+
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(
+
+                Request.Method.PUT,
+                baseURL + "/enemies/" + idGet.getText().toString() + "/attack/" + dmgGet.getText().toString(),
+                bossJSON,
+
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Volley Response", response.toString());
+                        errorText.setText(response.toString());
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley Error", error.toString());
+                    }
+                }
+        )
+        {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
