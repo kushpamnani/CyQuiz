@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:layout_marginTop="50dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,17 +19,17 @@
         <Button
             android:id="@+id/btnBoss"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="75dp"
             android:layout_weight="1"
             android:text="Final Fight" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="358dp"
+        android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="1dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,7 +55,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="358dp"
+        android:layout_width="0dp"
         android:layout_height="75dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="75dp"
@@ -68,7 +68,7 @@
         <Button
             android:id="@+id/btnMap2_1"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
             android:layout_weight="1"
             android:text="Button" />
@@ -77,22 +77,24 @@
             android:id="@+id/btnMap2_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
             android:text="Button" />
+
         <Button
             android:id="@+id/btnMap2_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
             android:text="Button" />
+
         <Button
             android:id="@+id/btnMap2_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginHorizontal="5dp"
+            android:layout_weight="1"
             android:text="Button" />
 
     </LinearLayout>
