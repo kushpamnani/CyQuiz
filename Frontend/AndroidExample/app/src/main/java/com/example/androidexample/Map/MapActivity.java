@@ -4,6 +4,7 @@ import static com.example.androidexample.BattleActivity.healthGet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,15 +34,21 @@ import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import com.example.androidexample.LoginActivity;
 
 public class MapActivity extends AppCompatActivity {
-    static Button a_1, a_2, a_3, b_1, b_2, b_3, b_4, c_1, c_2, boss;
+    static Button a_1, a_2, a_3, b_1, b_2, b_3, b_4, c_1, c_2, boss,Continue;
     static TextView start;
     Button option1, option2, option3, option4, load, New, CreateEvent;
-    TextView question,desciption,Heath,Hpchange,Description,Conditon;
+    TextView question;
+    TextView desciption;
+    static TextView Heath;
+    TextView Hpchange;
+    TextView Description;
+    TextView Conditon;
     StringBuilder seed;
     char type;
     static int hp;
@@ -325,6 +332,8 @@ public class MapActivity extends AppCompatActivity {
                 if (positon == "c_2" || positon == "c_1") {
                     try {
                         setPositon('4', '1');
+                        setHp(healthGet());
+                        startActivity(new Intent(MapActivity.this, BattleActivity.class));
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -347,13 +356,21 @@ public class MapActivity extends AppCompatActivity {
             makeMapDel(url+"maps/"+userInfo.getString("id"));
         }
     }
-    void setHp(int amount) throws JSONException {
+    public void setHp(int amount) throws JSONException {
         hp= amount;
         Heath.setText(Integer.toString(hp));
         info.put("heath",String.valueOf(hp));
         if(hp<=0){
             makeMapDel(url);
         }
+    }
+    static public void afterbattleHp(int afterbattleHp){
+        hp = afterbattleHp;
+        Heath.setText(Integer.toString(hp));
+
+    }
+    public static int getHp() {
+        return hp;
     }
 
     void event(char event) throws JSONException {
@@ -365,6 +382,7 @@ public class MapActivity extends AppCompatActivity {
             changehp(20);
         } else if (event == '2') {
             setContentView(R.layout.event_random_event);
+            Continue= findViewById(R.id.RE_Continue);
             RandomEvents();
         } else {
             setContentView(R.layout.event_quiz);
@@ -402,7 +420,7 @@ public class MapActivity extends AppCompatActivity {
     void RandomEvents() {
         makerandomEventreq(url_event);
     }
-    void RandomEvents(JSONArray events) throws JSONException {
+    void RandomEvents(JSONArray events) throws JSONException, InterruptedException {
         Random rand = new Random();
         JSONObject event = events.getJSONObject(Math.abs(rand.nextInt(events.length())));
         Hpchange = findViewById(R.id.RE_HealAmount);
@@ -431,7 +449,14 @@ public class MapActivity extends AppCompatActivity {
             Conditon.setText("");
             changehp(Integer.parseInt(event.getString("hpChange")));
         }
-
+        Continue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MapGenerator map = new MapGenerator();
+                setUi();
+                map.newMap(String.valueOf(seed));
+            }
+        });
     }
     private void update() throws JSONException {
         //info.put("id",userInfo.getJSONObject("map").getString("id"));
@@ -439,9 +464,7 @@ public class MapActivity extends AppCompatActivity {
         //makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
     }
 
-    public static int getHp() {
-        return hp;
-    }
+    
 
     void makeJsonArrayReq(String url) {
         JsonArrayRequest jsonObjReq = new JsonArrayRequest(
@@ -705,6 +728,7 @@ public class MapActivity extends AppCompatActivity {
                         try {
                             RandomEvents(response);
                         } catch (JSONException e) {
+                        } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
                     }
