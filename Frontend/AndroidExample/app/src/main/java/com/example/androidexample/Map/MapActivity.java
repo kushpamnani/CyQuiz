@@ -42,7 +42,7 @@ import com.example.androidexample.LoginActivity;
 public class MapActivity extends AppCompatActivity {
     static Button a_1, a_2, a_3, b_1, b_2, b_3, b_4, c_1, c_2, boss,Continue;
     static TextView start;
-    Button option1, option2, option3, option4, load, New, CreateEvent;
+    Button option1, option2, option3, option4, load, New, CreateEvent,Win;
     TextView question;
     TextView desciption;
     static TextView Heath;
@@ -136,6 +136,8 @@ public class MapActivity extends AppCompatActivity {
         c_2 = findViewById(R.id.btnMap3_2);
         start = findViewById(R.id.Start);
         boss = findViewById(R.id.btnBoss);
+        Win= findViewById(R.id.Btn_Win);
+        Win.setVisibility(View.GONE);
         start.setText("start");
         Heath = findViewById(R.id.Heath_val);
         Heath.setText(Integer.toString(hp));
@@ -331,11 +333,26 @@ public class MapActivity extends AppCompatActivity {
                         setPositon('4', '1');
                         setHp(healthGet());
                         startActivity(new Intent(MapActivity.this, BattleActivity.class));
+                        Win.setVisibility(view.VISIBLE);
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
                 }
 
+            }
+        });
+        Win.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                char test = seed.charAt(9);
+                if(seed.charAt(9) == '4'){
+                    try {
+                        makeMapDel(url+"maps/"+userInfo.getString("id"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    finish();
+                }
             }
         });
     }
