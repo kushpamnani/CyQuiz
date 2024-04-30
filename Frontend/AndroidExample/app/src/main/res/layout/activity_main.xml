@@ -36,22 +36,19 @@
         android:id="@+id/btnJsonObjRequest"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:text="Create users"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btnAdmin"
-        app:layout_constraintTop_toBottomOf="@+id/btnAdmin" />
+        app:layout_constraintTop_toBottomOf="@+id/btnMapTest" />
 
     <Button
         android:id="@+id/btnFlashCard"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="73dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:text="Flash Card"
-        app:layout_constraintEnd_toStartOf="@+id/btnAdmin"
+        android:text="Flash Cards"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -59,13 +56,11 @@
         android:id="@+id/btnAdmin"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
         android:text="Admin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btnFlashCard"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/btnJsonObjRequest" />
 
     <Button
         android:id="@+id/btnSIgnOut"
@@ -81,17 +76,17 @@
         android:id="@+id/btnMapTest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="20dp"
-        android:text="Map Test"
+        android:text="Play"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnJsonObjRequest" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <Button
         android:id="@+id/btnEnemyCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
         android:text="Enemy Creation"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,7 +96,7 @@
         android:id="@+id/anouncments"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
         android:text="anouncments"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,11 +106,11 @@
         android:id="@+id/onlineScreen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:text="Online Setter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnMapTest" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAdmin" />
 
     <Button
         android:id="@+id/battleScreen"
