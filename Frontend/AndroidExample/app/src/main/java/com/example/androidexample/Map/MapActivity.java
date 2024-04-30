@@ -475,6 +475,7 @@ public class MapActivity extends AppCompatActivity {
     private void update() throws JSONException {
         info.put("id",userInfo.getJSONObject("map").getString("id"));
         info.put("hp",Integer.toString(hp));
+        String test = url+"maps/"+userInfo.getJSONObject("map").getString("id");
         makeMapUpdate(url+"maps/"+userInfo.getJSONObject("map").getString("id"));
     }
 

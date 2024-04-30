@@ -129,7 +129,7 @@ public class FlashCardActivity extends AppCompatActivity {
                         makeJsonObjSave(SqlUrl +"/"+Id);
                     }
                     else{
-                        makeJsonObjPost(SqlUrl+"/"+Id);
+                        makeJsonObjPost(SqlUrl);
                     }
                 }
 
