@@ -93,6 +93,7 @@ public class MapActivity extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
                 makeMapSave(url+"maps");
+
             }
         });
         load.setOnClickListener(new View.OnClickListener() {
@@ -598,6 +599,11 @@ public class MapActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        try {
+                            userInfo = LoginActivity.getUserInfo().getJSONArray("classroomRegistrations").getJSONObject(0);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                         Log.d("Volley Response", response.toString());
                     }
                 },
