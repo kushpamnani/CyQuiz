@@ -8,7 +8,7 @@ import java.util.Set;
 
 /**
  *
- * @author Dalton Clark
+ * @author Kush Pamnani
  *
  */
 @Entity
