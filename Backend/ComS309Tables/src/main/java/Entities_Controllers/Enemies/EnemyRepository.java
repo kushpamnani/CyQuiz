@@ -5,7 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Dalton Clark
+ * @author Kush Pamnani
  *
  */
 public interface EnemyRepository extends JpaRepository<Enemy, Long> {
