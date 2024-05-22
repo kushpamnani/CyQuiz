@@ -1,34 +1,36 @@
-# CyQuiz
+# Welcome to CyQuiz
 
-CyQuiz is an innovative Android application that transforms learning into an exciting adventure by incorporating educational quizzes within a dungeon crawler game framework.
+CyQuiz is a dynamic Android app that revolutionizes the educational experience of students by integrating quizzes into a dungeon crawler game.
 
-## Features
+## Key Features
 
-- **Interactive Learning Quizzes**: Students can enhance their knowledge on various school subjects by navigating through different levels, each featuring curriculum-based quizzes.
-- **Real-time Communication**: Utilized WebSocket technology to enable real-time messaging within the app, fostering effective communication and collaboration among students.
-- **Efficient CI/CD Pipelines**: Implemented Continuous Integration and Continuous Deployment pipelines on GitLab, which streamlined the deployment process and ensured smooth code distribution.
+- **Engaging Quiz Levels**: Students can explore and learn school subjects by completing various levels, each packed with quizzes aligned with their curriculum.
+- **Team Play**: Students can team up in groups of 2 or 3 to tackle quizzes together. Live updates on key achievements are provided via WebSocket, making the game more interactive and collaborative.
+- **Live Messaging**: Leveraged WebSocket technology for real-time communication within the app, enhancing student collaboration and interaction.
+- **Leaderboard**: A competitive leaderboard tracks and displays student rankings based on their performance, motivating students to improve and excel.
+- **Streamlined CI/CD Processes**: Implemented CI/CD pipelines on GitLab, significantly reducing deployment times and ensuring efficient code integration and delivery.
 
-## Tech Stack
+## Technology Stack
 
 ### Backend Development:
-- Spearheaded development using Spring Boot and Maven for creating robust CRUD operations.
-- Leveraged REST APIs, Postman, and Hibernate for seamless data management.
-- Integrated MySQL for reliable database management.
-- Employed Swagger for comprehensive API documentation.
-- Conducted thorough System Testing using Rest Assured.
+- Led development with Spring Boot and Maven for robust CRUD operations.
+- Utilized REST APIs, Postman, and Hibernate for seamless data transactions.
+- Integrated MySQL for database management.
+- Documented APIs with Swagger.
+- Conducted rigorous system testing using Rest Assured.
 
-### Real-time Features:
-- Integrated WebSocket technology to facilitate real-time messaging and interactive quiz features.
-- Added in-app chat and swipe functionalities to enhance user engagement and interaction.
+### Real-Time Functionalities:
+- Integrated WebSocket technology to support real-time messaging, interactive quiz features, and live updates on achievements.
+- Enhanced user experience with in-app chat, team play features, and swipe functionalities.
 
-### Testing:
-- Attained a test coverage of 96.4% and a code coverage of approximately 90% through rigorous functional and system testing.
+### Testing and Coverage:
+- Achieved 86.4% test coverage and approximately 90% code coverage through comprehensive functional and system testing.
 
-## Project Structure
+## Project Overview
 
 ### Collaborative Development:
-- Worked collaboratively with a team on GitLab for project development.
-- Successfully migrated the final version to GitHub.
+- Collaboratively developed on GitLab with team members.
+- Successfully transitioned the project to GitHub for broader access.
 
-### Comprehensive Documentation:
-- Detailed documentation, including a Block Diagram of the app and screen sketches, is available in the Documents subfolder on Git.
+### Detailed Documentation:
+- Extensive documentation, including app block diagrams and screen sketches, can be found in the Documents subfolder on Git.
