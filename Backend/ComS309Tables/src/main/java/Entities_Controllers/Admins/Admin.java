@@ -7,7 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 /**
  *
- * @author Dalton Clark
+ * @author Kush Pamnani
  *
  */
 @Entity
