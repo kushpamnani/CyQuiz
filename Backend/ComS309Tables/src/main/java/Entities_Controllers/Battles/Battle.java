@@ -11,7 +11,7 @@ import jakarta.persistence.JoinColumn;
 
 /**
  *
- * @author Dalton Clark
+ * @author Kush Pamnani
  *
  */
 @Entity
