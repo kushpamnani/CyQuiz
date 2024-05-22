@@ -2,7 +2,7 @@ package Entities_Controllers.Users;
 
 /**
  * 
- * @author Dalton Clark
+ * @author Kush Pamnani
  * 
  */
 public interface User {
