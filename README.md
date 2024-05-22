@@ -1,4 +1,4 @@
-# Welcome to CyQuiz
+# CyQuiz
 
 CyQuiz is a dynamic Android app that revolutionizes the educational experience of students by integrating quizzes into a dungeon crawler game.
 
