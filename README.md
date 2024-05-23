@@ -21,7 +21,7 @@ CyQuiz is a dynamic Android app that revolutionizes the educational experience o
 
 ### Real-Time Functionalities:
 - Integrated WebSocket technology to support real-time messaging, interactive quiz features, and live updates on achievements.
-- Enhanced user experience with in-app chat, team play features, and swipe functionalities.
+- Enhanced user experience with in-app chat and team play features.
 
 ### Testing and Coverage:
 - Achieved 86.4% test coverage and approximately 90% code coverage through comprehensive functional and system testing.
