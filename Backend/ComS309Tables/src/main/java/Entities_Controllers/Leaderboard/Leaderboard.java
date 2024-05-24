@@ -5,6 +5,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+/**
+ * 
+ * @author Kush Pamnani
+ * 
+ */
+
 @Entity
 public class Leaderboard {
 
