@@ -7,6 +7,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Kush Pamnani
+ * 
+ */
+
 @RestController
 public class LeaderboardController {
 
