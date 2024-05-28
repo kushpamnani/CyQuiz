@@ -33,4 +33,4 @@ CyQuiz is a dynamic Android app that revolutionizes the educational experience o
 - Successfully transitioned the project to GitHub for broader access.
 
 ### Detailed Documentation:
-- Extensive documentation, including app block diagrams and screen sketches, can be found in the Documents subfolder on Git.
+- Extensive documentation, including app block diagrams and screen sketches, can be found in the Documents subfolder.
