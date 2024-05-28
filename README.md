@@ -24,7 +24,7 @@ CyQuiz is a dynamic Android app that revolutionizes the educational experience o
 - Enhanced user experience with in-app chat and team play features.
 
 ### Testing and Coverage:
-- Achieved 86.4% test coverage and approximately 90% code coverage through comprehensive functional and system testing.
+- Achieved 86.4% test coverage and approximately 75% code coverage through comprehensive functional and system testing.
 
 ## Project Overview
 
